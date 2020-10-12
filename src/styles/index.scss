@@ -2,3 +2,9 @@
 * {
   font-family: 'Roboto', sans-serif;
 }
+
+html, body, #app {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
