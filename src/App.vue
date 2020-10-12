@@ -5,6 +5,13 @@
     setup() {
       const uploadRef = ref(null);
       const harContent = ref(null);
+      const selectedPage = ref(null);
+      const filteredEntries = ref([]);
+
+      const onPage = () => {
+        filteredEntries.value = harContent.value.entries
+          .filter(entry => entry.pageref === selectedPage.value);
+      };
 
       const onUpload = () => {
         uploadRef.value.click();
@@ -26,7 +33,11 @@
         }));
 
         const content = await readFile();
-        harContent.value = JSON.parse(content);
+        const har = JSON.parse(content);
+        harContent.value = har.log;
+        selectedPage.value = har.log.pages[0].id;
+        filteredEntries.value = harContent.value.entries
+          .filter(entry => entry.pageref === selectedPage.value);
       };
 
       return {
@@ -34,6 +45,9 @@
         onUpload,
         onUploadRef,
         harContent,
+        selectedPage,
+        filteredEntries,
+        onPage,
       };
     },
   };
@@ -60,6 +74,7 @@
                   <input
                     ref="uploadRef"
                     type="file"
+                    accept=".har"
                     hidden
                     @change="onUploadRef"
                   >
@@ -81,7 +96,53 @@
       </nav>
     </header>
     <main class="has-background-grey-dark has-text-light">
-      {{ harContent }}
+      <div
+        v-if="harContent"
+        class="is-flex viewer"
+      >
+        <div class="is-flex viewer-header">
+          <div>
+            <b class="is-unselectable">Version: </b>
+            {{ harContent.version ? harContent.version : "unknown" }}
+          </div>
+          <div
+            v-if="harContent.browser"
+            style="margin-left: 1em;"
+          >
+            <b class="is-unselectable">Browser: </b>
+            {{ harContent.browser.name ? harContent.browser.name : "Unknown" }}
+            ({{ harContent.browser.version ? harContent.browser.version : "unknown" }})
+          </div>
+          <div
+            v-if="harContent.creator"
+            style="margin-left: 1em;"
+          >
+            <b class="is-unselectable">Creator: </b>
+            {{ harContent.creator.name ? harContent.creator.name : "Unknown" }}
+            ({{ harContent.creator.version ? harContent.creator.version : "unknown" }})
+          </div>
+          <div
+            class="select"
+            style="margin-left: auto;"
+          >
+            <select
+              v-model="selectedPage"
+              @change="onPage"
+            >
+              <option
+                v-for="page in harContent.pages"
+                :key="page.id"
+                :value="page.id"
+              >
+                {{ page.title }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="viewer-content">
+          {{ filteredEntries }}
+        </div>
+      </div>
     </main>
     <footer class="footer is-unselectable has-background-dark has-text-light">
       <div class="content has-text-centered">
@@ -116,8 +177,25 @@
 
     & main {
       flex-grow: 1;
-      overflow: auto;
+      min-height: 0;
     }
+  }
+
+  .viewer {
+    flex-direction: column;
+    max-height: 100%;
+  }
+
+  .viewer-header {
+    flex-direction: row;
+    margin: .5em 1em;
+    align-items: center;
+  }
+
+  .viewer-content {
+    overflow-y: auto;
+    flex-grow: 1;
+    min-height: 0;
   }
 
   .footer {

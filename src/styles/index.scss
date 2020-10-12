@@ -8,3 +8,16 @@ html, body, #app {
   margin: 0;
   overflow: hidden;
 }
+
+.select select, .textarea, .input {
+  background-color: #4a4a4a;
+  color: whitesmoke;
+}
+
+.select:not(.is-multiple):not(.is-loading)::after {
+  border-color: whitesmoke;
+}
+
+.select:not(.is-multiple):not(.is-loading):hover::after {
+  border-color: #b5b5b5;
+}
