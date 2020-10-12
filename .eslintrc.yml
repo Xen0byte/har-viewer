@@ -1,0 +1,75 @@
+---
+root: true
+
+env:
+  browser: true
+  es2021: true
+
+extends:
+  - plugin:import/errors
+  - plugin:import/warnings
+  - plugin:vue/recommended
+  - airbnb-base
+
+plugins:
+  - import
+  - vue
+
+settings:
+  import/resolver: webpack
+
+parserOptions:
+  parser: "@babel/eslint-parser"
+  sourceType: module
+  requireConfigFile: false
+
+rules:
+  arrow-parens:
+    - error
+    - as-needed
+  comma-dangle:
+    - error
+    - always-multiline
+  eol-last:
+    - error
+    - always
+  import/extensions:
+    - error
+    - ignorePackages
+    - js: never
+      vue: never
+  indent:
+    - error
+    - 2
+    - SwitchCase: 1
+  linebreak-style:
+    - error
+    - unix
+  max-len:
+    - error
+    - 120
+  no-console: error
+  no-plusplus:
+    - error
+    - allowForLoopAfterthoughts: true
+  quotes:
+    - error
+    - double
+  semi:
+    - error
+    - always
+
+overrides:
+  - files:
+      - "*.vue"
+    rules:
+      indent: 0
+      vue/script-indent:
+        - error
+        - 2
+        - baseIndent: 1
+          switchCase: 1
+  - files:
+      - "*.html"
+    rules:
+      vue/comment-directive: 0
