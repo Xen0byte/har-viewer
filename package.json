@@ -1,0 +1,26 @@
+{
+  "name": "@develerik/har-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HTTP Archive Viewer",
+  "keywords": [
+    "har",
+    "http",
+    "viewer"
+  ],
+  "homepage": "https://github.com/develerik/har-viewer",
+  "bugs": "https://github.com/develerik/har-viewer/issues",
+  "repository": "git@github.com:develerik/har-viewer.git",
+  "license": "ISC",
+  "author": {
+    "name": "Erik Bender",
+    "email": "erik.bender@develerik.dev",
+    "url": "https://develerik.github.io"
+  },
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14"
+  }
+}
