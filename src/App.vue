@@ -7,14 +7,20 @@
       const harContent = ref(null);
       const selectedPage = ref(null);
       const filteredEntries = ref([]);
+      const selectedEntry = ref(null);
 
       const onPage = () => {
+        selectedEntry.value = null;
         filteredEntries.value = harContent.value.entries
           .filter(entry => entry.pageref === selectedPage.value);
       };
 
       const onUpload = () => {
         uploadRef.value.click();
+      };
+
+      const onSelectEntry = entry => {
+        selectedEntry.value = entry;
       };
 
       const onUploadRef = async e => {
@@ -36,8 +42,7 @@
         const har = JSON.parse(content);
         harContent.value = har.log;
         selectedPage.value = har.log.pages[0].id;
-        filteredEntries.value = harContent.value.entries
-          .filter(entry => entry.pageref === selectedPage.value);
+        onPage();
       };
 
       return {
@@ -48,6 +53,8 @@
         selectedPage,
         filteredEntries,
         onPage,
+        onSelectEntry,
+        selectedEntry,
       };
     },
   };
@@ -127,6 +134,7 @@
           >
             <select
               v-model="selectedPage"
+              class="is-unselectable"
               @change="onPage"
             >
               <option
@@ -139,8 +147,37 @@
             </select>
           </div>
         </div>
-        <div class="viewer-content">
-          {{ filteredEntries }}
+        <div class="viewer-content is-flex">
+          <table class="table has-background-dark has-text-light">
+            <thead class="is-unselectable">
+              <tr>
+                <th class="has-text-light">
+                  Method
+                </th>
+                <th class="has-text-light">
+                  Name
+                </th>
+                <th class="has-text-light">
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(entry, i) in filteredEntries"
+                :key="i"
+                style="cursor: pointer;"
+                @click="onSelectEntry(entry)"
+              >
+                <td>{{ entry.request.method }}</td>
+                <td>{{ entry.request.url.split("?")[0] }}</td>
+                <td>{{ entry.response.status }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            {{ selectedEntry }}
+          </div>
         </div>
       </div>
     </main>
@@ -196,6 +233,7 @@
     overflow-y: auto;
     flex-grow: 1;
     min-height: 0;
+    flex-direction: row;
   }
 
   .footer {
