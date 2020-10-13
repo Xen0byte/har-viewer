@@ -41,7 +41,7 @@
   <div class="metabar">
     <div>
       <div>
-        <b class="is-unselectable">Source:</b>
+        <b class="is-unselectable">Source: </b>
         <span v-text="filename" />
       </div>
       <div style="margin-top: .25em;">

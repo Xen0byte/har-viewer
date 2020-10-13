@@ -91,7 +91,7 @@
         />
         <button
           v-if="isLoaded"
-          :disabled="loading"
+          :disabled="loading || true"
           class="btn-primary"
           type="button"
           @click="onDownloadRedacted"
