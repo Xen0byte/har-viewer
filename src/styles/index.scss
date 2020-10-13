@@ -8,6 +8,7 @@
 }
 
 ::-webkit-scrollbar {
+  height: 6px;
   width: 6px;
 }
 
@@ -114,4 +115,10 @@ select {
 .tag-error {
   background-color: map.get($colors, "error.main");
   color: map.get($colors, "error.contrast");
+}
+
+code {
+  display: inline-block;
+  width:100%;
+  overflow: auto;
 }

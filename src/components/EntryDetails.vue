@@ -94,7 +94,7 @@
     </div>
     <div v-if="entry.response.content">
       <h2>Body</h2>
-      <div>
+      <div style="padding-bottom: 1em;">
         <b>Body Size:</b> {{ entry.response.bodySize }} bytes<br>
         <b>Content Size:</b> {{ entry.response.content.size }} bytes<br>
         <b>Mime Type:</b> {{ entry.response.content.mimeType }}
@@ -107,16 +107,20 @@
         <div v-if="entry.response.content.encoding">
           <b>Encoding:</b> {{ entry.response.content.encoding }}
         </div>
+        <!--TODO: add syntax highlighting for content-->
+        <!--TODO: add download button for preview and content-->
         <div v-if="entry.response.content.text && entry.response.content.encoding === 'base64' && entry.response.content.mimeType.startsWith('image/')">
           <h3>Preview</h3>
           <img :src="`data:${entry.response.content.mimeType};${entry.response.content.encoding}, ${entry.response.content.text}`">
         </div>
         <div v-if="entry.response.content.text && (entry.response.content.mimeType.startsWith('text/') || entry.response.content.mimeType.startsWith('application/'))">
           <h3>Content</h3>
-          <div
-            class="code"
-            v-text="entry.response.content.text"
-          />
+          <div class="code">
+            <code
+              style="overflow-wrap: anywhere;"
+              v-text="entry.response.content.text.trim()"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -148,6 +152,10 @@
   .code {
     white-space: pre;
     padding: 1em;
+
+    & > code {
+      max-height: 300px;
+    }
 
     @media (prefers-color-scheme: dark) {
       background-color: map.get($colors-dark, "background.paper");
