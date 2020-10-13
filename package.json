@@ -20,6 +20,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "build:analyze": "cross-env NODE_ENV=production ANALYZE=1 webpack",
+    "deploy": "node scripts/gh-pages-deploy.js",
     "lint": "eslint --ext js,vue .",
     "serve": "webpack serve"
   },
@@ -42,6 +43,7 @@
     "eslint-import-resolver-webpack": "^0.13.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-vue": "^7.0.1",
+    "execa": "^4.0.3",
     "fibers": "^5.0.0",
     "file-loader": "^6.1.1",
     "html-webpack-plugin": "^4.5.0",
