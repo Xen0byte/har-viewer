@@ -21,7 +21,7 @@
 
 <template>
   <div
-    class="entry"
+    class="entry is-unselectable"
     @click="onSelect"
   >
     <div>
@@ -31,7 +31,17 @@
       />
       <span v-text="entry.request.url.split('?')[0]" />
     </div>
-    <div style="margin-top: 1em;">
+    <div
+      class="tag"
+      :class="{
+        'tag-info': entry.response.status < 200,
+        'tag-success': entry.response.status > 199 && entry.response.status < 300,
+        'tag-info': entry.response.status > 299 && entry.response.status < 400,
+        'tag-warning': entry.response.status > 399 && entry.response.status < 500,
+        'tag-error': entry.response.status > 499
+      }"
+      style="margin-top: 1em;"
+    >
       <span
         style="margin-right: .5em;"
         v-text="entry.response.status"

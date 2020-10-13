@@ -89,3 +89,29 @@ select {
 .is-unselectable {
   user-select: none;
 }
+
+.tag {
+  border-radius: 5px;
+  padding: .2em .33em;
+  width: max-content;
+}
+
+.tag-success {
+  background-color: map.get($colors, "success.main");
+  color: map.get($colors, "success.contrast");
+}
+
+.tag-info {
+  background-color: map.get($colors, "info.main");
+  color: map.get($colors, "info.contrast");
+}
+
+.tag-warning {
+  background-color: map.get($colors, "warning.main");
+  color: map.get($colors, "warning.contrast");
+}
+
+.tag-error {
+  background-color: map.get($colors, "error.main");
+  color: map.get($colors, "error.contrast");
+}

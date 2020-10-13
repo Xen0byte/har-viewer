@@ -21,10 +21,12 @@
       const filteredEntries = ref([]);
       const loadError = ref(null);
       const isLoading = ref(false);
-      const selectedEntry = ref(false);
+      const selectedEntry = ref(null);
+      const selectedIndex = ref(null);
 
       const filterEntries = page => {
         selectedEntry.value = null;
+        selectedIndex.value = null;
         filteredEntries.value = harContent.value.entries
           .filter(entry => entry.pageref === page)
           .sort((a, b) => new Date(a.startedDateTime) - new Date(b.startedDateTime));
@@ -46,8 +48,9 @@
         }
       };
 
-      const onSelectEntry = entry => {
+      const onSelectEntry = (entry, index) => {
         selectedEntry.value = entry;
+        selectedIndex.value = index;
       };
 
       const onLoadUrl = async url => {
@@ -79,6 +82,7 @@
         isLoading,
         onSelectEntry,
         selectedEntry,
+        selectedIndex,
       };
     },
   };
@@ -122,7 +126,8 @@
               v-for="(entry, i) in filteredEntries"
               :key="i"
               :entry="entry"
-              @select="onSelectEntry(entry)"
+              :class="{ active: i === selectedIndex }"
+              @select="onSelectEntry(entry, i)"
             />
           </div>
           <EntryDetails
