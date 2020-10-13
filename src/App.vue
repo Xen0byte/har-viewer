@@ -194,6 +194,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: row;
+    padding-top: .75em;
+    padding-bottom: .75em;
   }
 
   .viewer-entries {
@@ -202,8 +204,6 @@
     max-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    padding-top: .75em;
-    padding-bottom: .75em;
     padding-left: .75em;
   }
 

@@ -1,5 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies,global-require */
 
+// TODO: setup pwa
+
 const path = require("path");
 const { DefinePlugin } = require("webpack");
 

@@ -51,14 +51,14 @@
         </div>
         <div style="margin-left: 1em;">
           <b class="is-unselectable">Creator: </b>
-          <span>{{ creator.name }} ({{ creator.version }})</span>
+          <span v-text="`${creator.name} (${creator.version})`" />
         </div>
         <div
           v-if="browser"
           style="margin-left: 1em;"
         >
           <b class="is-unselectable">Browser: </b>
-          <span>{{ browser.name }} ({{ browser.version }})</span>
+          <span v-text="`${browser.name} (${browser.version})`" />
         </div>
       </div>
     </div>

@@ -1,10 +1,17 @@
 <script>
+  import { onMounted, onUpdated } from "vue";
+  import Prism from "prismjs";
+
   export default {
     props: {
       entry: {
         type: Object,
         required: true,
       },
+    },
+    setup() {
+      onMounted(() => Prism.highlightAll());
+      onUpdated(() => Prism.highlightAll());
     },
   };
 </script>
@@ -46,7 +53,11 @@
       v-for="(header, i) in entry.request.headers"
       :key="i"
     >
-      <b>{{ header.name }}:</b> <span v-text="header.value" />
+      <b>{{ header.name }}: </b>
+      <span
+        :class="{ redacted: header.value === 'redacted' }"
+        v-text="header.value"
+      />
     </div>
     <div v-if="entry.request.cookies.length > 0">
       <h2>Cookies</h2>
@@ -54,7 +65,11 @@
         v-for="(cookie, i) in entry.request.cookies"
         :key="i"
       >
-        <b>{{ cookie.name }}:</b> <span v-text="cookie.value" />
+        <b>{{ cookie.name }}: </b>
+        <span
+          :class="{ redacted: cookie.value === 'redacted' }"
+          v-text="cookie.value"
+        />
       </div>
     </div>
     <div v-if="entry.request.queryString.length > 0">
@@ -85,7 +100,11 @@
       v-for="(header, i) in entry.response.headers"
       :key="i"
     >
-      <b>{{ header.name }}:</b> <span v-text="header.value" />
+      <b>{{ header.name }}: </b>
+      <span
+        :class="{ redacted: header.value === 'redacted' }"
+        v-text="header.value"
+      />
     </div>
     <div v-if="entry.response.cookies.length > 0">
       <h2>Cookies</h2>
@@ -93,7 +112,11 @@
         v-for="(cookie, i) in entry.response.cookies"
         :key="i"
       >
-        <b>{{ cookie.name }}:</b> <span v-text="cookie.value" />
+        <b>{{ cookie.name }}: </b>
+        <span
+          :class="{ redacted: cookie.value === 'redacted' }"
+          v-text="cookie.value"
+        />
       </div>
     </div>
     <div v-if="entry.response.content">
@@ -113,7 +136,6 @@
         <div v-if="entry.response.content.encoding">
           <b>Encoding:</b> {{ entry.response.content.encoding }}
         </div>
-        <!--TODO: add syntax highlighting for content-->
         <!--TODO: add download button for preview and content-->
         <div v-if="entry.response.content.text && entry.response.content.encoding === 'base64' && entry.response.content.mimeType.startsWith('image/')">
           <h3>Preview</h3>
@@ -122,10 +144,10 @@
         <div v-if="entry.response.content.text && (entry.response.content.mimeType.startsWith('text/') || entry.response.content.mimeType.startsWith('application/'))">
           <h3>Content</h3>
           <div class="code">
-            <code
-              style="overflow-wrap: anywhere;"
-              v-text="entry.response.content.text.trim()"
-            />
+            <pre><code
+              :class="`language-${entry.response.content.mimeType.split('/')[1]}`"
+              v-text="entry.response.content.text"
+            /></pre>
           </div>
         </div>
       </div>
@@ -156,19 +178,13 @@
   }
 
   .code {
-    white-space: pre;
-    padding: 1em;
-
-    & > code {
-      max-height: 300px;
+    & > pre {
+      overflow: hidden;
     }
 
-    @media (prefers-color-scheme: dark) {
-      background-color: map.get($colors-dark, "background.paper");
-    }
-
-    @media (prefers-color-scheme: light) {
-      background-color: map.get($colors-light, "background.paper");
+    & > pre,
+    & > pre > code {
+      max-height: 400px;
     }
   }
 

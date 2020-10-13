@@ -48,7 +48,7 @@
     </div>
     <div>
       <span>
-        <b class="is-unselectable">Version:</b> {{ version }}
+        <b class="is-unselectable">Version: </b><span v-text="version" />
       </span>
     </div>
   </footer>
