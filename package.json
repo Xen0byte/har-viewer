@@ -20,7 +20,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "build:analyze": "cross-env NODE_ENV=production ANALYZE=1 webpack",
-    "deploy": "node scripts/gh-pages-deploy.js",
+    "deploy": "cross-env DEPLOY=1 node scripts/gh-pages-deploy.js",
     "lint": "eslint --ext js,vue .",
     "serve": "webpack serve"
   },

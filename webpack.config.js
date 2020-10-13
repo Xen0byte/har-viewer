@@ -29,7 +29,9 @@ const config = {
     chunkFilename: isDev
       ? "js/[name].js"
       : "js/[contenthash].min.js",
-    publicPath: "/",
+    publicPath: process.env.DEPLOY
+      ? "/har-viewer/"
+      : "/",
     pathinfo: false,
   },
   performance: { hints: false },
@@ -134,7 +136,9 @@ const config = {
             ? "[name].[ext]"
             : "[contenthash].[ext]",
           noquotes: true,
-          publicPath: "/img",
+          publicPath: process.env.DEPLOY
+            ? "/har-viewer/img"
+            : "/img",
           outputPath: "img",
         },
       },
@@ -152,7 +156,9 @@ const config = {
             ? "[name].[ext]"
             : "[contenthash].[ext]",
           noquotes: true,
-          publicPath: "/fonts",
+          publicPath: process.env.DEPLOY
+            ? "/har-viewer/fonts"
+            : "/fonts",
           outputPath: "fonts",
         },
       },
