@@ -3,6 +3,25 @@
 
 * {
   font-family: 'Roboto', sans-serif;
+  scrollbar-color: map.get($colors, "secondary.main") rgba(0, 0, 0, 0);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 7.5px;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: map.get($colors, "secondary.main");
 }
 
 html, body, #app {

@@ -1,5 +1,6 @@
 <script>
   import { ref } from "vue";
+  import EntryDetails from "./components/EntryDetails";
   import { parseHarFile } from "./utils/har";
 
   import Footer from "./components/Footer";
@@ -9,6 +10,7 @@
 
   export default {
     components: {
+      EntryDetails,
       Footer,
       Header,
       MetaBar,
@@ -19,8 +21,10 @@
       const filteredEntries = ref([]);
       const loadError = ref(null);
       const isLoading = ref(false);
+      const selectedEntry = ref(false);
 
       const filterEntries = page => {
+        selectedEntry.value = null;
         filteredEntries.value = harContent.value.entries
           .filter(entry => entry.pageref === page)
           .sort((a, b) => new Date(a.startedDateTime) - new Date(b.startedDateTime));
@@ -40,6 +44,10 @@
         } finally {
           isLoading.value = false;
         }
+      };
+
+      const onSelectEntry = entry => {
+        selectedEntry.value = entry;
       };
 
       const onLoadUrl = async url => {
@@ -69,6 +77,8 @@
         filteredEntries,
         filterEntries,
         isLoading,
+        onSelectEntry,
+        selectedEntry,
       };
     },
   };
@@ -107,10 +117,18 @@
           @select-page="filterEntries"
         />
         <div class="viewer-content">
-          <Entry
-            v-for="(entry, i) in [filteredEntries[0]]"
-            :key="i"
-            :entry="entry"
+          <div class="viewer-entries">
+            <Entry
+              v-for="(entry, i) in filteredEntries"
+              :key="i"
+              :entry="entry"
+              @select="onSelectEntry(entry)"
+            />
+          </div>
+          <EntryDetails
+            v-if="selectedEntry"
+            :entry="selectedEntry"
+            class="viewer-details"
           />
         </div>
       </div>
@@ -156,8 +174,27 @@
   .viewer-content {
     flex-grow: 1;
     min-height: 0;
-    overflow-y: auto;
+    overflow: hidden;
+    padding: .75em;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .viewer-entries {
+    min-width: 600px;
+    max-width: 600px;
+    margin-right: 1em;
+    max-height: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .viewer-details {
+    flex-grow: 1;
+    min-width: 0;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .viewer-loading {
@@ -167,6 +204,10 @@
     height: 100%;
     max-height: 100%;
     overflow: hidden;
+  }
+
+  .entry:not(:last-child) {
+    margin-bottom: 1em;
   }
 
   .spinner {
