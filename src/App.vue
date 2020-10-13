@@ -5,12 +5,14 @@
   import Footer from "./components/Footer";
   import Header from "./components/Header";
   import MetaBar from "./components/MetaBar";
+  import Entry from "./components/Entry";
 
   export default {
     components: {
       Footer,
       Header,
       MetaBar,
+      Entry,
     },
     setup() {
       const harContent = ref(null);
@@ -18,9 +20,10 @@
       const loadError = ref(null);
       const isLoading = ref(false);
 
-      const onPage = page => {
+      const filterEntries = page => {
         filteredEntries.value = harContent.value.entries
-          .filter(entry => entry.pageref === page);
+          .filter(entry => entry.pageref === page)
+          .sort((a, b) => new Date(a.startedDateTime) - new Date(b.startedDateTime));
       };
 
       const onLoadFile = async file => {
@@ -31,7 +34,7 @@
           const har = await parseHarFile(file);
 
           harContent.value = har;
-          onPage(har.pages[0].id);
+          filterEntries(har.pages[0].id);
         } catch (e) {
           loadError.value = e.message;
         } finally {
@@ -64,7 +67,7 @@
         onLoadUrl,
         harContent,
         filteredEntries,
-        onPage,
+        filterEntries,
         isLoading,
       };
     },
@@ -89,33 +92,14 @@
           :creator="harContent.creator"
           :pages="harContent.pages"
           :version="harContent.version"
+          @select-page="filterEntries"
         />
         <div class="viewer-content">
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  Method
-                </th>
-                <th>
-                  Name
-                </th>
-                <th>
-                  Status
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(entry, i) in filteredEntries"
-                :key="i"
-              >
-                <td>{{ entry.request.method }}</td>
-                <td>{{ entry.request.url.split("?")[0] }}</td>
-                <td>{{ entry.response.status }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <Entry
+            v-for="(entry, i) in [filteredEntries[0]]"
+            :key="i"
+            :entry="entry"
+          />
         </div>
       </div>
     </main>
@@ -161,5 +145,6 @@
     flex-grow: 1;
     min-height: 0;
     overflow-y: auto;
+    overflow-x: hidden;
   }
 </style>
