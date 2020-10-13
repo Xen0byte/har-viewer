@@ -71,11 +71,11 @@ select {
 }
 
 .btn-primary {
-  background-color: map.get($colors, "secondary.main");
+  background-color: map.get($colors, "secondary.dark");
   color: map.get($colors, "secondary.contrast");
 
   &:hover {
-    background-color: map.get($colors, "secondary.dark");
+    background-color: map.get($colors, "secondary.main");
   }
 
   &:disabled {

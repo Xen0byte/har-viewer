@@ -101,6 +101,7 @@
             class="icon"
             width="18"
             height="18"
+            alt="incognito icon"
           >
           <span>Download Redacted</span>
         </button>
@@ -116,6 +117,7 @@
             class="icon"
             width="18"
             height="18"
+            alt="file icon"
           >
           <span>Open File</span>
         </button>
@@ -131,6 +133,7 @@
             class="icon"
             width="18"
             height="18"
+            alt="web icon"
           >
           <span>Load From URL</span>
         </button>

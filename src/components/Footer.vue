@@ -27,18 +27,21 @@
     <div>
       <span class="is-unselectable">
         <a
-          target="_blank"
           :href="homepage"
+          target="_blank"
+          rel="noreferrer"
         ><b v-text="app" /></a> by
         <a
-          target="_blank"
           :href="authorUrl"
+          target="_blank"
+          rel="noreferrer"
           v-text="authorName"
         />.
         The source code is licensed under the
         <a
-          target="_blank"
           :href="`https://opensource.org/licenses/${license}`"
+          target="_blank"
+          rel="noreferrer"
           v-text="license"
         /> license.
       </span>
@@ -76,7 +79,7 @@
   }
 
   a {
-    color: map.get($colors, "info.main");
+    color: map.get($colors, "info.light");
     text-decoration: none;
   }
 </style>
