@@ -98,6 +98,7 @@
 </script>
 
 <template>
+  <!--TODO: add filter options-->
   <div class="wrapper">
     <Header
       :error="loadError"
