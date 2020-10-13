@@ -1,7 +1,6 @@
 @use "sass:map";
 @import "../styles/colors";
 
-// use roboto font
 * {
   font-family: 'Roboto', sans-serif;
 }
@@ -16,13 +15,38 @@ button {
   border-radius: 2.5px;
   padding: .5em;
   cursor: pointer;
+  user-select: none;
+
+  & > * {
+    vertical-align: middle;
+  }
 
   & > .icon {
     margin-right: .25em;
+    filter: invert(1);
+  }
+
+  &:focus {
+    outline: none;
   }
 
   &:disabled {
     cursor: not-allowed;
+  }
+}
+
+select {
+  padding: .1em .25em;
+  border-color: map.get($colors-dark, "background.default");
+
+  @media (prefers-color-scheme: dark) {
+    background-color: map.get($colors-dark, "background.default");
+    color: map.get($colors-dark, "text.primary");
+  }
+
+  @media (prefers-color-scheme: light) {
+    background-color: map.get($colors-light, "background.default");
+    color: map.get($colors-light, "text.primary");
   }
 }
 

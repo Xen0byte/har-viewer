@@ -1,5 +1,7 @@
 <script>
   import { ref } from "vue";
+  import svgFileUpload from "@mdi/svg/svg/file-upload.svg";
+  import svgWeb from "@mdi/svg/svg/web.svg";
 
   export default {
     props: {
@@ -7,15 +9,29 @@
         type: String,
         default: null,
       },
+      loading: {
+        type: Boolean,
+        default: false,
+      },
     },
     emits: [
-      "upload-file",
+      "load-file",
+      "load-url",
     ],
     setup(props, { emit }) {
       const fileInputRef = ref(null);
+      const iconFileUpload = ref(svgFileUpload);
+      const iconWeb = ref(svgWeb);
 
       const onLoadFromFile = () => fileInputRef.value.click();
       const onLoadFromUrl = () => {
+        // TODO: better modal
+        // eslint-disable-next-line no-alert
+        const url = prompt("Enter the URL of the HAR file to load:");
+
+        if (url) {
+          emit("load-url", url);
+        }
       };
 
       const onFileUpload = ({ target: input }) => {
@@ -24,7 +40,7 @@
           return;
         }
 
-        emit("upload-file", input.files[0]);
+        emit("load-file", input.files[0]);
       };
 
       return {
@@ -32,6 +48,8 @@
         onLoadFromFile,
         onLoadFromUrl,
         onFileUpload,
+        iconFileUpload,
+        iconWeb,
       };
     },
   };
@@ -40,8 +58,11 @@
 <template>
   <header class="header">
     <nav>
-      <span class="is-unselectable">
-        HAR Viewer
+      <span
+        class="is-unselectable"
+        style="font-size: 1.25rem;"
+      >
+        HTTP Archive Viewer
       </span>
       <div>
         <input
@@ -55,29 +76,35 @@
           v-if="error"
           class="text-error"
           style="margin-right: 1em; font-weight: bold;"
-        >
-          {{ error }}
-        </span>
+          v-text="error"
+        />
         <button
+          :disabled="loading"
           class="btn-primary"
           type="button"
           @click="onLoadFromFile"
         >
-          <span class="icon">
-            <i class="mdi mdi-file-upload" />
-          </span>
+          <img
+            :src="iconFileUpload"
+            class="icon"
+            width="18"
+            height="18"
+          >
           <span>Open File</span>
         </button>
         <button
-          disabled
+          :disabled="loading"
           class="btn-primary"
           type="button"
-          style="margin-left: 1em;"
+          style="margin-left: .5em;"
           @click="onLoadFromUrl"
         >
-          <span class="icon">
-            <i class="mdi mdi-web" />
-          </span>
+          <img
+            :src="iconWeb"
+            class="icon"
+            width="18"
+            height="18"
+          >
           <span>Load From URL</span>
         </button>
       </div>
@@ -93,7 +120,7 @@
   @import "../styles/colors";
 
   .header {
-    padding: .5em 1em;
+    padding: .5em .5em .5em 1em;
     background-color: map.get($colors, "primary.main");
     color: map.get($colors, "primary.contrast");
 

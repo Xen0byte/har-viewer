@@ -16,29 +16,56 @@
       const harContent = ref(null);
       const filteredEntries = ref([]);
       const loadError = ref(null);
+      const isLoading = ref(false);
 
       const onPage = page => {
         filteredEntries.value = harContent.value.entries
           .filter(entry => entry.pageref === page);
       };
 
-      const onUploadFile = async file => {
+      const onLoadFile = async file => {
+        loadError.value = null;
+        isLoading.value = true;
+
         try {
           const har = await parseHarFile(file);
-          loadError.value = null;
+
           harContent.value = har;
           onPage(har.pages[0].id);
         } catch (e) {
           loadError.value = e.message;
+        } finally {
+          isLoading.value = false;
+        }
+      };
+
+      const onLoadUrl = async url => {
+        loadError.value = null;
+        isLoading.value = true;
+
+        try {
+          const result = await window.fetch(url);
+          console.log(url);
+          console.log(result);
+
+          // const har = await parseHarFile(result);
+          // harContent.value = har;
+          // onPage(har.pages[0].id);
+        } catch (e) {
+          loadError.value = e.message;
+        } finally {
+          isLoading.value = false;
         }
       };
 
       return {
         loadError,
-        onUploadFile,
+        onLoadFile,
+        onLoadUrl,
         harContent,
         filteredEntries,
         onPage,
+        isLoading,
       };
     },
   };
@@ -48,7 +75,9 @@
   <div class="wrapper">
     <Header
       :error="loadError"
-      @upload-file="onUploadFile"
+      :loading="isLoading"
+      @load-file="onLoadFile"
+      @load-url="onLoadUrl"
     />
     <main>
       <div

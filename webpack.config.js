@@ -193,6 +193,16 @@ if (isDev) {
       },
     }),
   ];
+
+  if (process.env.ANALYZE) {
+    const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+
+    config.plugins.push(new BundleAnalyzerPlugin({
+      analyzerMode: "static",
+      reportFilename: path.resolve(__dirname, "report.html"),
+      openAnalyzer: false,
+    }));
+  }
 }
 
 module.exports = config;

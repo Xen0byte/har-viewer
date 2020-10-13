@@ -15,25 +15,23 @@
 <template>
   <footer class="footer">
     <div>
-      <p class="is-unselectable">
+      <span class="is-unselectable">
         <strong>HAR Viewer</strong> by
         <a
           target="_blank"
           href="https://github.com/develerik"
-        >
-          Erik Bender</a>.
+        >Erik Bender</a>.
         The source code is licensed
         <a
           target="_blank"
           href="https://opensource.org/licenses/ISC"
-        >
-          ISC</a>.
-      </p>
+        >ISC</a>.
+      </span>
     </div>
     <div>
-      <p>
+      <span>
         <b class="is-unselectable">Version:</b> {{ version }}
-      </p>
+      </span>
     </div>
   </footer>
 </template>
@@ -49,8 +47,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding: .75em 1em;
 
     @media (prefers-color-scheme: dark) {
       background-color: map.get($colors-dark, "background.paper");
