@@ -63,7 +63,12 @@ const config = {
     new DefinePlugin({
       __VUE_OPTIONS_API__: "true",
       __VUE_PROD_DEVTOOLS__: "false",
+      APP: JSON.stringify(pkg.description),
+      AUTHOR_NAME: JSON.stringify(pkg.author.name),
+      AUTHOR_URL: JSON.stringify(pkg.author.url),
       DEBUG: isDev,
+      HOMEPAGE: JSON.stringify(pkg.homepage),
+      LICENSE: JSON.stringify(pkg.license),
       VERSION: JSON.stringify(pkg.version),
     }),
     new HtmlPlugin({

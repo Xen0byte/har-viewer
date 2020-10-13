@@ -3,9 +3,19 @@
 
   export default {
     setup() {
+      const app = ref(APP);
+      const authorName = ref(AUTHOR_NAME);
+      const authorUrl = ref(AUTHOR_URL);
+      const homepage = ref(HOMEPAGE);
+      const license = ref(LICENSE);
       const version = ref(VERSION);
 
       return {
+        app,
+        authorName,
+        authorUrl,
+        homepage,
+        license,
         version,
       };
     },
@@ -16,16 +26,21 @@
   <footer class="footer">
     <div>
       <span class="is-unselectable">
-        <strong>HAR Viewer</strong> by
         <a
           target="_blank"
-          href="https://github.com/develerik"
-        >Erik Bender</a>.
-        The source code is licensed
+          :href="homepage"
+        ><b v-text="app" /></a> by
         <a
           target="_blank"
-          href="https://opensource.org/licenses/ISC"
-        >ISC</a>.
+          :href="authorUrl"
+          v-text="authorName"
+        />.
+        The source code is licensed under the
+        <a
+          target="_blank"
+          :href="`https://opensource.org/licenses/${license}`"
+          v-text="license"
+        /> license.
       </span>
     </div>
     <div>

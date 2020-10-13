@@ -6,7 +6,12 @@ env:
   es2021: true
 
 globals:
+  APP: false
+  AUTHOR_NAME: false
+  AUTHOR_URL: false
   DEBUG: false
+  HOMEPAGE: false
+  LICENSE: false
   VERSION: false
 
 extends:
