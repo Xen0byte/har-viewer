@@ -17,6 +17,7 @@
       Entry,
     },
     setup() {
+      const filename = ref(null);
       const harContent = ref(null);
       const filteredEntries = ref([]);
       const loadError = ref(null);
@@ -40,6 +41,7 @@
           const har = await parseHarFile(file);
 
           harContent.value = har;
+          filename.value = file.name;
           filterEntries(har.pages[0].id);
         } catch (e) {
           loadError.value = e.message;
@@ -65,6 +67,7 @@
           // const har = await parseHarFile(result);
           // harContent.value = har;
           // onPage(har.pages[0].id);
+          filename.value = url;
         } catch (e) {
           loadError.value = e.message;
         } finally {
@@ -72,7 +75,9 @@
         }
       };
 
-      const onDownloadRedacted = () => {};
+      const onDownloadRedacted = () => {
+        window.alert("not implemented");
+      };
 
       return {
         loadError,
@@ -86,6 +91,7 @@
         selectedEntry,
         selectedIndex,
         onDownloadRedacted,
+        filename,
       };
     },
   };
@@ -123,6 +129,7 @@
           :creator="harContent.creator"
           :pages="harContent.pages"
           :version="harContent.version"
+          :filename="filename"
           @select-page="filterEntries"
         />
         <div class="viewer-content">

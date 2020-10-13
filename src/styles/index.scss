@@ -56,7 +56,7 @@ button {
 }
 
 select {
-  padding: .1em .25em;
+  padding: .25em;
   border-color: map.get($colors-dark, "background.default");
 
   @media (prefers-color-scheme: dark) {

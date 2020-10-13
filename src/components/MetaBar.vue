@@ -13,6 +13,10 @@
         type: String,
         required: true,
       },
+      filename: {
+        type: String,
+        required: true,
+      },
       pages: {
         type: Array,
         default: () => [],
@@ -36,19 +40,27 @@
 <template>
   <div class="metabar">
     <div>
-      <b class="is-unselectable">HAR Version: </b>
-      <span v-text="version" />
-    </div>
-    <div style="margin-left: 1em;">
-      <b class="is-unselectable">Creator: </b>
-      <span>{{ creator.name }} ({{ creator.version }})</span>
-    </div>
-    <div
-      v-if="browser"
-      style="margin-left: 1em;"
-    >
-      <b class="is-unselectable">Browser: </b>
-      <span>{{ browser.name }} ({{ browser.version }})</span>
+      <div>
+        <b class="is-unselectable">Source:</b>
+        <span v-text="filename" />
+      </div>
+      <div style="margin-top: .25em;">
+        <div>
+          <b class="is-unselectable">HAR Version: </b>
+          <span v-text="version" />
+        </div>
+        <div style="margin-left: 1em;">
+          <b class="is-unselectable">Creator: </b>
+          <span>{{ creator.name }} ({{ creator.version }})</span>
+        </div>
+        <div
+          v-if="browser"
+          style="margin-left: 1em;"
+        >
+          <b class="is-unselectable">Browser: </b>
+          <span>{{ browser.name }} ({{ browser.version }})</span>
+        </div>
+      </div>
     </div>
     <div
       v-if="pages.length > 1"
@@ -80,7 +92,16 @@
     flex-direction: row;
     padding: .5em 1em;
     align-items: center;
-    min-height: 26.2px;
+
+    & > div:nth-child(1) {
+      display: flex;
+      flex-direction: column;
+
+      & > div {
+        display: flex;
+        flex-direction: row;
+      }
+    }
 
     @media (prefers-color-scheme: dark) {
       background-color: map.get($colors-dark, "background.paper");
