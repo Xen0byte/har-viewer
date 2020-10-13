@@ -1,3 +1,6 @@
+@use "sass:map";
+@import "../styles/colors";
+
 // use roboto font
 * {
   font-family: 'Roboto', sans-serif;
@@ -8,15 +11,38 @@ html, body, #app {
   overflow: hidden;
 }
 
-.select select, .textarea, .input {
-  background-color: #4a4a4a;
-  color: whitesmoke;
+button {
+  border: none;
+  border-radius: 2.5px;
+  padding: .5em;
+  cursor: pointer;
+
+  & > .icon {
+    margin-right: .25em;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
-.select:not(.is-multiple):not(.is-loading)::after {
-  border-color: whitesmoke;
+.btn-primary {
+  background-color: map.get($colors, "secondary.main");
+  color: map.get($colors, "secondary.contrast");
+
+  &:hover {
+    background-color: map.get($colors, "secondary.dark");
+  }
+
+  &:disabled {
+    background-color: map.get($colors, "secondary.light");
+  }
 }
 
-.select:not(.is-multiple):not(.is-loading):hover::after {
-  border-color: #b5b5b5;
+.text-error {
+  color: map.get($colors, "error.main");
+}
+
+.is-unselectable {
+  user-select: none;
 }

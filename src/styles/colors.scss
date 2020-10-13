@@ -1,0 +1,44 @@
+$colors: (
+  "primary.light": #7986cb,
+  "primary.main": #3f51b5,
+  "primary.dark": #303f9f,
+  "primary.contrast": #fff,
+  "secondary.light": #ff4081,
+  "secondary.main": #f50057,
+  "secondary.dark": #c51162,
+  "secondary.contrast": #fff,
+  "error.light": #e57373,
+  "error.main": #f44336,
+  "error.dark": #d32f2f,
+  "error.contrast": #fff,
+  "warning.light": #ffb74d,
+  "warning.main": #ff9800,
+  "warning.dark": #f57c00,
+  "warning.contrast": rgba(0, 0, 0, 0.87),
+  "info.light": #64b5f6,
+  "info.main": #2196f3,
+  "info.dark": #1976d2,
+  "info.contrast": #fff,
+  "success.light": #81c784,
+  "success.main": #4caf50,
+  "success.dark": #388e3c,
+  "success.contrast": rgba(0, 0, 0, 0.87),
+);
+
+$colors-dark: (
+  "text.primary": #ffffff,
+  "text.secondary": rgba(255, 255, 255, 0.7),
+  "text.disabled": rgba(255, 255, 255, 0.5),
+  "background.default": #303030,
+  "background.paper": #424242,
+  "divider": rgba(255, 255, 255, 0.12),
+);
+
+$colors-light: (
+  "text.primary": rgba(0, 0, 0, 0.87),
+  "text.secondary": rgba(0, 0, 0, 0.54),
+  "text.disabled": rgba(0, 0, 0, 0.38),
+  "background.default": #fafafa,
+  "background.paper": #ffffff,
+  "divider": rgba(0, 0, 0, 0.12),
+);

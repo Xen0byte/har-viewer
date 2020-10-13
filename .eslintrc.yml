@@ -5,6 +5,10 @@ env:
   browser: true
   es2021: true
 
+globals:
+  DEBUG: false
+  VERSION: false
+
 extends:
   - plugin:import/errors
   - plugin:import/warnings

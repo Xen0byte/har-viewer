@@ -7,6 +7,8 @@ const HtmlPlugin = require("html-webpack-plugin");
 const ScriptExtHtmlPlugin = require("script-ext-html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 
+const pkg = require("./package.json");
+
 const isDev = process.env.NODE_ENV !== "production";
 
 const config = {
@@ -61,6 +63,8 @@ const config = {
     new DefinePlugin({
       __VUE_OPTIONS_API__: "true",
       __VUE_PROD_DEVTOOLS__: "false",
+      DEBUG: isDev,
+      VERSION: JSON.stringify(pkg.version),
     }),
     new HtmlPlugin({
       template: path.resolve(__dirname, "./src/index.html"),
@@ -178,6 +182,9 @@ if (isDev) {
         ecma: 2021,
         compress: {
           drop_console: true,
+          global_defs: {
+            DEBUG: false,
+          },
         },
         output: {
           comments: false,
