@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 /**
- * Keys that are required for a .har file.
+ * Keys that are required for a HAR file.
  * @type {string[]}
  */
 const requiredKeys = [
@@ -37,22 +37,13 @@ async function readFile(file) {
 }
 
 /**
- * Check whether the mime type is empty or 'application/json'.
- * @param {string} type - The mime type of the file.
- * @return {boolean}
- */
-function isHarMime(type) {
-  return !type || type === "application/json";
-}
-
-/**
- * Parse a given .har file.
+ * Parse a given HAR file.
  *
- * @param {File} file - The .har file to parse.
+ * @param {File} file - The HAR file to parse.
  * @return {Promise<Object|Error>}
  */
 export async function parseHarFile(file) {
-  if (!isHarMime(file.type)) {
+  if (file.type && file.type !== "application/json") {
     if (DEBUG) {
       // eslint-disable-next-line no-console
       console.error("mime type does not match");
@@ -67,7 +58,9 @@ export async function parseHarFile(file) {
 
   // check required keys
   for (let i = 0; i < requiredKeys.length; i++) {
-    const hasKey = !!requiredKeys[i].split(".").reduce((obj, key) => obj[key], harContent);
+    const hasKey = !!requiredKeys[i]
+      .split(".")
+      .reduce((obj, key) => obj[key], harContent);
 
     if (!hasKey) {
       if (DEBUG) {
