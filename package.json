@@ -26,7 +26,6 @@
     "@mdi/font": "^5.6.55",
     "@openfonts/roboto_latin": "^1.44.1",
     "axios": "^0.20.0",
-    "bulma": "^0.9.1",
     "vue": "^3.0.0"
   },
   "devDependencies": {

@@ -2,8 +2,8 @@ import { createApp } from "vue";
 
 import "@openfonts/roboto_latin";
 import "@mdi/font/css/materialdesignicons.min.css";
-import "bulma";
 
+import "./styles/normalize.scss";
 import "./styles/index.scss";
 import App from "./App";
 
