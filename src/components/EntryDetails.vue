@@ -71,7 +71,11 @@
     <b>HTTP Version:</b> <span v-text="entry.response.httpVersion" /><br>
     <b>Status:</b> {{ entry.response.status }} {{ entry.response.statusText }}
     <div v-if="entry.response.redirectURL">
-      <b>Redirect URL:</b> {{ entry.response.redirectURL }}
+      <b>Redirect URL:</b>
+      <span
+        style="word-break: break-all;"
+        v-text="entry.response.redirectURL"
+      />
     </div>
     <h2>Headers</h2>
     <div style="margin-bottom: 1em;">
@@ -98,11 +102,13 @@
         <b>Body Size:</b> {{ entry.response.bodySize }} bytes<br>
         <b>Content Size:</b> {{ entry.response.content.size }} bytes<br>
         <b>Mime Type:</b> {{ entry.response.content.mimeType }}
-        <div
-          v-if="entry.response.content.comment"
-          class="comment"
-          v-text="entry.response.content.comment"
-        />
+        <div v-if="entry.response.content.comment">
+          <br>
+          <span
+            class="comment"
+            v-text="entry.response.content.comment"
+          />
+        </div>
         <br>
         <div v-if="entry.response.content.encoding">
           <b>Encoding:</b> {{ entry.response.content.encoding }}

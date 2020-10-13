@@ -197,8 +197,8 @@
   }
 
   .viewer-entries {
-    min-width: 600px;
-    max-width: 600px;
+    min-width: 500px;
+    max-width: 500px;
     max-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
