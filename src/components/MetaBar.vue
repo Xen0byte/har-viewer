@@ -34,23 +34,21 @@
 </script>
 
 <template>
-  <div class="viewer-header">
+  <div class="metabar">
     <div>
-      <b>Version: </b>
-      {{ version }}
+      <b class="is-unselectable">Version: </b>
+      <span>{{ version }}</span>
     </div>
     <div
       v-if="browser"
       style="margin-left: 1em;"
     >
-      <b>Browser: </b>
-      {{ browser.name }}
-      ({{ browser.version }})
+      <b class="is-unselectable">Browser: </b>
+      <span>{{ browser.name }} ({{ browser.version }})</span>
     </div>
     <div style="margin-left: 1em;">
-      <b>Creator: </b>
-      {{ creator.name }}
-      ({{ creator.version }})
+      <b class="is-unselectable">Creator: </b>
+      <span>{{ creator.name }} ({{ creator.version }})</span>
     </div>
     <div
       v-if="pages.length > 1"
@@ -69,3 +67,27 @@
     </div>
   </div>
 </template>
+
+<style
+  lang="scss"
+  scoped
+>
+  @use "sass:map";
+  @import "../styles/colors";
+
+  .metabar {
+    display: flex;
+    flex-direction: row;
+    padding: .5em 1em;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: map.get($colors-dark, "background.paper");
+      color: map.get($colors-dark, "text.primary");
+    }
+
+    @media (prefers-color-scheme: light) {
+      background-color: map.get($colors-light, "background.default");
+      color: map.get($colors-light, "text.primary");
+    }
+  }
+</style>

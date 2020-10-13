@@ -51,24 +51,20 @@
     justify-content: space-between;
     padding-left: 1em;
     padding-right: 1em;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: map.get($colors-dark, "background.paper");
+      color: map.get($colors-dark, "text.primary");
+    }
+
+    @media (prefers-color-scheme: light) {
+      background-color: map.get($colors-light, "background.default");
+      color: map.get($colors-light, "text.primary");
+    }
   }
 
   a {
     color: map.get($colors, "info.main");
     text-decoration: none;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .footer {
-      background-color: map.get($colors-dark, "background.paper");
-      color: map.get($colors-dark, "text.primary");
-    }
-  }
-
-  @media (prefers-color-scheme: light) {
-    .footer {
-      background-color: map.get($colors-light, "background.paper");
-      color: map.get($colors-light, "text.primary");
-    }
   }
 </style>

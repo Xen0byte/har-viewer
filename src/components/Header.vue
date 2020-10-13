@@ -94,26 +94,14 @@
 
   .header {
     padding: .5em 1em;
+    background-color: map.get($colors, "primary.main");
+    color: map.get($colors, "primary.contrast");
 
     & nav {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .header {
-      background-color: map.get($colors-dark, "background.paper");
-      color: map.get($colors-dark, "text.primary");
-    }
-  }
-
-  @media (prefers-color-scheme: light) {
-    .header {
-      background-color: map.get($colors-light, "background.paper");
-      color: map.get($colors-light, "text.primary");
     }
   }
 </style>

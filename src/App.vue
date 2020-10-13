@@ -15,17 +15,11 @@
     setup() {
       const harContent = ref(null);
       const filteredEntries = ref([]);
-      const selectedEntry = ref(null);
       const loadError = ref(null);
 
       const onPage = page => {
-        selectedEntry.value = null;
         filteredEntries.value = harContent.value.entries
           .filter(entry => entry.pageref === page);
-      };
-
-      const onSelectEntry = entry => {
-        selectedEntry.value = entry;
       };
 
       const onUploadFile = async file => {
@@ -45,8 +39,6 @@
         harContent,
         filteredEntries,
         onPage,
-        onSelectEntry,
-        selectedEntry,
       };
     },
   };
@@ -59,7 +51,10 @@
       @upload-file="onUploadFile"
     />
     <main>
-      <div v-if="harContent">
+      <div
+        v-if="harContent"
+        class="viewer"
+      >
         <MetaBar
           :browser="harContent.browser"
           :creator="harContent.creator"
@@ -85,8 +80,6 @@
               <tr
                 v-for="(entry, i) in filteredEntries"
                 :key="i"
-                style="cursor: pointer;"
-                @click="onSelectEntry(entry)"
               >
                 <td>{{ entry.request.method }}</td>
                 <td>{{ entry.request.url.split("?")[0] }}</td>
@@ -94,9 +87,6 @@
               </tr>
             </tbody>
           </table>
-          <div>
-            {{ selectedEntry }}
-          </div>
         </div>
       </div>
     </main>
@@ -108,6 +98,9 @@
   lang="scss"
   scoped
 >
+  @use "sass:map";
+  @import "./styles/colors";
+
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -117,23 +110,27 @@
   main {
     flex-grow: 1;
     min-height: 0;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: map.get($colors-dark, "background.default");
+      color: map.get($colors-dark, "text.primary");
+    }
+
+    @media (prefers-color-scheme: light) {
+      background-color: map.get($colors-light, "background.paper");
+      color: map.get($colors-light, "text.primary");
+    }
   }
 
   .viewer {
+    display: flex;
     flex-direction: column;
     max-height: 100%;
   }
 
-  .viewer-header {
-    flex-direction: row;
-    margin: .5em 1em;
-    align-items: center;
-  }
-
   .viewer-content {
-    overflow-y: auto;
     flex-grow: 1;
     min-height: 0;
-    flex-direction: row;
+    overflow-y: auto;
   }
 </style>
