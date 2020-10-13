@@ -51,11 +51,12 @@
   .entry {
     display: flex;
     flex-direction: column;
-    padding: 1em;
+    padding: .75em 0 .75em .75em;
     border-radius: 5px;
     cursor: pointer;
     border-width: 1px;
     border-style: dashed;
+    margin-right: .75em;
 
     @media (prefers-color-scheme: dark) {
       border-color: map.get($colors-dark, "background.paper");

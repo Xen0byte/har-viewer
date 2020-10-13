@@ -175,7 +175,6 @@
     flex-grow: 1;
     min-height: 0;
     overflow: hidden;
-    padding: .75em;
     display: flex;
     flex-direction: row;
   }
@@ -183,10 +182,12 @@
   .viewer-entries {
     min-width: 600px;
     max-width: 600px;
-    margin-right: 1em;
     max-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    padding-top: .75em;
+    padding-bottom: .75em;
+    padding-left: .75em;
   }
 
   .viewer-details {
@@ -207,7 +208,7 @@
   }
 
   .entry:not(:last-child) {
-    margin-bottom: 1em;
+    margin-bottom: .75em;
   }
 
   .spinner {
