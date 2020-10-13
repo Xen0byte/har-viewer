@@ -72,6 +72,8 @@
         }
       };
 
+      const onDownloadRedacted = () => {};
+
       return {
         loadError,
         onLoadFile,
@@ -83,6 +85,7 @@
         onSelectEntry,
         selectedEntry,
         selectedIndex,
+        onDownloadRedacted,
       };
     },
   };
@@ -93,8 +96,10 @@
     <Header
       :error="loadError"
       :loading="isLoading"
+      :is-loaded="!!harContent"
       @load-file="onLoadFile"
       @load-url="onLoadUrl"
+      @download-redacted="onDownloadRedacted"
     />
     <main>
       <div

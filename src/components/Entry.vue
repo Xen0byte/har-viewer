@@ -24,7 +24,7 @@
     class="entry is-unselectable"
     @click="onSelect"
   >
-    <div>
+    <div class="summary">
       <b
         style="margin-right: 1em;"
         v-text="entry.request.method"
@@ -58,10 +58,14 @@
   @use "sass:map";
   @import "../styles/colors";
 
+  .summary {
+    overflow-wrap: anywhere;
+  }
+
   .entry {
     display: flex;
     flex-direction: column;
-    padding: .75em 0 .75em .75em;
+    padding: .75em .75em .75em .75em;
     border-radius: 5px;
     cursor: pointer;
     border-width: 1px;

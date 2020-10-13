@@ -2,6 +2,7 @@
   import { ref } from "vue";
   import svgFileUpload from "@mdi/svg/svg/file-upload.svg";
   import svgWeb from "@mdi/svg/svg/web.svg";
+  import svgIncognitoCircle from "@mdi/svg/svg/incognito-circle.svg";
 
   export default {
     props: {
@@ -13,15 +14,21 @@
         type: Boolean,
         default: false,
       },
+      isLoaded: {
+        type: Boolean,
+        default: false,
+      },
     },
     emits: [
       "load-file",
       "load-url",
+      "download-redacted",
     ],
     setup(props, { emit }) {
       const fileInputRef = ref(null);
       const iconFileUpload = ref(svgFileUpload);
       const iconWeb = ref(svgWeb);
+      const iconIncognitoCircle = ref(svgIncognitoCircle);
 
       const onLoadFromFile = () => fileInputRef.value.click();
       const onLoadFromUrl = () => {
@@ -43,6 +50,8 @@
         emit("load-file", input.files[0]);
       };
 
+      const onDownloadRedacted = () => emit("download-redacted");
+
       return {
         fileInputRef,
         onLoadFromFile,
@@ -50,6 +59,8 @@
         onFileUpload,
         iconFileUpload,
         iconWeb,
+        iconIncognitoCircle,
+        onDownloadRedacted,
       };
     },
   };
@@ -79,9 +90,25 @@
           v-text="error"
         />
         <button
+          v-if="isLoaded"
           :disabled="loading"
           class="btn-primary"
           type="button"
+          @click="onDownloadRedacted"
+        >
+          <img
+            :src="iconIncognitoCircle"
+            class="icon"
+            width="18"
+            height="18"
+          >
+          <span>Download Redacted</span>
+        </button>
+        <button
+          :disabled="loading"
+          class="btn-primary"
+          type="button"
+          style="margin-left: .5em;"
           @click="onLoadFromFile"
         >
           <img
