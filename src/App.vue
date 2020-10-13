@@ -84,7 +84,19 @@
     />
     <main>
       <div
-        v-if="harContent"
+        v-if="isLoading"
+        class="viewer-loading"
+      >
+        <div class="spinner">
+          <div class="rect1" />
+          <div class="rect2" />
+          <div class="rect3" />
+          <div class="rect4" />
+          <div class="rect5" />
+        </div>
+      </div>
+      <div
+        v-if="!isLoading && harContent"
         class="viewer"
       >
         <MetaBar
@@ -146,5 +158,67 @@
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  .viewer-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .spinner {
+    width: 50px;
+    height: 100px;
+    text-align: center;
+    font-size: 10px;
+
+    & > div {
+      height: 100%;
+      width: 6px;
+      display: inline-block;
+
+      animation: sk-stretchdelay 1.2s infinite ease-in-out;
+
+      &:not(:last-child) {
+        margin-right: 3px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        background-color: map.get($colors-dark, "text.secondary");
+      }
+
+      @media (prefers-color-scheme: light) {
+        background-color: map.get($colors-light, "text.secondary");
+      }
+    }
+
+    & > .rect2 {
+      animation-delay: -1.1s;
+    }
+
+    & > .rect3 {
+      animation-delay: -1.0s;
+    }
+
+    & > .rect4 {
+      animation-delay: -0.9s;
+    }
+
+    & > .rect5 {
+      animation-delay: -0.8s;
+    }
+
+    @keyframes sk-stretchdelay {
+      0%, 40%, 100% {
+        transform: scaleY(0.4);
+      }
+
+      20% {
+        transform: scaleY(1.0);
+      }
+    }
   }
 </style>
