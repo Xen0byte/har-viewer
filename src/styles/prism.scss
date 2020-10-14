@@ -51,7 +51,13 @@ pre[class*="language-"] {
 }
 
 .token.punctuation {
-  color: map.get($colors-dark, "text.primary");
+  @media (prefers-color-scheme: dark) {
+    color: map.get($colors-dark, "text.primary");
+  }
+
+  @media (prefers-color-scheme: light) {
+    color: map.get($colors-light, "text.primary");
+  }
 }
 
 .token.namespace {
@@ -86,7 +92,13 @@ pre[class*="language-"] {
 .language-css .token.string,
 .style .token.string,
 .token.variable {
-  color: map.get($colors-dark, "text.primary");
+  @media (prefers-color-scheme: dark) {
+    color: map.get($colors-dark, "text.primary");
+  }
+
+  @media (prefers-color-scheme: light) {
+    color: map.get($colors-light, "text.primary");
+  }
 }
 
 .token.atrule,
