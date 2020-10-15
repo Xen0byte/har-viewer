@@ -87,7 +87,7 @@ select {
   }
 
   &:disabled {
-    background-color: map.get($colors, "secondary.light");
+    background-color: map.get($colors, "primary.light");
   }
 }
 

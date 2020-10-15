@@ -37,6 +37,31 @@ async function readFile(file) {
 }
 
 /**
+ * Check if object is a valid HAR file.
+ * @param {Object} harContent - The HAR file contents
+ * @return {Promise<Object|Error>}
+ */
+export function checkHar(harContent) {
+  // check required keys
+  for (let i = 0; i < requiredKeys.length; i++) {
+    const hasKey = !!requiredKeys[i]
+      .split(".")
+      .reduce((obj, key) => obj[key], harContent);
+
+    if (!hasKey) {
+      if (DEBUG) {
+        // eslint-disable-next-line no-console
+        console.error(`missing key: ${requiredKeys[i]}`);
+      }
+
+      throw errInvalid;
+    }
+  }
+
+  return harContent.log;
+}
+
+/**
  * Parse a given HAR file.
  *
  * @param {File} file - The HAR file to parse.
@@ -56,21 +81,5 @@ export async function parseHarFile(file) {
   const content = await readFile(file);
   const harContent = JSON.parse(content);
 
-  // check required keys
-  for (let i = 0; i < requiredKeys.length; i++) {
-    const hasKey = !!requiredKeys[i]
-      .split(".")
-      .reduce((obj, key) => obj[key], harContent);
-
-    if (!hasKey) {
-      if (DEBUG) {
-        // eslint-disable-next-line no-console
-        console.error(`missing key: ${requiredKeys[i]}`);
-      }
-
-      throw errInvalid;
-    }
-  }
-
-  return harContent.log;
+  return checkHar(harContent);
 }

@@ -1,7 +1,7 @@
 <script>
   import { ref } from "vue";
   import EntryDetails from "./components/EntryDetails";
-  import { parseHarFile } from "./utils/har";
+  import { parseHarFile, checkHar } from "./utils/har";
 
   import Footer from "./components/Footer";
   import Header from "./components/Header";
@@ -60,13 +60,12 @@
         isLoading.value = true;
 
         try {
-          const result = await window.fetch(url);
-          console.log(url);
-          console.log(result);
+          const res = await window.fetch(url);
+          const json = await res.json();
+          const har = checkHar(json);
 
-          // const har = await parseHarFile(result);
-          // harContent.value = har;
-          // onPage(har.pages[0].id);
+          harContent.value = har;
+          filterEntries(har.pages[0].id);
           filename.value = url;
         } catch (e) {
           loadError.value = e.message;
