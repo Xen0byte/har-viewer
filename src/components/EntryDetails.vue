@@ -10,8 +10,26 @@
       },
     },
     setup() {
+      const isImage = content => !!content.text
+        && content.encoding === "base64"
+        && content.mimeType.startsWith("image/");
+
+      const isText = content => !!content.text
+        && (content.mimeType.startsWith("text/") || content.mimeType.startsWith("application/"));
+
+      const getImageDate = content => `data:${content.mimeType};${content.encoding}, ${content.text}`;
+
+      const getHighlightingClass = mimeType => `language-${mimeType.split("/")[1].split(";")[0]}`;
+
       onMounted(() => Prism.highlightAll());
       onUpdated(() => Prism.highlightAll());
+
+      return {
+        isImage,
+        isText,
+        getImageDate,
+        getHighlightingClass,
+      };
     },
   };
 </script>
@@ -137,15 +155,15 @@
           <b>Encoding:</b> {{ entry.response.content.encoding }}
         </div>
         <!--TODO: add download button for preview and content-->
-        <div v-if="entry.response.content.text && entry.response.content.encoding === 'base64' && entry.response.content.mimeType.startsWith('image/')">
+        <div v-if="isImage(entry.response.content)">
           <h3>Preview</h3>
-          <img :src="`data:${entry.response.content.mimeType};${entry.response.content.encoding}, ${entry.response.content.text}`">
+          <img :src="getImageDate(entry.response.content)">
         </div>
-        <div v-if="entry.response.content.text && (entry.response.content.mimeType.startsWith('text/') || entry.response.content.mimeType.startsWith('application/'))">
+        <div v-if="isText(entry.response.content)">
           <h3>Content</h3>
           <div class="code">
             <pre><code
-              :class="`language-${entry.response.content.mimeType.split('/')[1]}`"
+              :class="getHighlightingClass(entry.response.content.mimeType)"
               v-text="entry.response.content.text"
             /></pre>
           </div>
