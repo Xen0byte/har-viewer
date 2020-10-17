@@ -12,6 +12,7 @@ globals:
   DEBUG: false
   HOMEPAGE: false
   LICENSE: false
+  SW_URL: false
   VERSION: false
 
 extends:

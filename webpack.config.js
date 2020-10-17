@@ -73,6 +73,9 @@ const config = {
       DEBUG: isDev,
       HOMEPAGE: JSON.stringify(pkg.homepage),
       LICENSE: JSON.stringify(pkg.license),
+      SW_URL: JSON.stringify(process.env.DEPLOY
+        ? "/har-viewer/service-worker.js"
+        : "/service-worker.js"),
       VERSION: JSON.stringify(pkg.version),
     }),
     new HtmlPlugin({

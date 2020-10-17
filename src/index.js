@@ -10,7 +10,7 @@ import App from "./App";
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     try {
-      await navigator.serviceWorker.register("/service-worker.js");
+      await navigator.serviceWorker.register(SW_URL);
     } catch (_) {
       // ignore
     }
