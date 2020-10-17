@@ -157,7 +157,10 @@
         <!--TODO: add download button for preview and content-->
         <div v-if="isImage(entry.response.content)">
           <h3>Preview</h3>
-          <img :src="getImageDate(entry.response.content)">
+          <img
+            :src="getImageDate(entry.response.content)"
+            alt="Content Preview"
+          >
         </div>
         <div v-if="isText(entry.response.content)">
           <h3>Content</h3>

@@ -1,8 +1,7 @@
 report.html
-dist
 
-# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,vim,visualstudiocode,intellij+all,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,vim,visualstudiocode,intellij+all,node
+# Created by https://toptal.com/developers/gitignore/api/windows,macos,linux,vim,visualstudiocode,intellij+all,node
+# Edit at https://toptal.com/developers/gitignore?templates=windows,macos,linux,vim,visualstudiocode,intellij+all,node
 
 ### Intellij+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -306,4 +305,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,vim,visualstudiocode,intellij+all,node
+# End of https://toptal.com/developers/gitignore/api/windows,macos,linux,vim,visualstudiocode,intellij+all,node

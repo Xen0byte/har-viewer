@@ -6,7 +6,8 @@ View HTTP Archives
 
 - **Erik Bender** - *Initial work* - [develerik](https://github.com/develerik)
 
-See also the list of [contributors](https://github.com/develerik/har-viewer/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/develerik/har-viewer/graphs/contributors) who participated in
+this project.
 
 ## License
 

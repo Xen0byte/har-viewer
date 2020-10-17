@@ -38,13 +38,16 @@
 </script>
 
 <template>
-  <div class="metabar">
-    <div>
+  <div class="metabar row">
+    <div class="column">
       <div>
         <b class="is-unselectable">Source: </b>
         <span v-text="filename" />
       </div>
-      <div style="margin-top: .25em;">
+      <div
+        class="row"
+        style="margin-top: .25em;"
+      >
         <div>
           <b class="is-unselectable">HAR Version: </b>
           <span v-text="version" />
@@ -67,7 +70,10 @@
       class="select"
       style="margin-left: auto;"
     >
-      <select @change="onChangePage">
+      <select
+        aria-label="Select the recorded page to display"
+        @change="onChangePage"
+      >
         <option
           v-for="page in pages"
           :key="page.id"
@@ -88,20 +94,8 @@
   @import "../styles/colors";
 
   .metabar {
-    display: flex;
-    flex-direction: row;
     padding: .5em 1em;
     align-items: center;
-
-    & > div:nth-child(1) {
-      display: flex;
-      flex-direction: column;
-
-      & > div {
-        display: flex;
-        flex-direction: row;
-      }
-    }
 
     @media (prefers-color-scheme: dark) {
       background-color: map.get($colors-dark, "background.paper");

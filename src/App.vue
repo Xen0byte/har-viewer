@@ -75,6 +75,8 @@
       };
 
       const onDownloadRedacted = () => {
+        // TODO: implement reacted download
+        // eslint-disable-next-line no-alert
         window.alert("not implemented");
       };
 
