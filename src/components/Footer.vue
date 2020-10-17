@@ -23,9 +23,9 @@
 </script>
 
 <template>
-  <footer class="footer">
+  <footer class="footer is-unselectable">
     <div>
-      <span class="is-unselectable">
+      <span>
         <a
           :href="homepage"
           title="Homepage"

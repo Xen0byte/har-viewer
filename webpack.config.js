@@ -1,13 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies,global-require */
 
-// TODO: setup pwa
-
 const path = require("path");
 const { DefinePlugin } = require("webpack");
 
 const HtmlPlugin = require("html-webpack-plugin");
 const ScriptExtHtmlPlugin = require("script-ext-html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
+const WebpackPwaManifest = require("webpack-pwa-manifest");
+const WorkboxPlugin = require("workbox-webpack-plugin");
 
 const pkg = require("./package.json");
 
@@ -81,6 +81,19 @@ const config = {
     }),
     new ScriptExtHtmlPlugin({
       defaultAttribute: "defer",
+    }),
+    new WebpackPwaManifest({
+      name: "HTTP Archive Viewer",
+      short_name: "HAR Viewer",
+      display: "standalone",
+      fingerprints: !isDev,
+      lang: "en",
+      orientation: "landscape",
+      theme_color: "#3f51b5",
+    }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
     }),
     new VueLoaderPlugin(),
   ],

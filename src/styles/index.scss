@@ -3,6 +3,9 @@
 
 * {
   font-family: "Roboto", sans-serif;
+}
+
+div {
   // noinspection CssUnknownProperty
   scrollbar-color: map.get($colors, "secondary.main") rgba(0, 0, 0, 0);
   // noinspection CssUnknownProperty

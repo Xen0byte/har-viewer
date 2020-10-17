@@ -1,5 +1,5 @@
 <script>
-  import { ref } from "vue";
+  import { ref, onMounted } from "vue";
   import EntryDetails from "./components/EntryDetails";
   import { parseHarFile, checkHar } from "./utils/har";
 
@@ -17,6 +17,11 @@
       Entry,
     },
     setup() {
+      onMounted(() => {
+        // workaround for 100vh on mobile browsers
+        window.height = window.innerHeight;
+      });
+
       const filename = ref(null);
       const harContent = ref(null);
       const filteredEntries = ref([]);
