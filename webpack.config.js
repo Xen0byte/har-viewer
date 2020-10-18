@@ -7,7 +7,6 @@ const HtmlPlugin = require("html-webpack-plugin");
 const ScriptExtHtmlPlugin = require("script-ext-html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
-const WorkboxPlugin = require("workbox-webpack-plugin");
 
 const pkg = require("./package.json");
 
@@ -93,10 +92,6 @@ const config = {
       lang: "en",
       orientation: "landscape",
       theme_color: "#3f51b5",
-    }),
-    new WorkboxPlugin.GenerateSW({
-      clientsClaim: true,
-      skipWaiting: true,
     }),
     new VueLoaderPlugin(),
   ],
@@ -197,11 +192,16 @@ if (isDev) {
   const { CleanWebpackPlugin } = require("clean-webpack-plugin");
   const MiniCssExtractPlugin = require("mini-css-extract-plugin");
   const TerserPlugin = require("terser-webpack-plugin");
+  const WorkboxPlugin = require("workbox-webpack-plugin");
 
   config.plugins.push(new CleanWebpackPlugin());
   config.plugins.push(new MiniCssExtractPlugin({
     filename: "css/[contenthash].min.css",
     chunkFilename: "css/[contenthash].min.css",
+  }));
+  config.plugins.push(new WorkboxPlugin.GenerateSW({
+    clientsClaim: true,
+    skipWaiting: true,
   }));
 
   config.optimization.minimizer = [

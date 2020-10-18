@@ -11,9 +11,11 @@
     ],
     setup(props, { emit }) {
       const onSelect = () => emit("select");
+      const round = n => Math.round(n);
 
       return {
         onSelect,
+        round,
       };
     },
   };
@@ -21,7 +23,7 @@
 
 <template>
   <div
-    class="entry is-unselectable"
+    class="entry column is-unselectable"
     @click="onSelect"
   >
     <div class="summary">
@@ -29,24 +31,34 @@
         style="margin-right: 1em;"
         v-text="entry.request.method"
       />
-      <span v-text="entry.request.url.split('?')[0]" />
+      <div
+        style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"
+        v-text="entry.request.url.split('?')[0]"
+      />
     </div>
     <div
-      class="tag"
-      :class="{
-        'tag-info': entry.response.status < 200,
-        'tag-success': entry.response.status > 199 && entry.response.status < 300,
-        'tag-info': entry.response.status > 299 && entry.response.status < 400,
-        'tag-warning': entry.response.status > 399 && entry.response.status < 500,
-        'tag-error': entry.response.status > 499
-      }"
-      style="margin-top: 1em;"
+      class="row"
+      style="align-items: center; margin-top: 1em;"
     >
-      <span
-        style="margin-right: .5em;"
-        v-text="entry.response.status"
-      />
-      <span v-text="entry.response.statusText" />
+      <div
+        class="tag"
+        :class="{
+          'tag-info': entry.response.status < 200,
+          'tag-success': entry.response.status > 199 && entry.response.status < 300,
+          'tag-info': entry.response.status > 299 && entry.response.status < 400,
+          'tag-warning': entry.response.status > 399 && entry.response.status < 500,
+          'tag-error': entry.response.status > 499
+        }"
+      >
+        <span
+          style="margin-right: .5em;"
+          v-text="entry.response.status"
+        />
+        <span v-text="entry.response.statusText" />
+      </div>
+      <span style="margin-left: 1em;">
+        {{ round(entry.time) }} ms
+      </span>
     </div>
   </div>
 </template>
@@ -63,9 +75,7 @@
   }
 
   .entry {
-    display: flex;
-    flex-direction: column;
-    padding: .75em .75em .75em .75em;
+    padding: .75em;
     border-radius: 5px;
     cursor: pointer;
     border-width: 1px;

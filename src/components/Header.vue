@@ -68,7 +68,7 @@
 
 <template>
   <header class="header">
-    <nav>
+    <nav class="row">
       <span
         class="is-unselectable"
         style="font-size: 1.25rem;"
@@ -90,7 +90,7 @@
           v-text="error"
         />
         <button
-          v-if="isLoaded"
+          v-if="isLoaded && false"
           :disabled="loading || true"
           class="btn-primary"
           type="button"
@@ -155,8 +155,6 @@
     color: map.get($colors, "primary.contrast");
 
     & nav {
-      display: flex;
-      flex-direction: row;
       justify-content: space-between;
       align-items: center;
     }

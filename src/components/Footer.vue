@@ -23,7 +23,7 @@
 </script>
 
 <template>
-  <footer class="footer is-unselectable">
+  <footer class="footer row is-unselectable">
     <div>
       <span>
         <a
@@ -65,8 +65,6 @@
   @import "../styles/colors";
 
   .footer {
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
     padding: .75em 1em;
 
