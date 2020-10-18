@@ -43,7 +43,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-import-resolver-webpack": "^0.13.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-vue": "^7.0.1",
+    "eslint-plugin-vue": "^7.1.0",
     "execa": "^4.0.3",
     "fibers": "^5.0.0",
     "file-loader": "^6.1.1",
