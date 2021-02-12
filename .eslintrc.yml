@@ -18,7 +18,7 @@ globals:
 extends:
   - plugin:import/errors
   - plugin:import/warnings
-  - plugin:vue/recommended
+  - plugin:vue/vue3-recommended
   - airbnb-base
 
 plugins:
@@ -27,11 +27,6 @@ plugins:
 
 settings:
   import/resolver: webpack
-
-parserOptions:
-  parser: "@babel/eslint-parser"
-  sourceType: module
-  requireConfigFile: false
 
 rules:
   arrow-parens:

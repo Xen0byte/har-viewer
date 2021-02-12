@@ -4,7 +4,6 @@ const path = require("path");
 const { DefinePlugin } = require("webpack");
 
 const HtmlPlugin = require("html-webpack-plugin");
-const ScriptExtHtmlPlugin = require("script-ext-html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 
@@ -79,10 +78,9 @@ const config = {
     }),
     new HtmlPlugin({
       template: path.resolve(__dirname, "./src/index.html"),
+      hash: !isDev,
       minify: !isDev,
-    }),
-    new ScriptExtHtmlPlugin({
-      defaultAttribute: "defer",
+      scriptLoading: "defer",
     }),
     new WebpackPwaManifest({
       name: "HTTP Archive Viewer",
@@ -135,43 +133,19 @@ const config = {
       ],
     }, {
       test: /\.svg$/,
-      // TODO: https://github.com/vuejs/vue-loader/issues/1729
-      /* type: "asset/resource",
+      type: "asset/resource",
       generator: {
-        filename: "img/[name][ext]",
-      }, */
-      use: {
-        loader: "file-loader",
-        options: {
-          name: isDev
-            ? "[name].[ext]"
-            : "[contenthash].[ext]",
-          noquotes: true,
-          publicPath: process.env.DEPLOY
-            ? "/har-viewer/img"
-            : "/img",
-          outputPath: "img",
-        },
+        filename: isDev
+          ? "img/[name][ext]"
+          : "img/[contenthash][ext]",
       },
     }, {
-      test: /\.(woff2?|eot|ttf)$/,
-      // TODO: https://github.com/vuejs/vue-loader/issues/1729
-      /* type: "asset/resource",
+      test: /\.woff2?$/,
+      type: "asset/resource",
       generator: {
-        filename: "fonts/[name][ext]",
-      }, */
-      use: {
-        loader: "file-loader",
-        options: {
-          name: isDev
-            ? "[name].[ext]"
-            : "[contenthash].[ext]",
-          noquotes: true,
-          publicPath: process.env.DEPLOY
-            ? "/har-viewer/fonts"
-            : "/fonts",
-          outputPath: "fonts",
-        },
+        filename: isDev
+          ? "fonts/[name][ext]"
+          : "fonts/[contenthash][ext]",
       },
     }, {
       test: /\.vue$/,
@@ -187,6 +161,7 @@ if (isDev) {
     host: "0.0.0.0",
     historyApiFallback: true,
     transportMode: "ws",
+    disableHostCheck: true,
   };
 } else {
   const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -216,6 +191,7 @@ if (isDev) {
           },
         },
         output: {
+          beautify: false,
           comments: false,
           indent_level: 2,
         },
@@ -229,6 +205,7 @@ if (isDev) {
     config.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: "static",
       reportFilename: path.resolve(__dirname, "report.html"),
+      defaultSizes: "parsed",
       openAnalyzer: false,
     }));
   }
