@@ -58,7 +58,8 @@
       const statusCodes = computed(() => {
         const codes = harContent.value ? harContent.value.entries
           .filter(entry => (selectedPage.value ? entry.pageref === selectedPage.value : true))
-          .map(e => e.response.status)
+          .map(entry => entry.response.status)
+          .filter(sc => !!sc)
           .sort() : [];
         return [...new Set(codes)];
       });
@@ -67,7 +68,8 @@
         const typeValues = harContent.value ? harContent.value.entries
           .filter(entry => (selectedPage.value ? entry.pageref === selectedPage.value : true))
           // eslint-disable-next-line no-underscore-dangle
-          .map(t => t._resourceType)
+          .map(entry => entry._resourceType)
+          .filter(t => !!t)
           .sort() : [];
         return [...new Set(typeValues)];
       });
