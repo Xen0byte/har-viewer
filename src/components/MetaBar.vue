@@ -26,9 +26,7 @@
       "select-page",
     ],
     setup(props, { emit }) {
-      const onChangePage = page => {
-        emit("select-page", page);
-      };
+      const onChangePage = e => emit("select-page", e.target.value);
 
       return {
         onChangePage,
@@ -67,10 +65,10 @@
     </div>
     <div
       v-if="pages.length > 1"
-      class="select"
-      style="margin-left: auto;"
+      style="text-align: end; flex-grow: 1;"
     >
       <select
+        class="page-select"
         aria-label="Select the recorded page to display"
         @change="onChangePage"
       >
@@ -96,5 +94,18 @@
 
     background-color: var(--color-background-card);
     color: var(--color-text);
+
+    @media (max-width: 835px) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      & > div:first-child {
+        margin-bottom: .5em;
+      }
+    }
+  }
+
+  .page-select {
+    max-width: 50vw;
   }
 </style>
