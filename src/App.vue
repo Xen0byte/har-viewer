@@ -1,6 +1,9 @@
 <script>
-  import { ref, onMounted, onBeforeMount } from "vue";
+  import {
+    ref, computed, onMounted, onBeforeMount,
+  } from "vue";
   import EntryDetails from "./components/EntryDetails";
+  import FilterControl from "./components/FilterControl";
 
   import { switchTheme, getSystemTheme } from "./utils/theme";
   import { parseHarFile, checkHar } from "./utils/har";
@@ -12,6 +15,7 @@
 
   export default {
     components: {
+      FilterControl,
       EntryDetails,
       Footer,
       Header,
@@ -30,19 +34,43 @@
 
       const filename = ref(null);
       const harContent = ref(null);
-      const filteredEntries = ref([]);
       const loadError = ref(null);
       const isLoading = ref(false);
       const selectedEntry = ref(null);
       const selectedIndex = ref(null);
+      const selectedPage = ref("");
+      const selectedType = ref("");
+      const selectedStatusCode = ref("");
 
       const filterEntries = page => {
         selectedEntry.value = null;
         selectedIndex.value = null;
-        filteredEntries.value = harContent.value.entries
-          .filter(entry => (page ? entry.pageref === page : true))
-          .sort((a, b) => new Date(a.startedDateTime) - new Date(b.startedDateTime));
+        selectedPage.value = page;
       };
+
+      const filteredEntries = computed(() => (harContent.value ? harContent.value.entries
+        .filter(entry => (selectedPage.value ? entry.pageref === selectedPage.value : true))
+        // eslint-disable-next-line no-underscore-dangle
+        .filter(entry => (selectedType.value ? entry._resourceType === selectedType.value : true))
+        .filter(entry => (selectedStatusCode.value ? String(entry.response.status) === selectedStatusCode.value : true))
+        .sort((a, b) => new Date(a.startedDateTime) - new Date(b.startedDateTime)) : []));
+
+      const statusCodes = computed(() => {
+        const codes = harContent.value ? harContent.value.entries
+          .filter(entry => (selectedPage.value ? entry.pageref === selectedPage.value : true))
+          .map(e => e.response.status)
+          .sort() : [];
+        return [...new Set(codes)];
+      });
+
+      const types = computed(() => {
+        const typeValues = harContent.value ? harContent.value.entries
+          .filter(entry => (selectedPage.value ? entry.pageref === selectedPage.value : true))
+          // eslint-disable-next-line no-underscore-dangle
+          .map(t => t._resourceType)
+          .sort() : [];
+        return [...new Set(typeValues)];
+      });
 
       const onLoadFile = async file => {
         loadError.value = null;
@@ -91,6 +119,14 @@
         window.alert("not implemented");
       };
 
+      const onTypeSelected = type => {
+        selectedType.value = type;
+      };
+
+      const onStatusCodeSelected = statusCode => {
+        selectedStatusCode.value = statusCode;
+      };
+
       return {
         loadError,
         onLoadFile,
@@ -104,6 +140,10 @@
         selectedIndex,
         onDownloadRedacted,
         filename,
+        statusCodes,
+        types,
+        onTypeSelected,
+        onStatusCodeSelected,
       };
     },
   };
@@ -146,15 +186,23 @@
           @select-page="filterEntries"
         />
         <div class="viewer-content">
-          <div class="viewer-entries">
-            <Entry
-              v-for="(entry, i) in filteredEntries"
-              :key="i"
-              :entry="entry"
-              :class="{ active: i === selectedIndex }"
-              @select="onSelectEntry(entry, i)"
+          <aside class="sidebar">
+            <FilterControl
+              :status-codes="statusCodes"
+              :types="types"
+              @selectedType="onTypeSelected"
+              @selectedStatusCode="onStatusCodeSelected"
             />
-          </div>
+            <div class="viewer-entries">
+              <Entry
+                v-for="(entry, i) in filteredEntries"
+                :key="i"
+                :entry="entry"
+                :class="{ active: i === selectedIndex }"
+                @select="onSelectEntry(entry, i)"
+              />
+            </div>
+          </aside>
           <EntryDetails
             v-if="selectedEntry"
             :entry="selectedEntry"
@@ -201,13 +249,18 @@
     padding-bottom: .75em;
   }
 
+  .sidebar {
+    padding-left: .75em;
+    min-width: 475px;
+    max-width: 475px;
+    box-sizing: border-box;
+  }
+
   .viewer-entries {
-    min-width: 500px;
-    max-width: 500px;
     max-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    padding-left: .75em;
+    margin-top: .5em;
   }
 
   .viewer-details {
