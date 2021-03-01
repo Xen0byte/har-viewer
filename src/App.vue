@@ -403,6 +403,7 @@
     label {
       grid-column: 1 / 2;
       align-self: center;
+      color: var(--color-text);
     }
 
     input {
