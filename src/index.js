@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 
-import "@openfonts/roboto_latin";
+import "@openfonts/inter_latin";
 
 import "./styles/normalize.scss";
 import "./styles/index.scss";

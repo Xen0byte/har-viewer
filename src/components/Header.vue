@@ -146,13 +146,10 @@
   lang="scss"
   scoped
 >
-  @use "sass:map";
-  @import "../styles/colors";
-
   .header {
     padding: .5em .5em .5em 1em;
-    background-color: map.get($colors, "primary.main");
-    color: map.get($colors, "primary.contrast");
+    background-color: var(--color-header);
+    color: #fff;
 
     & nav {
       justify-content: space-between;

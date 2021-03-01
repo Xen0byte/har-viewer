@@ -104,9 +104,6 @@
   lang="scss"
   scoped
 >
-  @use "sass:map";
-  @import "../styles/colors";
-
   .details {
     padding-left: .75em;
     padding-right: .75em;
@@ -116,13 +113,14 @@
     margin-bottom: 1em;
 
     span {
-      background-color: map.get($colors, "secondary.main");
+      background-color: var(--color-primary-500);
+      color: #fff;
       border-radius: 5px;
       cursor: pointer;
       padding: .4em .8em;
 
       &:hover, &.active {
-        background-color: map.get($colors, "secondary.dark");
+        background-color: var(--color-primary-600);
       }
     }
 
@@ -132,12 +130,6 @@
   }
 
   .redacted {
-    @media (prefers-color-scheme: dark) {
-      color: map.get($colors-dark, "text.secondary");
-    }
-
-    @media (prefers-color-scheme: light) {
-      color: map.get($colors-light, "text.secondary");
-    }
+    color: var(--color-text);
   }
 </style>

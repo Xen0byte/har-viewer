@@ -90,21 +90,11 @@
   lang="scss"
   scoped
 >
-  @use "sass:map";
-  @import "../styles/colors";
-
   .metabar {
     padding: .5em 1em;
     align-items: center;
 
-    @media (prefers-color-scheme: dark) {
-      background-color: map.get($colors-dark, "background.paper");
-      color: map.get($colors-dark, "text.primary");
-    }
-
-    @media (prefers-color-scheme: light) {
-      background-color: map.get($colors-light, "background.default");
-      color: map.get($colors-light, "text.primary");
-    }
+    background-color: var(--color-background-card);
+    color: var(--color-text);
   }
 </style>

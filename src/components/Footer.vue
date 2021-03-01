@@ -61,26 +61,16 @@
   lang="scss"
   scoped
 >
-  @use "sass:map";
-  @import "../styles/colors";
-
   .footer {
     justify-content: space-between;
     padding: .75em 1em;
 
-    @media (prefers-color-scheme: dark) {
-      background-color: map.get($colors-dark, "background.paper");
-      color: map.get($colors-dark, "text.primary");
-    }
-
-    @media (prefers-color-scheme: light) {
-      background-color: map.get($colors-light, "background.default");
-      color: map.get($colors-light, "text.primary");
-    }
+    background-color: var(--color-background-card);
+    color: var(--color-text);
   }
 
   a {
-    color: map.get($colors, "info.light");
+    color: var(--color-link);
     text-decoration: none;
   }
 </style>

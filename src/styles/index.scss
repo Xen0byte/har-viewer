@@ -1,13 +1,12 @@
-@use "sass:map";
-@import "../styles/colors";
+@import "colors";
 
 * {
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 div {
   // noinspection CssUnknownProperty
-  scrollbar-color: map.get($colors, "secondary.main") rgba(0, 0, 0, 0);
+  scrollbar-color: var(--color-primary-500) rgba(0, 0, 0, 0);
   // noinspection CssUnknownProperty
   scrollbar-width: thin;
 }
@@ -27,11 +26,11 @@ div {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: map.get($colors, "secondary.main");
+  background-color: var(--color-primary-500);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: map.get($colors, "secondary.dark");
+  background-color: var(--color-primary-600);
 }
 
 ::-webkit-scrollbar-corner {
@@ -70,34 +69,27 @@ button {
 
 select {
   padding: .25em;
-  border-color: map.get($colors-dark, "background.default");
+  border-color: #151a30;
 
-  @media (prefers-color-scheme: dark) {
-    background-color: map.get($colors-dark, "background.default");
-    color: map.get($colors-dark, "text.primary");
-  }
-
-  @media (prefers-color-scheme: light) {
-    background-color: map.get($colors-light, "background.default");
-    color: map.get($colors-light, "text.primary");
-  }
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 .btn-primary {
-  background-color: map.get($colors, "secondary.dark");
-  color: map.get($colors, "secondary.contrast");
+  background-color: var(--color-primary-600);
+  color: #fff;
 
   &:hover {
-    background-color: map.get($colors, "secondary.main");
+    background-color: var(--color-primary-700);
   }
 
   &:disabled {
-    background-color: map.get($colors, "primary.light");
+    background-color: var(--color-primary-800);
   }
 }
 
 .text-error {
-  color: map.get($colors, "error.main");
+  color: var(--color-danger);
 }
 
 .is-unselectable {
@@ -110,24 +102,28 @@ select {
   width: max-content;
 }
 
+.tag-unknown {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
 .tag-success {
-  background-color: map.get($colors, "success.main");
-  color: map.get($colors, "success.contrast");
+  background-color:var(--color-success);
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .tag-info {
-  background-color: map.get($colors, "info.main");
-  color: map.get($colors, "info.contrast");
+  background-color: var(--color-info);
+  color: #fff;
 }
 
 .tag-warning {
-  background-color: map.get($colors, "warning.main");
-  color: map.get($colors, "warning.contrast");
+  background-color: var(--color-warning);
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .tag-error {
-  background-color: map.get($colors, "error.main");
-  color: map.get($colors, "error.contrast");
+  background-color: var(--color-danger);
+  color: #fff;
 }
 
 code {

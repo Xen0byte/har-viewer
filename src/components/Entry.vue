@@ -43,18 +43,20 @@
       <div
         class="tag"
         :class="{
-          'tag-info': entry.response.status < 200,
+          'tag-unknown': entry.response.status === 0,
+          'tag-info': entry.response.status < 200 && entry.response.status != 0,
           'tag-success': entry.response.status > 199 && entry.response.status < 300,
           'tag-info': entry.response.status > 299 && entry.response.status < 400,
           'tag-warning': entry.response.status > 399 && entry.response.status < 500,
           'tag-error': entry.response.status > 499
         }"
       >
+        <span v-text="entry.response.status" />
         <span
-          style="margin-right: .5em;"
-          v-text="entry.response.status"
+          v-if="entry.response.statusText"
+          style="margin-left: .5em;"
+          v-text="entry.response.statusText"
         />
-        <span v-text="entry.response.statusText" />
       </div>
       <span style="margin-left: 1em;">
         {{ round(entry.time) }} ms
@@ -67,9 +69,6 @@
   lang="scss"
   scoped
 >
-  @use "sass:map";
-  @import "../styles/colors";
-
   .summary {
     overflow-wrap: anywhere;
   }
@@ -82,24 +81,12 @@
     border-style: dashed;
     margin-right: .75em;
 
-    @media (prefers-color-scheme: dark) {
-      border-color: map.get($colors-dark, "background.paper");
-      background-color: map.get($colors-dark, "background.paper");
+    background-color: var(--color-background-card);
+    border-color: var(--color-background-card);
 
-      &:hover, &.active {
-        border-color: map.get($colors-dark, "text.secondary");
-        background-color: map.get($colors-dark, "background.default");
-      }
-    }
-
-    @media (prefers-color-scheme: light) {
-      border-color: map.get($colors-light, "background.default");
-      background-color: map.get($colors-light, "background.default");
-
-      &:hover, &.active {
-        border-color: map.get($colors-light, "text.secondary");
-        background-color: map.get($colors-light, "background.paper");
-      }
+    &:hover, &.active {
+      background-color: var(--color-background);
+      border-color: var(--color-text);
     }
   }
 </style>

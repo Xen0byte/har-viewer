@@ -1,8 +1,5 @@
 <script>
-  import { ref, computed } from "vue";
-  import Prism from "prismjs";
-
-  import "../styles/prism.scss";
+  import { ref } from "vue";
 
   export default {
     props: {
@@ -22,30 +19,8 @@
         && props.response.content.encoding === "base64"
         && props.response.content.mimeType.startsWith("image/");
 
-      const isText = () => !!props.response.content.text
-        && (props.response.content.mimeType.startsWith("text/")
-          || props.response.content.mimeType.startsWith("application/"));
-
       // eslint-disable-next-line max-len
       const getImageDate = () => `data:${props.response.content.mimeType};${props.response.content.encoding}, ${props.response.content.text}`;
-
-      const getLanguage = () => props.response.content.mimeType
-        .split("/")[1].split(";")[0];
-
-      const highlightedCode = computed(() => {
-        if (isText(props.response.content)) {
-          const lang = getLanguage();
-          const grammar = Prism.languages[lang];
-
-          if (!grammar) {
-            return props.response.content.text;
-          }
-
-          return Prism.highlight(props.response.content.text, Prism.languages[lang], lang);
-        }
-
-        return null;
-      });
 
       const onDownload = () => {
         // eslint-disable-next-line max-len
@@ -69,9 +44,7 @@
 
       return {
         isImage,
-        isText,
         getImageDate,
-        highlightedCode,
         showContent,
         onDownload,
       };
@@ -105,21 +78,6 @@
           alt="Content Preview"
         >
       </div>
-      <div v-if="isText()">
-        <h3>Content</h3>
-        <button
-          class="btn-primary"
-          @click="showContent = !showContent"
-        >
-          {{ showContent ? "Hide Content" : "Show Content" }}
-        </button>
-        <div
-          v-if="showContent"
-          class="code"
-        >
-          <pre><code v-html="highlightedCode" /></pre>
-        </div>
-      </div>
       <button
         class="btn-primary"
         style="margin-top: .5em;"
@@ -135,43 +93,7 @@
   lang="scss"
   scoped
 >
-  @use "sass:map";
-  @import "../styles/colors";
-
-  .code {
-    border-radius: 5px;
-
-    @media (prefers-color-scheme: dark) {
-      background-color: map.get($colors-dark, "background.paper");
-    }
-
-    @media (prefers-color-scheme: light) {
-      background-color: map.get($colors-light, "background.default");
-    }
-
-    & > pre {
-      overflow: hidden;
-      padding: 1em;
-
-      & > code {
-        overflow-wrap: break-word;
-        white-space: pre-wrap;
-      }
-    }
-
-    & > pre,
-    & > pre > code {
-      max-height: 400px;
-    }
-  }
-
   .comment {
-    @media (prefers-color-scheme: dark) {
-      color: map.get($colors-dark, "text.secondary");
-    }
-
-    @media (prefers-color-scheme: light) {
-      color: map.get($colors-light, "text.secondary");
-    }
+    color: var(--color-text);
   }
 </style>

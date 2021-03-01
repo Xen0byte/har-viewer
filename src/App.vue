@@ -1,6 +1,8 @@
 <script>
-  import { ref, onMounted } from "vue";
+  import { ref, onMounted, onBeforeMount } from "vue";
   import EntryDetails from "./components/EntryDetails";
+
+  import { switchTheme, getSystemTheme } from "./utils/theme";
   import { parseHarFile, checkHar } from "./utils/har";
 
   import Footer from "./components/Footer";
@@ -17,6 +19,10 @@
       Entry,
     },
     setup() {
+      onBeforeMount(() => {
+        switchTheme(getSystemTheme());
+      });
+
       onMounted(() => {
         // workaround for 100vh on mobile browsers
         window.height = window.innerHeight;
@@ -165,9 +171,6 @@
   lang="scss"
   scoped
 >
-  @use "sass:map";
-  @import "./styles/colors";
-
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -178,15 +181,8 @@
     flex-grow: 1;
     min-height: 0;
 
-    @media (prefers-color-scheme: dark) {
-      background-color: map.get($colors-dark, "background.default");
-      color: map.get($colors-dark, "text.primary");
-    }
-
-    @media (prefers-color-scheme: light) {
-      background-color: map.get($colors-light, "background.paper");
-      color: map.get($colors-light, "text.primary");
-    }
+    background-color: var(--color-background);
+    color: var(--color-text);
   }
 
   .viewer {
@@ -252,13 +248,7 @@
         margin-right: 3px;
       }
 
-      @media (prefers-color-scheme: dark) {
-        background-color: map.get($colors-dark, "text.secondary");
-      }
-
-      @media (prefers-color-scheme: light) {
-        background-color: map.get($colors-light, "text.secondary");
-      }
+      background-color: var(--color-spinner);
     }
 
     & > .rect2 {
