@@ -44,7 +44,7 @@ html, body, #app {
 
 button {
   border: none;
-  border-radius: 2.5px;
+  border-radius: 5px;
   padding: .5em;
   cursor: pointer;
   user-select: none;
@@ -137,4 +137,39 @@ select {
 .column {
   display: flex;
   flex-direction: column;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+code {
+  white-space: pre-wrap;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.modal-container {
+  padding: 1.5em;
+  background-color: var(--color-background-card);
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  overflow: auto;
+  max-height: 75vh;
+  max-width: 75vw;
 }

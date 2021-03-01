@@ -65,7 +65,7 @@
       <h2>Post Data</h2>
       <div>
         <b>Body Size:</b> {{ request.bodySize }} bytes<br>
-        <b>Data Size:</b> {{ request.postData.size }}
+        <b>Data Size:</b> {{ request.postData.size }}<br>
         <b>Mime Type:</b> {{ request.postData.mimeType }}
         <h3>Parameters</h3>
         <div
@@ -144,3 +144,12 @@
     </div>
   </div>
 </template>
+
+<style
+  lang="scss"
+  scoped
+>
+  h2 {
+    margin-top: 1em;
+  }
+</style>

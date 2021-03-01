@@ -11,7 +11,9 @@
 
 <template>
   <div>
-    <h2>General</h2>
+    <h2 style="margin-top: 0;">
+      General
+    </h2>
     <table>
       <tbody>
         <tr>
@@ -86,3 +88,12 @@
     </div>
   </div>
 </template>
+
+<style
+  lang="scss"
+  scoped
+>
+  h2 {
+    margin-top: 1em;
+  }
+</style>

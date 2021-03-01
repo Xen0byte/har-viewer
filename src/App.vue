@@ -214,8 +214,7 @@
     flex-grow: 1;
     min-width: 0;
     max-height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
   }
 
   .viewer-loading, .viewer-error {

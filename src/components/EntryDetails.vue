@@ -1,5 +1,5 @@
 <script>
-  import { ref, computed } from "vue";
+  import { ref, computed, watch } from "vue";
 
   import RequestTab from "./RequestTab";
   import ResponseContentTab from "./ResponseContentTab";
@@ -21,6 +21,16 @@
     },
     setup(props) {
       const selectedTab = ref("request");
+
+      watch(() => props.entry, () => {
+        selectedTab.value = "request";
+      });
+
+      watch(() => selectedTab.value, () => {
+        const scrollContainer = document.querySelector(".details-content");
+        scrollContainer.scrollTop = 0;
+      });
+
       const filename = computed(() => {
         const fn = props.entry.request.url
           .substring(props.entry.request.url.lastIndexOf("/") + 1);
@@ -78,25 +88,27 @@
         Timing
       </span>
     </div>
-    <RequestTab
-      v-if="selectedTab === 'request'"
-      :request="entry.request"
-      :remote-address="entry.serverIPAddress"
-      :timestamp="entry.startedDateTime"
-    />
-    <ResponseTab
-      v-if="selectedTab === 'response'"
-      :response="entry.response"
-    />
-    <ResponseContentTab
-      v-if="entry.response.content.size && selectedTab === 'response-content'"
-      :response="entry.response"
-      :filename="filename"
-    />
-    <TimingTab
-      v-if="selectedTab === 'timing'"
-      :timings="entry.timings"
-    />
+    <div class="details-content">
+      <RequestTab
+        v-if="selectedTab === 'request'"
+        :request="entry.request"
+        :remote-address="entry.serverIPAddress"
+        :timestamp="entry.startedDateTime"
+      />
+      <ResponseTab
+        v-if="selectedTab === 'response'"
+        :response="entry.response"
+      />
+      <ResponseContentTab
+        v-if="entry.response.content.size && selectedTab === 'response-content'"
+        :response="entry.response"
+        :filename="filename"
+      />
+      <TimingTab
+        v-if="selectedTab === 'timing'"
+        :timings="entry.timings"
+      />
+    </div>
   </div>
 </template>
 
@@ -109,12 +121,19 @@
     padding-right: .75em;
   }
 
+  .details-content {
+    background-color: var(--color-background-card);
+    border-radius: 5px;
+    padding: 1em;
+    overflow-y: auto;
+  }
+
   .tab-bar {
     margin-bottom: 1em;
 
     span {
       background-color: var(--color-primary-500);
-      color: #fff;
+      color: #ffffff;
       border-radius: 5px;
       cursor: pointer;
       padding: .4em .8em;

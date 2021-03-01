@@ -1,7 +1,9 @@
 <script>
-  import { ref } from "vue";
+  import { ref, computed, watch } from "vue";
+  import Modal from "./Modal";
 
   export default {
+    components: { Modal },
     props: {
       response: {
         type: Object,
@@ -13,11 +15,23 @@
       },
     },
     setup(props) {
-      const showContent = ref(false);
+      const showPreview = ref(false);
 
-      const isImage = () => !!props.response.content.text
+      watch(() => props.response, () => {
+        showPreview.value = false;
+      });
+
+      const onShowPreview = () => {
+        showPreview.value = true;
+      };
+
+      const isImage = computed(() => !!props.response.content.text
         && props.response.content.encoding === "base64"
-        && props.response.content.mimeType.startsWith("image/");
+        && props.response.content.mimeType.startsWith("image/"));
+
+      const isText = computed(() => !!props.response.content.text
+        && (props.response.content.mimeType.startsWith("text/")
+          || props.response.content.mimeType.startsWith("application/")));
 
       // eslint-disable-next-line max-len
       const getImageDate = () => `data:${props.response.content.mimeType};${props.response.content.encoding}, ${props.response.content.text}`;
@@ -44,9 +58,11 @@
 
       return {
         isImage,
+        isText,
         getImageDate,
-        showContent,
+        showPreview,
         onDownload,
+        onShowPreview,
       };
     },
   };
@@ -55,7 +71,7 @@
 <template>
   <div>
     <h2>Response Content</h2>
-    <div style="padding-bottom: 1em;">
+    <div>
       <b>Body Size:</b> {{ response.bodySize }} bytes<br>
       <b>Content Size:</b> {{ response.content.size }} bytes<br>
       <b>Mime Type:</b> {{ response.content.mimeType }}
@@ -70,14 +86,28 @@
       <div v-if="response.content.encoding">
         <b>Encoding:</b> {{ response.content.encoding }}
       </div>
-      <!--TODO: add download button for preview and content-->
-      <div v-if="isImage()">
-        <h3>Preview</h3>
+      <Modal
+        v-if="(isImage || isText) && showPreview"
+        @close="showPreview = false"
+      >
         <img
+          v-if="isImage"
           :src="getImageDate()"
-          alt="Content Preview"
+          style="height: 500px; max-width: 100%;"
         >
-      </div>
+        <code
+          v-if="isText"
+          v-text="response.content.text"
+        />
+      </Modal>
+      <button
+        v-if="isImage || (isText && response.content.size <= 100000)"
+        class="btn-primary"
+        style="margin-top: .5em; margin-right: .5em"
+        @click="onShowPreview"
+      >
+        Show Preview
+      </button>
       <button
         class="btn-primary"
         style="margin-top: .5em;"
