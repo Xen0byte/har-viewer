@@ -51,7 +51,7 @@
           'tag-error': entry.response.status > 499
         }"
       >
-        <span v-text="entry.response.status" />
+        <span v-text="entry.response.status !== 0 ? entry.response.status : entry.response._error || 'unknown'" />
         <span
           v-if="entry.response.statusText"
           style="margin-left: .5em;"

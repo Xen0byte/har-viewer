@@ -105,11 +105,12 @@ select {
 }
 
 .tag-unknown {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 .tag-success {
-  background-color:var(--color-success);
+  background-color: var(--color-success);
   color: rgba(0, 0, 0, 0.87);
 }
 
