@@ -69,10 +69,16 @@ button {
 
 select {
   padding: .25em;
-  border-color: #151a30;
+  border: none;
+  border-radius: 5px;
 
   background: var(--color-background);
   color: var(--color-text);
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 .35rem var(--color-header);
+  }
 }
 
 .btn-primary {

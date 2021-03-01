@@ -40,7 +40,7 @@
         selectedEntry.value = null;
         selectedIndex.value = null;
         filteredEntries.value = harContent.value.entries
-          .filter(entry => entry.pageref === page)
+          .filter(entry => (page ? entry.pageref === page : true))
           .sort((a, b) => new Date(a.startedDateTime) - new Date(b.startedDateTime));
       };
 
@@ -53,7 +53,7 @@
 
           harContent.value = har;
           filename.value = file.name;
-          filterEntries(har.pages[0].id);
+          filterEntries("");
         } catch (e) {
           loadError.value = e.message;
         } finally {
@@ -125,13 +125,7 @@
         v-if="isLoading"
         class="viewer-loading"
       >
-        <div class="spinner">
-          <div class="rect1" />
-          <div class="rect2" />
-          <div class="rect3" />
-          <div class="rect4" />
-          <div class="rect5" />
-        </div>
+        <span>Loading...</span>
       </div>
       <div
         v-if="!isLoading && loadError"
@@ -238,54 +232,12 @@
     color: var(--color-danger);
   }
 
-  .entry:not(:last-child) {
-    margin-bottom: .75em;
+  .viewer-loading {
+    font-weight: bold;
+    color: var(--color-spinner);
   }
 
-  .spinner {
-    width: 50px;
-    height: 100px;
-    text-align: center;
-    font-size: 10px;
-
-    & > div {
-      height: 100%;
-      width: 6px;
-      display: inline-block;
-
-      animation: sk-stretchdelay 1.2s infinite ease-in-out;
-
-      &:not(:last-child) {
-        margin-right: 3px;
-      }
-
-      background-color: var(--color-spinner);
-    }
-
-    & > .rect2 {
-      animation-delay: -1.1s;
-    }
-
-    & > .rect3 {
-      animation-delay: -1.0s;
-    }
-
-    & > .rect4 {
-      animation-delay: -0.9s;
-    }
-
-    & > .rect5 {
-      animation-delay: -0.8s;
-    }
-
-    @keyframes sk-stretchdelay {
-      0%, 40%, 100% {
-        transform: scaleY(0.4);
-      }
-
-      20% {
-        transform: scaleY(1.0);
-      }
-    }
+  .entry:not(:last-child) {
+    margin-bottom: .75em;
   }
 </style>

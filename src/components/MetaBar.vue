@@ -1,4 +1,6 @@
 <script>
+  import { computed } from "vue";
+
   export default {
     props: {
       browser: {
@@ -27,8 +29,26 @@
     ],
     setup(props, { emit }) {
       const onChangePage = e => emit("select-page", e.target.value);
+      const sortedPages = computed(() => {
+        const { pages } = props;
+        return pages.sort((a, b) => {
+          const keyA = new Date(a.startedDateTime);
+          const keyB = new Date(b.startedDateTime);
+
+          if (keyA < keyB) {
+            return -1;
+          }
+
+          if (keyA > keyB) {
+            return 1;
+          }
+
+          return 0;
+        });
+      });
 
       return {
+        sortedPages,
         onChangePage,
       };
     },
@@ -72,8 +92,11 @@
         aria-label="Select the recorded page to display"
         @change="onChangePage"
       >
+        <option value="">
+          All Pages
+        </option>
         <option
-          v-for="page in pages"
+          v-for="page in sortedPages"
           :key="page.id"
           :value="page.id"
         >
@@ -106,6 +129,6 @@
   }
 
   .page-select {
-    max-width: 50vw;
+    max-width: 45vw;
   }
 </style>
