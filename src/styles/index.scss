@@ -88,10 +88,6 @@ select {
   }
 }
 
-.text-error {
-  color: var(--color-danger);
-}
-
 .is-unselectable {
   user-select: none;
 }
@@ -124,12 +120,6 @@ select {
 .tag-error {
   background-color: var(--color-danger);
   color: #fff;
-}
-
-code {
-  display: inline-block;
-  width: 100%;
-  overflow: auto;
 }
 
 .row {

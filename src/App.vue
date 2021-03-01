@@ -134,6 +134,12 @@
         </div>
       </div>
       <div
+        v-if="!isLoading && loadError"
+        class="viewer-error"
+      >
+        <span v-text="loadError" />
+      </div>
+      <div
         v-if="!isLoading && harContent"
         class="viewer"
       >
@@ -218,13 +224,18 @@
     overflow-y: auto;
   }
 
-  .viewer-loading {
+  .viewer-loading, .viewer-error {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
     max-height: 100%;
     overflow: hidden;
+  }
+
+  .viewer-error {
+    font-weight: bold;
+    color: var(--color-danger);
   }
 
   .entry:not(:last-child) {

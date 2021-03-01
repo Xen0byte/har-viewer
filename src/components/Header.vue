@@ -6,10 +6,6 @@
 
   export default {
     props: {
-      error: {
-        type: String,
-        default: null,
-      },
       loading: {
         type: Boolean,
         default: false,
@@ -83,12 +79,6 @@
           hidden
           @change="onFileUpload"
         >
-        <span
-          v-if="error"
-          class="text-error"
-          style="margin-right: 1em; font-weight: bold;"
-          v-text="error"
-        />
         <button
           v-if="isLoaded && false"
           :disabled="loading || true"
