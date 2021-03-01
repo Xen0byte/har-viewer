@@ -2,7 +2,7 @@
   import { ref } from "vue";
   import svgFileUpload from "@mdi/svg/svg/file-upload.svg";
   import svgWeb from "@mdi/svg/svg/web.svg";
-  import svgIncognitoCircle from "@mdi/svg/svg/incognito-circle.svg";
+  import svgExport from "@mdi/svg/svg/export.svg";
 
   export default {
     props: {
@@ -14,17 +14,21 @@
         type: Boolean,
         default: false,
       },
+      hasError: {
+        type: Boolean,
+        default: false,
+      },
     },
     emits: [
       "load-file",
       "load-url",
-      "download-redacted",
+      "export",
     ],
     setup(props, { emit }) {
       const fileInputRef = ref(null);
       const iconFileUpload = ref(svgFileUpload);
       const iconWeb = ref(svgWeb);
-      const iconIncognitoCircle = ref(svgIncognitoCircle);
+      const iconExport = ref(svgExport);
 
       const onLoadFromFile = () => fileInputRef.value.click();
       const onLoadFromUrl = () => {
@@ -46,7 +50,7 @@
         emit("load-file", input.files[0]);
       };
 
-      const onDownloadRedacted = () => emit("download-redacted");
+      const onShowExport = () => emit("export");
 
       return {
         fileInputRef,
@@ -55,8 +59,8 @@
         onFileUpload,
         iconFileUpload,
         iconWeb,
-        iconIncognitoCircle,
-        onDownloadRedacted,
+        iconExport,
+        onShowExport,
       };
     },
   };
@@ -80,20 +84,20 @@
           @change="onFileUpload"
         >
         <button
-          v-if="isLoaded && false"
-          :disabled="loading || true"
+          v-if="isLoaded && !hasError"
+          :disabled="loading"
           class="btn-primary"
           type="button"
-          @click="onDownloadRedacted"
+          @click="onShowExport"
         >
           <img
-            :src="iconIncognitoCircle"
+            :src="iconExport"
             class="icon"
             width="18"
             height="18"
-            alt="incognito icon"
+            alt="file icon"
           >
-          <span>Download Redacted</span>
+          <span>Export</span>
         </button>
         <button
           :disabled="loading"
@@ -139,7 +143,7 @@
   .header {
     padding: .5em .5em .5em 1em;
     background-color: var(--color-header);
-    color: #fff;
+    color: #ffffff;
 
     & nav {
       justify-content: space-between;

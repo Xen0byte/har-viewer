@@ -4,6 +4,7 @@
   } from "vue";
   import EntryDetails from "./components/EntryDetails";
   import FilterControl from "./components/FilterControl";
+  import Modal from "./components/Modal";
 
   import { switchTheme, getSystemTheme } from "./utils/theme";
   import { parseHarFile, checkHar } from "./utils/har";
@@ -21,6 +22,7 @@
       Header,
       MetaBar,
       Entry,
+      Modal,
     },
     setup() {
       onBeforeMount(() => {
@@ -41,6 +43,10 @@
       const selectedPage = ref("");
       const selectedType = ref("");
       const selectedStatusCode = ref("");
+      const showExportDialog = ref(false);
+      const exportFilename = ref(`exported_${(new Date()).toISOString().split("T")[0]}`);
+      const exportFormat = ref("har");
+      const exportFiltered = ref(false);
 
       const filterEntries = page => {
         selectedEntry.value = null;
@@ -59,7 +65,7 @@
         const codes = harContent.value ? harContent.value.entries
           .filter(entry => (selectedPage.value ? entry.pageref === selectedPage.value : true))
           .map(entry => entry.response.status)
-          .filter(sc => !!sc)
+          .filter(sc => sc === 0 || !!sc)
           .sort() : [];
         return [...new Set(codes)];
       });
@@ -77,6 +83,9 @@
       const onLoadFile = async file => {
         loadError.value = null;
         isLoading.value = true;
+        selectedStatusCode.value = "";
+        selectedType.value = "";
+        selectedPage.value = "";
 
         try {
           const har = await parseHarFile(file);
@@ -99,6 +108,9 @@
       const onLoadUrl = async url => {
         loadError.value = null;
         isLoading.value = true;
+        selectedStatusCode.value = "";
+        selectedType.value = "";
+        selectedPage.value = "";
 
         try {
           const res = await window.fetch(url);
@@ -115,18 +127,56 @@
         }
       };
 
-      const onDownloadRedacted = () => {
-        // TODO: implement reacted download
-        // eslint-disable-next-line no-alert
-        window.alert("not implemented");
-      };
-
       const onTypeSelected = type => {
         selectedType.value = type;
       };
 
       const onStatusCodeSelected = statusCode => {
         selectedStatusCode.value = statusCode;
+      };
+
+      const onExport = () => {
+        const data = exportFiltered.value ? {
+          log: {
+            ...harContent.value,
+            creator: {
+              name: "HTTP Archive Viewer",
+              version: VERSION,
+            },
+            entries: filteredEntries.value,
+          },
+        } : {
+          log: {
+            ...harContent.value,
+            creator: {
+              name: "HTTP Archive Viewer",
+              version: VERSION,
+            },
+          },
+        };
+
+        let mimeType = "";
+        let ext = "";
+
+        switch (exportFormat.value) {
+          case "har":
+            mimeType = "application/json";
+            ext = ".har";
+            break;
+          default:
+            mimeType = "text/plain";
+            ext = ".txt";
+        }
+
+        const e = document.createElement("a");
+        e.setAttribute("href", `data:${mimeType};charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`);
+        e.setAttribute("download", exportFilename.value + ext);
+        e.style.display = "none";
+        document.body.appendChild(e);
+        e.click();
+        document.body.removeChild(e);
+
+        showExportDialog.value = false;
       };
 
       return {
@@ -140,12 +190,16 @@
         onSelectEntry,
         selectedEntry,
         selectedIndex,
-        onDownloadRedacted,
         filename,
         statusCodes,
         types,
         onTypeSelected,
         onStatusCodeSelected,
+        showExportDialog,
+        exportFilename,
+        exportFormat,
+        exportFiltered,
+        onExport,
       };
     },
   };
@@ -155,12 +209,12 @@
   <!--TODO: add filter options-->
   <div class="wrapper">
     <Header
-      :error="loadError"
+      :has-error="!!loadError"
       :loading="isLoading"
       :is-loaded="!!harContent"
       @load-file="onLoadFile"
       @load-url="onLoadUrl"
-      @download-redacted="onDownloadRedacted"
+      @export="showExportDialog = true"
     />
     <main>
       <div
@@ -215,6 +269,52 @@
     </main>
     <Footer />
   </div>
+  <!--TODO: export form to separate component-->
+  <Modal v-if="showExportDialog">
+    <template #header>
+      Export
+    </template>
+    <form class="export-form">
+      <label for="filename">Filename</label>
+      <input
+        id="filename"
+        v-model="exportFilename"
+        type="text"
+      >
+      <label for="filter">Respect filter</label>
+      <input
+        id="filter"
+        v-model="exportFiltered"
+        type="checkbox"
+      >
+      <label for="format">Output Format</label>
+      <select
+        id="format"
+        v-model="exportFormat"
+      >
+        <option value="har">
+          .har
+        </option>
+        <!--<option value="har_redacted">.har (Redacted)</option>-->
+      </select>
+    </form>
+    <template #footer>
+      <button
+        class="btn-cancel"
+        type="button"
+        @click="showExportDialog = false"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn-primary"
+        type="button"
+        @click="onExport"
+      >
+        Export
+      </button>
+    </template>
+  </Modal>
 </template>
 
 <style
@@ -293,5 +393,20 @@
 
   .entry:not(:last-child) {
     margin-bottom: .75em;
+  }
+
+  .export-form {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-gap: 1em;
+
+    label {
+      grid-column: 1 / 2;
+      align-self: center;
+    }
+
+    input {
+      grid-column: 2 / 3;
+    }
   }
 </style>

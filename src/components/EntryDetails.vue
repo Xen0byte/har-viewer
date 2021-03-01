@@ -129,7 +129,7 @@
   }
 
   .tab-bar {
-    margin-bottom: 1em;
+    margin-bottom: .5em;
 
     span {
       background-color: var(--color-primary-500);
@@ -144,7 +144,7 @@
     }
 
     span:not(:last-of-type) {
-      margin-right: .75em;
+      margin-right: .5em;
     }
   }
 
