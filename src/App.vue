@@ -2,9 +2,9 @@
   import {
     ref, computed, onMounted, onBeforeMount,
   } from "vue";
+  import ExportDialog from "./components/dialogs/ExportDialog";
   import EntryDetails from "./components/EntryDetails";
   import FilterControl from "./components/FilterControl";
-  import Modal from "./components/Modal";
 
   import { switchTheme, getSystemTheme } from "./utils/theme";
   import { parseHarFile, checkHar } from "./utils/har";
@@ -16,13 +16,13 @@
 
   export default {
     components: {
+      ExportDialog,
       FilterControl,
       EntryDetails,
       Footer,
       Header,
       MetaBar,
       Entry,
-      Modal,
     },
     setup() {
       onBeforeMount(() => {
@@ -44,9 +44,6 @@
       const selectedType = ref("");
       const selectedStatusCode = ref("");
       const showExportDialog = ref(false);
-      const exportFilename = ref(`exported_${(new Date()).toISOString().split("T")[0]}`);
-      const exportFormat = ref("har");
-      const exportFiltered = ref(false);
 
       const filterEntries = page => {
         selectedEntry.value = null;
@@ -135,8 +132,8 @@
         selectedStatusCode.value = statusCode;
       };
 
-      const onExport = () => {
-        const data = exportFiltered.value ? {
+      const onExport = options => {
+        const data = options.onlyFiltered ? {
           log: {
             ...harContent.value,
             creator: {
@@ -158,7 +155,7 @@
         let mimeType = "";
         let ext = "";
 
-        switch (exportFormat.value) {
+        switch (options.format) {
           case "har":
             mimeType = "application/json";
             ext = ".har";
@@ -170,7 +167,7 @@
 
         const e = document.createElement("a");
         e.setAttribute("href", `data:${mimeType};charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`);
-        e.setAttribute("download", exportFilename.value + ext);
+        e.setAttribute("download", options.filename + ext);
         e.style.display = "none";
         document.body.appendChild(e);
         e.click();
@@ -196,9 +193,6 @@
         onTypeSelected,
         onStatusCodeSelected,
         showExportDialog,
-        exportFilename,
-        exportFormat,
-        exportFiltered,
         onExport,
       };
     },
@@ -269,52 +263,11 @@
     </main>
     <Footer />
   </div>
-  <!--TODO: export form to separate component-->
-  <Modal v-if="showExportDialog">
-    <template #header>
-      Export
-    </template>
-    <form class="export-form">
-      <label for="filename">Filename</label>
-      <input
-        id="filename"
-        v-model="exportFilename"
-        type="text"
-      >
-      <label for="filter">Respect filter</label>
-      <input
-        id="filter"
-        v-model="exportFiltered"
-        type="checkbox"
-      >
-      <label for="format">Output Format</label>
-      <select
-        id="format"
-        v-model="exportFormat"
-      >
-        <option value="har">
-          .har
-        </option>
-        <!--<option value="har_redacted">.har (Redacted)</option>-->
-      </select>
-    </form>
-    <template #footer>
-      <button
-        class="btn-cancel"
-        type="button"
-        @click="showExportDialog = false"
-      >
-        Cancel
-      </button>
-      <button
-        class="btn-primary"
-        type="button"
-        @click="onExport"
-      >
-        Export
-      </button>
-    </template>
-  </Modal>
+  <ExportDialog
+    v-if="showExportDialog"
+    @export="onExport"
+    @close="showExportDialog = false"
+  />
 </template>
 
 <style
@@ -393,21 +346,5 @@
 
   .entry:not(:last-child) {
     margin-bottom: .75em;
-  }
-
-  .export-form {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    grid-gap: 1em;
-
-    label {
-      grid-column: 1 / 2;
-      align-self: center;
-      color: var(--color-text);
-    }
-
-    input {
-      grid-column: 2 / 3;
-    }
   }
 </style>
