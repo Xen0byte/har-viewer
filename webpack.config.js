@@ -156,12 +156,10 @@ const config = {
 
 if (isDev) {
   config.devServer = {
-    inline: true,
     hot: true,
     host: "0.0.0.0",
     historyApiFallback: true,
     transportMode: "ws",
-    disableHostCheck: true,
   };
 } else {
   const { CleanWebpackPlugin } = require("clean-webpack-plugin");
