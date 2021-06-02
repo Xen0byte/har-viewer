@@ -131,10 +131,6 @@ const config = {
         {
           loader: "sass-loader",
           options: {
-            implementation: require("sass"),
-            sassOptions: {
-              fiber: require("fibers"),
-            },
             sourceMap: isDev,
           },
         },

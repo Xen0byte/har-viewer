@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@mdi/svg": "^5.9.55",
-    "@openfonts/inter_latin": "^1.0.2",
+    "ua-parser-js": "^0.7.28",
     "vue": "^3.0.11"
   },
   "devDependencies": {
@@ -44,7 +44,6 @@
     "execa": "^5.0.1",
     "favicons": "https://github.com/dermoumi/favicons.git",
     "favicons-webpack-plugin": "^5.0.2",
-    "fibers": "^5.0.0",
     "html-webpack-plugin": "^5.3.1",
     "http-server": "^0.12.3",
     "mini-css-extract-plugin": "^1.6.0",

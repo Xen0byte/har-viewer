@@ -1,5 +1,7 @@
 import { createApp } from "vue";
 
+import "./styles/index.scss";
+
 import Shell from "./Shell";
 
 if (!DEBUG) {
@@ -15,4 +17,4 @@ if (!DEBUG) {
 }
 
 export default createApp(Shell)
-  .mount("#app");
+  .mount(".shell");

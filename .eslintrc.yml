@@ -13,7 +13,6 @@ globals:
   HOMEPAGE: false
   LICENSE: false
   SW_URL: false
-  VERSION: false
 
 extends:
   - plugin:import/errors
