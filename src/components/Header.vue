@@ -86,7 +86,7 @@
         <button
           v-if="isLoaded && !hasError"
           :disabled="loading"
-          class="btn-primary"
+          class="btn-primary export"
           type="button"
           @click="onShowExport"
         >
@@ -101,7 +101,7 @@
         </button>
         <button
           :disabled="loading"
-          class="btn-primary"
+          class="btn-primary from-file"
           type="button"
           style="margin-left: .5em;"
           @click="onLoadFromFile"
@@ -117,7 +117,7 @@
         </button>
         <button
           :disabled="loading"
-          class="btn-primary"
+          class="btn-primary from-url"
           type="button"
           style="margin-left: .5em;"
           @click="onLoadFromUrl"
@@ -148,6 +148,16 @@
     & nav {
       justify-content: space-between;
       align-items: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .from-file {
+      display: none;
+    }
+
+    .from-url {
+      display: none;
     }
   }
 </style>

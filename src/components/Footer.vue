@@ -8,7 +8,6 @@
       const authorUrl = ref(AUTHOR_URL);
       const homepage = ref(HOMEPAGE);
       const license = ref(LICENSE);
-      const version = ref(VERSION);
 
       return {
         app,
@@ -16,7 +15,6 @@
         authorUrl,
         homepage,
         license,
-        version,
       };
     },
   };
@@ -49,11 +47,6 @@
         /> license.
       </span>
     </div>
-    <div>
-      <span>
-        <b class="is-unselectable">Version: </b><span v-text="version" />
-      </span>
-    </div>
   </footer>
 </template>
 
@@ -67,6 +60,10 @@
 
     background-color: var(--color-background-card);
     color: var(--color-text);
+
+    @media (max-width: 576px) {
+      display: none;
+    }
   }
 
   a {

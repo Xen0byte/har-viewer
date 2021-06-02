@@ -5,6 +5,9 @@
     onMounted,
     ref,
   } from "vue";
+  import svgFileUpload from "@mdi/svg/svg/file-upload.svg";
+  import svgWeb from "@mdi/svg/svg/web.svg";
+
   import ExportDialog from "./components/dialogs/ExportDialog";
   import Entry from "./components/Entry";
   import EntryDetails from "./components/EntryDetails";
@@ -48,6 +51,8 @@
       const selectedMethod = ref("");
       const selectedStatusCode = ref("");
       const showExportDialog = ref(false);
+      const iconFileUpload = ref(svgFileUpload);
+      const iconWeb = ref(svgWeb);
 
       const filterEntries = page => {
         selectedEntry.value = null;
@@ -212,6 +217,8 @@
         showExportDialog,
         onExport,
         onMethodSelected,
+        iconFileUpload,
+        iconWeb,
       };
     },
   };
@@ -240,6 +247,45 @@
         class="viewer-error"
       >
         <span v-text="loadError" />
+      </div>
+      <div
+        v-if="!isLoading && !harContent"
+        style="height: 100%; display: flex; justify-content: center; align-items: center;"
+      >
+        <div>
+          <button
+            :disabled="isLoading"
+            class="btn-primary from-file"
+            type="button"
+            style="margin-bottom: .5em;"
+            @click="onLoadFile"
+          >
+            <img
+              :src="iconFileUpload"
+              class="icon"
+              width="18"
+              height="18"
+              alt="file icon"
+            >
+            <span>Open File</span>
+          </button>
+          <br>
+          <button
+            :disabled="isLoading"
+            class="btn-primary from-url"
+            type="button"
+            @click="onLoadUrl"
+          >
+            <img
+              :src="iconWeb"
+              class="icon"
+              width="18"
+              height="18"
+              alt="web icon"
+            >
+            <span>Load From URL</span>
+          </button>
+        </div>
       </div>
       <div
         v-if="!isLoading && harContent"
@@ -326,8 +372,8 @@
 
   .sidebar {
     padding-left: .75em;
-    min-width: 475px;
-    max-width: 475px;
+    width: 475px;
+    max-width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

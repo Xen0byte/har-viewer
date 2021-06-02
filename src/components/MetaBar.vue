@@ -63,7 +63,7 @@
         <span v-text="filename" />
       </div>
       <div
-        class="row"
+        class="details row"
         style="margin-top: .25em;"
       >
         <div>
@@ -121,9 +121,19 @@
     @media (max-width: 835px) {
       flex-direction: column;
       align-items: flex-start;
+    }
+  }
 
-      & > div:first-child {
-        margin-bottom: .5em;
+  @media (max-width: 576px) {
+    .details {
+      flex-direction: column;
+
+      & div {
+        margin-left: unset !important;
+
+        &:not(:first-child) {
+          margin-top: .25em;
+        }
       }
     }
   }
