@@ -33,7 +33,9 @@ more people can benefit from it.
 
 ## Roadmap
 
-No changes are currently planned.
+- Filtering, Grouping and Sorting
+- Better mobile experience
+- Better exporting
 
 ## Contributing
 
