@@ -78,7 +78,6 @@ const config = {
     }),
     new HtmlPlugin({
       template: path.resolve(__dirname, "./src/index.html"),
-      hash: !isDev,
       minify: !isDev,
       scriptLoading: "defer",
     }),
@@ -92,6 +91,9 @@ const config = {
         background: "#e4e9f2",
         theme_color: "#3f51b5",
         version: pkg.version,
+        start_url: process.env.DEPLOY
+          ? "/har-viewer"
+          : "/",
         icons: {
           coast: false,
           yandex: false,
