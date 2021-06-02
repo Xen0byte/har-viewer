@@ -23,7 +23,7 @@
     "deploy": "cross-env DEPLOY=1 node scripts/gh-pages-deploy.js",
     "lint": "eslint --ext js,vue .",
     "serve": "webpack serve",
-    "start": "http-server dist"
+    "start": "http-server dist --no-dotfiles --gzip --brotli -c86400"
   },
   "dependencies": {
     "@mdi/svg": "^5.9.55",
@@ -42,7 +42,7 @@
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-vue": "^7.10.0",
     "execa": "^5.0.1",
-    "favicons": "^6.2.2",
+    "favicons": "https://github.com/dermoumi/favicons.git",
     "favicons-webpack-plugin": "^5.0.2",
     "fibers": "^5.0.0",
     "html-webpack-plugin": "^5.3.1",

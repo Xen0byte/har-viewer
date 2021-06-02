@@ -11,6 +11,10 @@ const pkg = require("./package.json");
 
 const isDev = process.env.NODE_ENV !== "production";
 
+const publicUrl = process.env.DEPLOY
+  ? "/har-viewer/"
+  : "/";
+
 const config = {
   devtool: isDev
     ? "eval-source-map"
@@ -27,9 +31,7 @@ const config = {
     chunkFilename: isDev
       ? "js/[name].js"
       : "js/[contenthash].min.js",
-    publicPath: process.env.DEPLOY
-      ? "/har-viewer/"
-      : "/",
+    publicPath: publicUrl,
     pathinfo: false,
   },
   performance: { hints: false },
@@ -71,9 +73,7 @@ const config = {
       DEBUG: isDev,
       HOMEPAGE: JSON.stringify(pkg.homepage),
       LICENSE: JSON.stringify(pkg.license),
-      SW_URL: JSON.stringify(process.env.DEPLOY
-        ? "/har-viewer/service-worker.js"
-        : "/service-worker.js"),
+      SW_URL: JSON.stringify(`${publicUrl}service-worker.js`),
       VERSION: JSON.stringify(pkg.version),
     }),
     new HtmlPlugin({
@@ -84,16 +84,15 @@ const config = {
     new FaviconsPlugin({
       logo: path.resolve("./src/assets/icon.svg"),
       favicons: {
+        manifestMaskable: path.resolve("./src/assets/icon_mask.svg"),
         appShortName: "HAR Viewer",
-        appName: "HTTP Archive Viewer",
-        developerName: "Erik Bender",
-        developerURL: "https://develerik.dev",
+        appName: pkg.description,
+        developerName: pkg.author.name,
+        developerURL: pkg.author.url,
         background: "#e4e9f2",
         theme_color: "#3f51b5",
         version: pkg.version,
-        start_url: process.env.DEPLOY
-          ? "/har-viewer"
-          : "/",
+        start_url: publicUrl,
         icons: {
           coast: false,
           yandex: false,
