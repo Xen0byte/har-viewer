@@ -5,7 +5,7 @@ const { DefinePlugin } = require("webpack");
 
 const HtmlPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
-const WebpackPwaManifest = require("webpack-pwa-manifest");
+const FaviconsPlugin = require("favicons-webpack-plugin");
 
 const pkg = require("./package.json");
 
@@ -82,14 +82,21 @@ const config = {
       minify: !isDev,
       scriptLoading: "defer",
     }),
-    new WebpackPwaManifest({
-      name: "HTTP Archive Viewer",
-      short_name: "HAR Viewer",
-      display: "standalone",
-      fingerprints: !isDev,
-      lang: "en",
-      orientation: "landscape",
-      theme_color: "#3f51b5",
+    new FaviconsPlugin({
+      logo: path.resolve("./src/assets/icon.svg"),
+      favicons: {
+        appShortName: "HAR Viewer",
+        appName: "HTTP Archive Viewer",
+        developerName: "Erik Bender",
+        developerURL: "https://develerik.dev",
+        background: "#e4e9f2",
+        theme_color: "#3f51b5",
+        version: pkg.version,
+        icons: {
+          coast: false,
+          yandex: false,
+        },
+      },
     }),
     new VueLoaderPlugin(),
   ],
