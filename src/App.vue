@@ -1,18 +1,21 @@
 <script>
   import {
-    ref, computed, onMounted, onBeforeMount,
+    computed,
+    onBeforeMount,
+    onMounted,
+    ref,
   } from "vue";
   import ExportDialog from "./components/dialogs/ExportDialog";
+  import Entry from "./components/Entry";
   import EntryDetails from "./components/EntryDetails";
   import FilterControl from "./components/FilterControl";
-
-  import { switchTheme, getSystemTheme } from "./utils/theme";
-  import { parseHarFile, checkHar } from "./utils/har";
 
   import Footer from "./components/Footer";
   import Header from "./components/Header";
   import MetaBar from "./components/MetaBar";
-  import Entry from "./components/Entry";
+  import { checkHar, parseHarFile } from "./utils/har";
+
+  import { getSystemTheme, switchTheme } from "./utils/theme";
 
   export default {
     components: {
@@ -42,6 +45,7 @@
       const selectedIndex = ref(null);
       const selectedPage = ref("");
       const selectedType = ref("");
+      const selectedMethod = ref("");
       const selectedStatusCode = ref("");
       const showExportDialog = ref(false);
 
@@ -56,6 +60,7 @@
         // eslint-disable-next-line no-underscore-dangle
         .filter(entry => (selectedType.value ? entry._resourceType === selectedType.value : true))
         .filter(entry => (selectedStatusCode.value ? String(entry.response.status) === selectedStatusCode.value : true))
+        .filter(entry => (selectedMethod.value ? String(entry.request.method) === selectedMethod.value : true))
         .sort((a, b) => new Date(a.startedDateTime) - new Date(b.startedDateTime)) : []));
 
       const statusCodes = computed(() => {
@@ -65,6 +70,15 @@
           .filter(sc => sc === 0 || !!sc)
           .sort() : [];
         return [...new Set(codes)];
+      });
+
+      const methods = computed(() => {
+        const values = harContent.value ? harContent.value.entries
+          .filter(entry => (selectedPage.value ? entry.pageref === selectedPage.value : true))
+          .map(entry => entry.request.method)
+          .filter(sc => sc === 0 || !!sc)
+          .sort() : [];
+        return [...new Set(values)];
       });
 
       const types = computed(() => {
@@ -85,9 +99,7 @@
         selectedPage.value = "";
 
         try {
-          const har = await parseHarFile(file);
-
-          harContent.value = har;
+          harContent.value = await parseHarFile(file);
           filename.value = file.name;
           filterEntries("");
         } catch (e) {
@@ -132,6 +144,10 @@
         selectedStatusCode.value = statusCode;
       };
 
+      const onMethodSelected = method => {
+        selectedMethod.value = method;
+      };
+
       const onExport = options => {
         const data = options.onlyFiltered ? {
           log: {
@@ -152,8 +168,8 @@
           },
         };
 
-        let mimeType = "";
-        let ext = "";
+        let mimeType;
+        let ext;
 
         switch (options.format) {
           case "har":
@@ -190,10 +206,12 @@
         filename,
         statusCodes,
         types,
+        methods,
         onTypeSelected,
         onStatusCodeSelected,
         showExportDialog,
         onExport,
+        onMethodSelected,
       };
     },
   };
@@ -240,8 +258,10 @@
             <FilterControl
               :status-codes="statusCodes"
               :types="types"
+              :methods="methods"
               @selectedType="onTypeSelected"
               @selectedStatusCode="onStatusCodeSelected"
+              @selectedMethod="onMethodSelected"
             />
             <div class="viewer-entries">
               <Entry
@@ -309,6 +329,8 @@
     min-width: 475px;
     max-width: 475px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
   }
 
   .viewer-entries {

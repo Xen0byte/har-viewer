@@ -10,15 +10,21 @@
         type: Array,
         default: () => [],
       },
+      methods: {
+        type: Array,
+        default: () => [],
+      },
     },
-    emits: ["selectedType", "selectedStatusCode"],
+    emits: ["selectedType", "selectedStatusCode", "selectedMethod"],
     setup(_, { emit }) {
       const onStatusCodeSelected = e => emit("selectedStatusCode", e.target.value);
       const onTypeSelected = e => emit("selectedType", e.target.value);
+      const onMethodSelected = e => emit("selectedMethod", e.target.value);
 
       return {
         onStatusCodeSelected,
         onTypeSelected,
+        onMethodSelected,
       };
     },
   };
@@ -28,7 +34,23 @@
   <div style="display: flex; flex-direction: row;">
     <div style="margin-right: 1.5em;">
       <label>
-        Status Code:
+        Method:
+        <select @change="onMethodSelected">
+          <option value="">
+            All
+          </option>
+          <option
+            v-for="method in methods"
+            :key="method"
+            :value="method"
+            v-text="method"
+          />
+        </select>
+      </label>
+    </div>
+    <div style="margin-right: 1.5em;">
+      <label>
+        Status:
         <select @change="onStatusCodeSelected">
           <option value="">
             All
