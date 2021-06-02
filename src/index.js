@@ -1,10 +1,6 @@
 import { createApp } from "vue";
 
-import "@openfonts/inter_latin";
-
-import "./styles/normalize.scss";
-import "./styles/index.scss";
-import App from "./App";
+import Shell from "./Shell";
 
 if (!DEBUG) {
   if ("serviceWorker" in navigator) {
@@ -18,6 +14,5 @@ if (!DEBUG) {
   }
 }
 
-const app = createApp(App);
-
-app.mount("#app");
+export default createApp(Shell)
+  .mount("#app");
