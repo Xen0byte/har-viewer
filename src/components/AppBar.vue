@@ -41,7 +41,7 @@
     </div>
     <div class="actions">
       <button
-        v-if="!isLoaded"
+        v-if="isLoaded"
         type="button"
         class="btn"
         title="Export"

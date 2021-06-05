@@ -1,35 +1,120 @@
 <script>
-  import { ref } from "vue";
+  import { ref, onMounted } from "vue";
+  import svgLoading from "@mdi/svg/svg/loading.svg";
 
   import AppBar from "./components/AppBar";
+  import { parseHarFile, checkHar } from "./utils/har";
 
   export default {
     name: "Shell",
     components: { AppBar },
     setup() {
-      const root = document.querySelector("html");
-
       const data = ref(null);
-      const theme = ref(root.dataset.theme);
+      const isLoading = ref(false);
+      const hasError = ref(null);
 
-      const onAction = action => {
-        console.log(action);
+      onMounted(() => {
+        // workaround for 100vh on mobile browsers
+        window.height = window.innerHeight;
+      });
+
+      const openFile = () => {
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = ".har";
+
+        fileInput.onchange = async ({ target: input }) => {
+          if (!input.files || input.files.length !== 1) {
+            return;
+          }
+
+          isLoading.value = true;
+
+          try {
+            data.value = await parseHarFile(input.files[0]);
+            hasError.value = null;
+          } catch (e) {
+            data.value = null;
+            hasError.value = e.message;
+          } finally {
+            isLoading.value = false;
+          }
+        };
+
+        fileInput.click();
+      };
+
+      const loadUrl = async () => {
+        // eslint-disable-next-line no-alert
+        const url = window.prompt("Enter the URL of the HAR file to load:");
+        isLoading.value = true;
+
+        try {
+          const res = await window.fetch(url);
+          const resData = await res.json();
+
+          data.value = checkHar(resData);
+          hasError.value = null;
+        } catch (e) {
+          data.value = null;
+          hasError.value = e.message;
+        } finally {
+          isLoading.value = false;
+        }
+      };
+
+      const onAction = async action => {
+        switch (action) {
+          case "openFile":
+            openFile();
+            break;
+          case "loadUrl":
+            await loadUrl();
+            break;
+          default:
+            // eslint-disable-next-line no-console
+            console.error(`unsupported action: ${action}`);
+            break;
+        }
       };
 
       return {
         data,
-        theme,
+        isLoading,
+        hasError,
         onAction,
+        svgLoading,
       };
     },
   };
 </script>
 
 <template>
-  <app-bar @action="onAction">
+  <app-bar
+    :is-loaded="!!data"
+    @action="onAction"
+  >
     <h1>HTTP Archive Viewer</h1>
   </app-bar>
-  <main />
+  <main>
+    <div
+      v-if="isLoading"
+      class="loading"
+    >
+      <img :src="svgLoading">
+    </div>
+    <div
+      v-if="hasError && !isLoading"
+      class="error"
+      v-text="hasError"
+    />
+    <div
+      v-if="!data && !hasError && !isLoading"
+      class="empty"
+    >
+      No file loaded
+    </div>
+  </main>
 </template>
 
 <style lang="scss">
@@ -43,5 +128,45 @@
 
   main {
     flex-grow: 1;
+    height: 0;
+  }
+
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    user-select: none;
+    color: #708090;
+  }
+
+  .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    user-select: none;
+    color: #a31a14;
+  }
+
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    user-select: none;
+
+    & > img {
+      filter: invert(12%) sepia(39%) saturate(6592%) hue-rotate(196deg) brightness(96%) contrast(98%);
+      animation: spin 1s linear infinite;
+      height: 64px;
+      width: 64px;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   }
 </style>
