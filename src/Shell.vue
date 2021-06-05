@@ -13,6 +13,7 @@
       const theme = ref(root.dataset.theme);
 
       const onAction = action => {
+        console.log(action);
       };
 
       return {
