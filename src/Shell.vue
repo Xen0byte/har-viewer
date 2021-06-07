@@ -4,15 +4,23 @@
   import svgAlertCircleOutline from "@mdi/svg/svg/alert-circle-outline.svg";
 
   import AppBar from "./components/AppBar";
+  import Footer from "./components/Footer";
   import { parseHarFile, checkHar } from "./utils/har";
 
   export default {
     name: "Shell",
-    components: { AppBar },
+    components: {
+      Footer,
+      AppBar,
+    },
     setup() {
       const data = ref(null);
+      const file = ref("");
       const isLoading = ref(false);
       const hasError = ref(null);
+      const isStandalone = ref(window.matchMedia("(display-mode: standalone)").matches
+        || (window.navigator.standalone)
+        || document.referrer.includes("android-app://"));
 
       onMounted(() => {
         // workaround for 100vh on mobile browsers
@@ -34,9 +42,11 @@
           try {
             data.value = await parseHarFile(input.files[0]);
             hasError.value = null;
+            file.value = input.files[0].name;
           } catch (e) {
             data.value = null;
             hasError.value = e.message;
+            file.value = "";
           } finally {
             isLoading.value = false;
           }
@@ -61,7 +71,9 @@
 
           data.value = checkHar(resData);
           hasError.value = null;
+          file.value = url;
         } catch (e) {
+          file.value = "";
           data.value = null;
           hasError.value = e.message;
         } finally {
@@ -91,6 +103,8 @@
         onAction,
         svgLoading,
         svgAlertCircleOutline,
+        file,
+        isStandalone,
       };
     },
   };
@@ -118,6 +132,7 @@
       <span v-text="hasError" />
     </div>
   </main>
+  <Footer v-if="!isStandalone" />
 </template>
 
 <style lang="scss">
@@ -140,7 +155,7 @@
     justify-content: center;
     height: 100%;
     user-select: none;
-    color: #DF7B6E;
+    color: #df7b6e;
     flex-direction: column;
 
     & > span {

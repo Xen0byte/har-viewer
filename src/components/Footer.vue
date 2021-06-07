@@ -56,10 +56,9 @@
 >
   .footer {
     justify-content: space-between;
-    padding: .75em 1em;
-
-    background-color: var(--color-background-card);
-    color: var(--color-text);
+    padding: .25em .25em;
+    background-color: white;
+    color: black;
 
     @media (max-width: 576px) {
       display: none;
@@ -67,7 +66,7 @@
   }
 
   a {
-    color: var(--color-link);
+    color: #0359a2;
     text-decoration: none;
   }
 </style>
