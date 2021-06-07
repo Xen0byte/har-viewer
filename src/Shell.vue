@@ -47,6 +47,11 @@
       const loadUrl = async () => {
         // eslint-disable-next-line no-alert
         const url = window.prompt("Enter the URL of the HAR file to load:");
+
+        if (!url) {
+          return;
+        }
+
         isLoading.value = true;
 
         try {
