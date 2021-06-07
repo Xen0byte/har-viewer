@@ -142,7 +142,7 @@
     justify-content: center;
     height: 100%;
     user-select: none;
-    color: #708090;
+    color: #0359a2;
   }
 
   .error {
@@ -151,7 +151,7 @@
     justify-content: center;
     height: 100%;
     user-select: none;
-    color: #a31a14;
+    color: #0359a2;
   }
 
   .loading {
