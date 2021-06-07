@@ -1,6 +1,7 @@
 <script>
   import { ref, onMounted } from "vue";
   import svgLoading from "@mdi/svg/svg/loading.svg";
+  import svgAlertCircleOutline from "@mdi/svg/svg/alert-circle-outline.svg";
 
   import AppBar from "./components/AppBar";
   import { parseHarFile, checkHar } from "./utils/har";
@@ -89,6 +90,7 @@
         hasError,
         onAction,
         svgLoading,
+        svgAlertCircleOutline,
       };
     },
   };
@@ -111,13 +113,9 @@
     <div
       v-if="hasError && !isLoading"
       class="error"
-      v-text="hasError"
-    />
-    <div
-      v-if="!data && !hasError && !isLoading"
-      class="empty"
     >
-      No file loaded
+      <img :src="svgAlertCircleOutline">
+      <span v-text="hasError" />
     </div>
   </main>
 </template>
@@ -136,22 +134,25 @@
     height: 0;
   }
 
-  .empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    user-select: none;
-    color: #0359a2;
-  }
-
   .error {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
     user-select: none;
-    color: #0359a2;
+    color: #DF7B6E;
+    flex-direction: column;
+
+    & > span {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    & > img {
+      filter: invert(71%) sepia(36%) saturate(1149%) hue-rotate(309deg) brightness(89%) contrast(95%);
+      height: 128px;
+      width: 128px;
+    }
   }
 
   .loading {
