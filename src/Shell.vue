@@ -4,6 +4,7 @@
   import svgAlertCircleOutline from "@mdi/svg/svg/alert-circle-outline.svg";
 
   import AppBar from "./components/AppBar";
+  import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
   import { parseHarFile, checkHar } from "./utils/har";
 
@@ -12,6 +13,7 @@
     components: {
       Footer,
       AppBar,
+      HarViewer,
     },
     setup() {
       const data = ref(null);
@@ -117,21 +119,24 @@
   >
     <h1>HTTP Archive Viewer</h1>
   </app-bar>
-  <main>
-    <div
-      v-if="isLoading"
-      class="loading"
-    >
-      <img :src="svgLoading">
-    </div>
-    <div
-      v-if="hasError && !isLoading"
-      class="error"
-    >
-      <img :src="svgAlertCircleOutline">
-      <span v-text="hasError" />
-    </div>
+  <main
+    v-if="isLoading"
+    class="loading"
+  >
+    <img :src="svgLoading">
   </main>
+  <main
+    v-if="hasError && !isLoading"
+    class="error"
+  >
+    <img :src="svgAlertCircleOutline">
+    <span v-text="hasError" />
+  </main>
+  <HarViewer
+    v-if="!isLoading && !hasError && !!data"
+    :data="data"
+  />
+  <main v-if="!hasError && !isLoading && !data" />
   <Footer v-if="!isStandalone" />
 </template>
 
@@ -147,14 +152,13 @@
   main {
     flex-grow: 1;
     height: 0;
-  }
-
-  .error {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
     user-select: none;
+  }
+
+  .error {
     color: #df7b6e;
     flex-direction: column;
 
@@ -171,12 +175,6 @@
   }
 
   .loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    user-select: none;
-
     & > img {
       filter: invert(12%) sepia(39%) saturate(6592%) hue-rotate(196deg) brightness(96%) contrast(98%);
       animation: spin 1s linear infinite;

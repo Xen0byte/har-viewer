@@ -1,20 +1,12 @@
 <script>
-  import { ref } from "vue";
-
   export default {
     setup() {
-      const app = ref(APP);
-      const authorName = ref(AUTHOR_NAME);
-      const authorUrl = ref(AUTHOR_URL);
-      const homepage = ref(HOMEPAGE);
-      const license = ref(LICENSE);
-
       return {
-        app,
-        authorName,
-        authorUrl,
-        homepage,
-        license,
+        app: APP,
+        authorName: AUTHOR_NAME,
+        authorUrl: AUTHOR_URL,
+        homepage: HOMEPAGE,
+        license: LICENSE,
       };
     },
   };
