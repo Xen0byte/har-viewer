@@ -47,6 +47,7 @@
   scoped
 >
   .footer {
+    user-select: none;
     justify-content: space-between;
     padding: .25em .25em;
     background-color: var(--color-background-2);

@@ -182,7 +182,7 @@
 
   .loading {
     & > img {
-      filter: invert(12%) sepia(39%) saturate(6592%) hue-rotate(196deg) brightness(96%) contrast(98%);
+      filter: invert(57%) sepia(74%) saturate(1464%) hue-rotate(182deg) brightness(98%) contrast(92%);
       animation: spin 1s linear infinite;
       height: 64px;
       width: 64px;
