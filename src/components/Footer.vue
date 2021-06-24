@@ -49,8 +49,8 @@
   .footer {
     justify-content: space-between;
     padding: .25em .25em;
-    background-color: white;
-    color: black;
+    background-color: var(--color-background-2);
+    color: var(--color-text);
 
     @media (max-width: 576px) {
       display: none;
@@ -58,7 +58,7 @@
   }
 
   a {
-    color: #0359a2;
+    color: var(--color-text);
     text-decoration: none;
   }
 </style>

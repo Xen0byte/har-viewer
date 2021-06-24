@@ -1,12 +1,14 @@
 <script>
-  import { ref, onMounted } from "vue";
+  import { ref, onMounted, onBeforeMount } from "vue";
   import svgLoading from "@mdi/svg/svg/loading.svg";
   import svgAlertCircleOutline from "@mdi/svg/svg/alert-circle-outline.svg";
 
   import AppBar from "./components/AppBar";
   import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
+
   import { parseHarFile, checkHar } from "./utils/har";
+  import { getSystemTheme, switchTheme } from "./utils/theme";
 
   export default {
     name: "Shell",
@@ -23,6 +25,10 @@
       const isStandalone = ref(window.matchMedia("(display-mode: standalone)").matches
         || (window.navigator.standalone)
         || document.referrer.includes("android-app://"));
+
+      onBeforeMount(() => {
+        switchTheme(getSystemTheme());
+      });
 
       onMounted(() => {
         // workaround for 100vh on mobile browsers
