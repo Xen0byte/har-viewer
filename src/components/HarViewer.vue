@@ -17,6 +17,14 @@
       const filteredData = ref([]);
       const slowMode = ref(false);
 
+      const onSelect = entry => {
+        if (window.innerWidth <= 475) {
+          console.log("open dialog");
+        } else {
+          selectedEntry.value = entry;
+        }
+      };
+
       onMounted(() => {
         if (props.data.entries.length < 100) {
           filteredData.value = props.data.entries;
@@ -45,6 +53,7 @@
         selectedEntry,
         filteredData,
         slowMode,
+        onSelect,
       };
     },
   };
@@ -64,10 +73,13 @@
         :key="i"
         :data="entry"
         :active="selectedEntry === entry"
-        @select="selectedEntry = entry"
+        @select="() => onSelect(entry)"
       />
     </aside>
-    <div v-text="selectedEntry" />
+    <div
+      class="request-details"
+      v-text="selectedEntry"
+    />
   </main>
 </template>
 
@@ -103,6 +115,12 @@
       overflow-y: auto;
       width: 475px;
       max-width: 100%;
+    }
+
+    @media (max-width: 475px) {
+      .request-details {
+        display: none;
+      }
     }
   }
 

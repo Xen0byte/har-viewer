@@ -97,9 +97,11 @@
       color: #f8f9fa;
     }
 
-    &:hover {
-      background-color: var(--color-background);
-      border-color: #4da4f0;
+    @media (min-width: 476px) {
+      &:hover {
+        background-color: var(--color-background);
+        border-color: #4da4f0;
+      }
     }
 
     & > .details {
