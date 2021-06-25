@@ -4,12 +4,17 @@
 
   import RequestCard from "./RequestCard";
   import TabBar from "./TabBar";
+
+  import CookieTab from "./tabs/CookieTab";
   import RequestTab from "./tabs/RequestTab";
   import ResponseTab from "./tabs/ResponseTab";
+  import TimingTab from "./tabs/TimingTab";
 
   export default {
     name: "HarViewer",
     components: {
+      TimingTab,
+      CookieTab,
       ResponseTab,
       RequestTab,
       TabBar,
@@ -138,6 +143,14 @@
           />
           <ResponseTab
             v-if="currentTab === 'response'"
+            :data="selectedEntry"
+          />
+          <CookieTab
+            v-if="currentTab === 'cookies'"
+            :data="selectedEntry"
+          />
+          <TimingTab
+            v-if="currentTab === 'timing'"
             :data="selectedEntry"
           />
         </div>
