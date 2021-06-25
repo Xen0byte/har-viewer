@@ -48,3 +48,8 @@ div {
 ::-webkit-scrollbar-corner {
   background-color: transparent;
 }
+
+::selection {
+  color: #2a2e33;
+  background: #4da4f0;
+}

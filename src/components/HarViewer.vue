@@ -4,10 +4,12 @@
 
   import RequestCard from "./RequestCard";
   import TabBar from "./TabBar";
+  import RequestTab from "./tabs/RequestTab";
 
   export default {
     name: "HarViewer",
     components: {
+      RequestTab,
       TabBar,
       RequestCard,
     },
@@ -127,7 +129,10 @@
           @change="tab => currentTab = tab"
         />
         <div class="tabs">
-          {{ selectedEntry.request.url }}
+          <RequestTab
+            v-if="currentTab === 'request'"
+            :data="selectedEntry"
+          />
         </div>
       </div>
     </div>
@@ -186,6 +191,10 @@
           height: 0;
           overflow-y: auto;
           overflow-x: hidden;
+          background-color: var(--color-background-2);
+          border-radius: .25rem;
+          padding: 1rem;
+          color: var(--color-text);
         }
       }
     }
