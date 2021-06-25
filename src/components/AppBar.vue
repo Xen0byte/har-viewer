@@ -59,7 +59,7 @@
         v-if="isLoaded"
         type="button"
         class="btn"
-        title="Sort and filter"
+        title="Filter / Sort / Group"
         @click="onSortAndFilter"
       >
         <img :src="svgTune">

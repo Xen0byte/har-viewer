@@ -97,6 +97,7 @@
 
   .modal-body {
     padding: .75rem;
+    color: var(--color-text);
   }
 
   .modal-container {
