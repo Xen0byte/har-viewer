@@ -256,7 +256,8 @@
       }
 
       .request-details.show {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column;
       }
     }
   }
