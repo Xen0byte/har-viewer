@@ -60,7 +60,7 @@
       <b>Body</b>: {{ data.request.bodySize }} bytes<br>
       <b>Total</b>: {{ data.request.headersSize + data.request.bodySize }} bytes
     </section>
-    <section>
+    <section v-if="data._initiator">
       <h1>Initiator</h1>
       <b>Type</b>: {{ data._initiator.type }}<br>
       <div v-if="data._initiator.type === 'parser'">

@@ -141,6 +141,7 @@
           :has-post-data="!!selectedEntry.request.postData"
           :has-response-content="selectedEntry.response.content.size !== 0"
           :has-cookies="selectedEntry.request.cookies.length !== 0 || selectedEntry.response.cookies.length !== 0"
+          :has-timings="Object.keys(selectedEntry.timings).length !== 0"
           @change="tab => currentTab = tab"
         />
         <div class="tabs">

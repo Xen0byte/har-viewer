@@ -28,12 +28,13 @@
       const onSelect = () => emit("select");
 
       if (status === 0) {
+        status = "UNKNOWN";
         // eslint-disable-next-line no-underscore-dangle
         if (props.data.response._error) {
           statusType = "error";
+          // eslint-disable-next-line no-underscore-dangle
+          status = props.data.response._error.replace("net::", "");
         }
-        // eslint-disable-next-line no-underscore-dangle
-        status = props.data.response._error.replace("net::", "") || "UNKNOWN";
       } else if (status < 200) {
         statusType = "info";
       } else if (status > 199 && status < 300) {

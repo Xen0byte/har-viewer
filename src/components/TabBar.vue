@@ -22,6 +22,10 @@
         type: Boolean,
         default: false,
       },
+      hasTimings: {
+        type: Boolean,
+        default: false,
+      },
     },
     emits: ["change"],
     setup(_, { emit }) {
@@ -68,7 +72,10 @@
       >
         Cookies
       </option>
-      <option value="timing">
+      <option
+        v-if="hasTimings"
+        value="timing"
+      >
         Timing
       </option>
     </select>
@@ -121,12 +128,13 @@
       Cookies
     </button>
     <button
+      v-if="hasTimings"
       :class="{ active: currentTab === 'timing' }"
       class="btn"
       type="button"
       @click="onChange('timing')"
     >
-      Timing
+      Timings
     </button>
   </nav>
 </template>
