@@ -77,7 +77,7 @@
   scoped
 >
   .btn {
-    background-color: #023d70;
+    background-color: var(--color-primary-dark);
     border: none;
     color: #ffffff;
     padding: .375rem .75rem;
@@ -94,7 +94,7 @@
     transition: background-color .15s ease-in-out;
 
     &:hover {
-      background-color: #4da4f0;
+      background-color: var(--color-primary-light);
     }
   }
 
@@ -103,7 +103,7 @@
     align-items: center;
     justify-content: space-between;
     height: 56px;
-    background: #0359a2;
+    background: var(--color-primary);
     padding: .5rem .75rem;
 
     & .brand {

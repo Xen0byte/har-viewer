@@ -50,7 +50,7 @@
     user-select: none;
     justify-content: space-between;
     padding: .25em .25em;
-    background-color: var(--color-background-2);
+    background-color: var(--color-background-dark);
     color: var(--color-text);
 
     @media (max-width: 576px) {

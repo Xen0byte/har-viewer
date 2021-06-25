@@ -29,6 +29,10 @@
 
       if (status === 0) {
         // eslint-disable-next-line no-underscore-dangle
+        if (props.data.response._error) {
+          statusType = "error";
+        }
+        // eslint-disable-next-line no-underscore-dangle
         status = props.data.response._error.replace("net::", "") || "UNKNOWN";
       } else if (status < 200) {
         statusType = "info";
@@ -83,8 +87,8 @@
 >
   .request-card {
     cursor: pointer;
-    background-color: var(--color-background-2);
-    border-color: var(--color-background-2);
+    background-color: var(--color-background-dark);
+    border-color: var(--color-background-dark);
     border-radius: .25rem;
     border-width: 2px;
     border-style: dashed;
@@ -92,15 +96,15 @@
     padding: 1rem;
 
     &.active {
-      background-color: #0359a2 !important;
-      border-color: #0359a2 !important;
+      background-color: var(--color-primary) !important;
+      border-color: var(--color-primary) !important;
       color: #f8f9fa;
     }
 
     @media (min-width: 476px) {
       &:hover {
         background-color: var(--color-background);
-        border-color: #4da4f0;
+        border-color: var(--color-primary-light);
       }
     }
 
@@ -131,20 +135,20 @@
     }
 
     & .tag-success {
-      background-color: #28a745;
+      background-color: var(--color-success);
     }
 
     & .tag-info {
-      background-color: #17a2b8;
+      background-color: var(--color-info);
     }
 
     & .tag-warning {
-      background-color: #ffc107;
-      color: #2a2e33;
+      background-color: var(--color-warning);
+      color: var(--color-warning-text);
     }
 
     & .tag-error {
-      background-color: #dc3545;
+      background-color: var(--color-error);
     }
   }
 </style>

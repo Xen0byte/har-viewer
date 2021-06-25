@@ -109,8 +109,8 @@
 
     & .nav-select {
       padding: .5rem;
-      background-color: var(--color-background-2);
-      border-color: var(--color-background-2);
+      background-color: var(--color-background-dark);
+      border-color: var(--color-background-dark);
       color: var(--color-text);
       width: 100%;
       outline: none;
@@ -118,7 +118,7 @@
     }
 
     & .btn {
-      background-color: #0359a2;
+      background-color: var(--color-primary);
       border: none;
       color: #ffffff;
       padding: .375rem .75rem;
@@ -135,11 +135,11 @@
       transition: background-color .15s ease-in-out;
 
       &.active {
-        background-color: #4da4f0;
+        background-color: var(--color-primary-light);
       }
 
       &:hover {
-        background-color: #4da4f0;
+        background-color: var(--color-primary-light);
       }
     }
   }

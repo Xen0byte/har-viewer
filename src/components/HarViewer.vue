@@ -191,7 +191,7 @@
           height: 0;
           overflow-y: auto;
           overflow-x: hidden;
-          background-color: var(--color-background-2);
+          background-color: var(--color-background-dark);
           border-radius: .25rem;
           padding: 1rem;
           color: var(--color-text);
@@ -214,14 +214,14 @@
           align-items: center;
           justify-content: space-between;
           height: 56px;
-          background: #0359a2;
+          background: var(--color-primary);
           padding: .5rem .75rem;
           position: sticky;
           top: 0;
           margin-bottom: .5rem;
 
           & .btn {
-            background-color: #023d70;
+            background-color: var(--color-primary-dark);
             border: none;
             color: #ffffff;
             padding: .375rem .75rem;
@@ -242,7 +242,7 @@
             }
 
             &:hover {
-              background-color: #4da4f0;
+              background-color: var(--color-primary-light);
             }
           }
         }
