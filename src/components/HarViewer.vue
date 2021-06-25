@@ -6,6 +6,7 @@
   import TabBar from "./TabBar";
 
   import CookieTab from "./tabs/CookieTab";
+  import PostDataTab from "./tabs/PostDataTab";
   import RequestTab from "./tabs/RequestTab";
   import ResponseContentTab from "./tabs/ResponseContentTab";
   import ResponseTab from "./tabs/ResponseTab";
@@ -14,6 +15,7 @@
   export default {
     name: "HarViewer",
     components: {
+      PostDataTab,
       ResponseContentTab,
       TimingTab,
       CookieTab,
@@ -136,11 +138,18 @@
         <TabBar
           :current-tab="currentTab"
           :as-dialog="showDialog"
+          :has-post-data="!!selectedEntry.request.postData"
+          :has-response-content="selectedEntry.response.content.size !== 0"
+          :has-cookies="selectedEntry.request.cookies.length !== 0 || selectedEntry.response.cookies.length !== 0"
           @change="tab => currentTab = tab"
         />
         <div class="tabs">
           <RequestTab
             v-if="currentTab === 'request'"
+            :data="selectedEntry"
+          />
+          <PostDataTab
+            v-if="currentTab === 'post-data'"
             :data="selectedEntry"
           />
           <ResponseTab

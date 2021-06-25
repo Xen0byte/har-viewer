@@ -10,6 +10,18 @@
         type: Boolean,
         default: false,
       },
+      hasPostData: {
+        type: Boolean,
+        default: false,
+      },
+      hasResponseContent: {
+        type: Boolean,
+        default: false,
+      },
+      hasCookies: {
+        type: Boolean,
+        default: false,
+      },
     },
     emits: ["change"],
     setup(_, { emit }) {
@@ -35,13 +47,25 @@
       <option value="request">
         Request
       </option>
+      <option
+        v-if="hasPostData"
+        value="post-data"
+      >
+        Post Data
+      </option>
       <option value="response">
         Response
       </option>
-      <option value="response-content">
+      <option
+        v-if="hasResponseContent"
+        value="response-content"
+      >
         Response Content
       </option>
-      <option value="cookies">
+      <option
+        v-if="hasCookies"
+        value="cookies"
+      >
         Cookies
       </option>
       <option value="timing">
@@ -62,6 +86,15 @@
       Request
     </button>
     <button
+      v-if="hasPostData"
+      :class="{ active: currentTab === 'post-data' }"
+      class="btn"
+      type="button"
+      @click="onChange('post-data')"
+    >
+      Post Data
+    </button>
+    <button
       :class="{ active: currentTab === 'response' }"
       class="btn"
       type="button"
@@ -70,6 +103,7 @@
       Response
     </button>
     <button
+      v-if="hasResponseContent"
       :class="{ active: currentTab === 'response-content' }"
       class="btn"
       type="button"
@@ -78,6 +112,7 @@
       Response Content
     </button>
     <button
+      v-if="hasCookies"
       :class="{ active: currentTab === 'cookies' }"
       class="btn"
       type="button"
@@ -121,7 +156,7 @@
       background-color: var(--color-primary);
       border: none;
       color: #ffffff;
-      padding: .375rem .75rem;
+      padding: .375rem .5rem;
       cursor: pointer;
       font-size: 1rem;
       line-height: 1.5;

@@ -27,11 +27,10 @@
     <b>Request on {{ data.startedDateTime }}</b>
     <section style="margin-top: .5rem;">
       <h1>General</h1>
-      Request URL: {{ data.request.url.split("?")[0] }}<br>
-      Version: {{ data.request.httpVersion }}<br>
-      Request method: {{ data.request.method }}<br>
-      Remote Address: {{ data.serverIPAddress }}<br>
-      Initiated by: {{ data._initiator }}
+      <b>Request URL</b>: {{ data.request.url.split("?")[0] }}<br>
+      <b>Version</b>: {{ data.request.httpVersion }}<br>
+      <b>Request method</b>: {{ data.request.method }}<br>
+      <b>Remote Address</b>: {{ data.serverIPAddress }}
     </section>
     <section>
       <h1>Headers</h1>
@@ -40,7 +39,7 @@
           v-for="h in filteredHeaders"
           :key="h.name"
         >
-          {{ h.name }}: {{ h.value }}
+          <b>{{ h.name }}</b>: {{ h.value }}
         </li>
       </ul>
     </section>
@@ -51,15 +50,42 @@
           v-for="q in data.request.queryString"
           :key="q.name"
         >
-          {{ q.name }}: {{ q.value }}
+          <b>{{ q.name }}</b>: {{ q.value }}
         </li>
       </ul>
     </section>
     <section>
       <h1>Size</h1>
-      Headers: {{ data.request.headersSize }} bytes<br>
-      Body: {{ data.request.bodySize }} bytes<br>
-      Total: {{ data.request.headersSize + data.request.bodySize }} bytes
+      <b>Headers</b>: {{ data.request.headersSize }} bytes<br>
+      <b>Body</b>: {{ data.request.bodySize }} bytes<br>
+      <b>Total</b>: {{ data.request.headersSize + data.request.bodySize }} bytes
+    </section>
+    <section>
+      <h1>Initiator</h1>
+      <b>Type</b>: {{ data._initiator.type }}<br>
+      <div v-if="data._initiator.type === 'parser'">
+        <b>Url</b>: {{ data._initiator.url }}<br>
+        <b>Line Number</b>: {{ data._initiator.lineNumber }}
+      </div>
+      <div v-if="data._initiator.type === 'preflight'">
+        <b>Url</b>: {{ data._initiator.url }}
+      </div>
+      <div v-if="data._initiator.type === 'script'">
+        <details style="margin-top: .25rem">
+          <summary style="user-select: none;">
+            Call Stack
+          </summary>
+          <ul>
+            <li
+              v-for="(f, i) in data._initiator.stack.callFrames"
+              :key="i"
+            >
+              {{ f.scriptId }}: {{ f.functionName }} ({{ f.lineNumber }}:{{ f.columnNumber }})<br>
+              {{ f.url }}
+            </li>
+          </ul>
+        </details>
+      </div>
     </section>
   </article>
 </template>

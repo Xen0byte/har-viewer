@@ -43,7 +43,7 @@
           v-for="h in filteredHeaders"
           :key="h.name"
         >
-          {{ h.name }}: {{ h.value }}
+          <b>{{ h.name }}</b>: {{ h.value }}
         </li>
       </ul>
     </section>
@@ -53,9 +53,9 @@
     </section>
     <section v-if="data.response.status !== 0">
       <h1>Size</h1>
-      Headers: {{ data.response.headersSize }} bytes<br>
-      Body: {{ data.response.bodySize }} bytes<br>
-      Total: {{ data.response._transferSize }} bytes
+      <b>Headers</b>: {{ data.response.headersSize }} bytes<br>
+      <b>Body</b>: {{ data.response.bodySize }} bytes<br>
+      <b>Total</b>: {{ data.response._transferSize }} bytes
     </section>
   </article>
 </template>

@@ -12,25 +12,25 @@
 
 <template>
   <article>
-    <section>
+    <section v-if="data.request.cookies.length !== 0">
       <h1>Sent</h1>
       <ul>
         <li
           v-for="c in data.request.cookies"
           :key="c.name"
         >
-          {{ c.name }}: {{ c.value }}
+          <b>{{ c.name }}</b>: {{ c.value }}
         </li>
       </ul>
     </section>
-    <section>
+    <section v-if="data.response.cookies.length !== 0">
       <h1>Received</h1>
       <ul>
         <li
           v-for="c in data.response.cookies"
           :key="c.name"
         >
-          {{ c.name }}: {{ c.value }}
+          <b>{{ c.name }}</b>: {{ c.value }}
         </li>
       </ul>
     </section>
