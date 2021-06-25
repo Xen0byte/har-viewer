@@ -1,5 +1,6 @@
 <script>
   import { ref, onMounted, onBeforeUnmount } from "vue";
+  import svgChevronLeft from "@mdi/svg/svg/chevron-left.svg";
 
   import RequestCard from "./RequestCard";
 
@@ -16,12 +17,12 @@
       const selectedEntry = ref(null);
       const filteredData = ref([]);
       const slowMode = ref(false);
+      const showDialog = ref(false);
 
       const onSelect = entry => {
+        selectedEntry.value = entry;
         if (window.innerWidth <= 475) {
-          console.log("open dialog");
-        } else {
-          selectedEntry.value = entry;
+          showDialog.value = true;
         }
       };
 
@@ -59,15 +60,18 @@
 
       onBeforeUnmount(() => {
         if (onScroll) {
-          window.document.querySelector(".request-list").removeEventListener("scroll");
+          window.document.querySelector(".request-list")
+            .removeEventListener("scroll");
         }
       });
 
       return {
+        svgChevronLeft,
         selectedEntry,
         filteredData,
         slowMode,
         onSelect,
+        showDialog,
       };
     },
   };
@@ -92,8 +96,24 @@
     </aside>
     <div
       class="request-details"
-      v-text="selectedEntry"
-    />
+      :class="{ show: showDialog }"
+    >
+      <div
+        v-if="showDialog"
+        class="navbar"
+      >
+        <button
+          class="btn"
+          type="button"
+          @click="showDialog = false; selectedEntry = null"
+        >
+          <img :src="svgChevronLeft">
+        </button>
+      </div>
+      <div class="container">
+        {{ selectedEntry }}
+      </div>
+    </div>
   </main>
 </template>
 
@@ -134,6 +154,59 @@
     @media (max-width: 475px) {
       .request-details {
         display: none;
+        position: absolute;
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        background-color: var(--color-background);
+        overflow: hidden;
+
+        & .navbar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 56px;
+          background: #0359a2;
+          padding: .5rem .75rem;
+          position: sticky;
+          top: 0;
+
+          & .btn {
+            background-color: #023d70;
+            border: none;
+            color: #ffffff;
+            padding: .375rem .75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1.5;
+            font-weight: 400;
+            border-radius: .25rem;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: background-color .15s ease-in-out;
+
+            & > img {
+              filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(66deg) brightness(117%) contrast(100%);
+            }
+
+            &:hover {
+              background-color: #4da4f0;
+            }
+          }
+        }
+
+        & .container {
+          overflow-y: auto;
+          overflow-x: hidden;
+          max-height: calc(100vh - 56px);
+        }
+      }
+
+      .request-details.show {
+        display: block !important;
       }
     }
   }
