@@ -1,4 +1,6 @@
 <script>
+  import { ref } from "vue";
+
   export default {
     name: "ResponseTab",
     props: {
@@ -7,13 +9,23 @@
         required: true,
       },
     },
+    setup(props) {
+      const filteredHeaders = ref([]);
+
+      filteredHeaders.value = props.data.response.headers
+        .filter(h => h.name !== "set-cookie");
+
+      return {
+        filteredHeaders,
+      };
+    },
   };
 </script>
 
 <template>
   <article>
     <div v-if="data.response.status !== 0">
-      <b v-text="data.response.status" /> {{ data.response.statusText }} {{ data.response.httpVersion }}
+      <b> {{ data.response.status }} {{ data.response.statusText }} {{ data.response.httpVersion }}</b>
     </div>
     <section
       v-if="data.response._error"
@@ -28,7 +40,7 @@
       <h1>Headers</h1>
       <ul>
         <li
-          v-for="h in data.response.headers"
+          v-for="h in filteredHeaders"
           :key="h.name"
         >
           {{ h.name }}: {{ h.value }}

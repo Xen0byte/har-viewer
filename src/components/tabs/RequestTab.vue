@@ -1,4 +1,6 @@
 <script>
+  import { ref } from "vue";
+
   export default {
     name: "RequestTab",
     props: {
@@ -6,6 +8,16 @@
         type: Object,
         required: true,
       },
+    },
+    setup(props) {
+      const filteredHeaders = ref([]);
+
+      filteredHeaders.value = props.data.request.headers
+        .filter(h => h.name !== "cookie");
+
+      return {
+        filteredHeaders,
+      };
     },
   };
 </script>
@@ -25,7 +37,7 @@
       <h1>Headers</h1>
       <ul>
         <li
-          v-for="h in data.request.headers"
+          v-for="h in filteredHeaders"
           :key="h.name"
         >
           {{ h.name }}: {{ h.value }}
