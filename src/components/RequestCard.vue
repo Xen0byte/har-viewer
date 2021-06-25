@@ -96,8 +96,8 @@
     padding: 1rem;
 
     &.active {
-      background-color: var(--color-primary) !important;
-      border-color: var(--color-primary) !important;
+      background-color: var(--color-active) !important;
+      border-color: var(--color-active) !important;
       color: #f8f9fa;
     }
 

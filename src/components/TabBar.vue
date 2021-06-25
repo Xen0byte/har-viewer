@@ -139,7 +139,7 @@
     display: flex;
 
     & button:not(:last-of-type) {
-      margin-right: .5rem;
+      margin-right: .35rem;
     }
 
     & .nav-select {
@@ -153,9 +153,9 @@
     }
 
     & .btn {
-      background-color: var(--color-primary);
+      background-color: var(--color-background-dark);
       border: none;
-      color: #ffffff;
+      color: #f8f9fa;
       padding: .375rem .5rem;
       cursor: pointer;
       font-size: 1rem;
@@ -170,7 +170,8 @@
       transition: background-color .15s ease-in-out;
 
       &.active {
-        background-color: var(--color-primary-light);
+        background-color: var(--color-active);
+        color: #f8f9fa;
       }
 
       &:hover {

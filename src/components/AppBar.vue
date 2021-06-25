@@ -124,7 +124,7 @@
       }
 
       & button:not(:last-child) {
-        margin-right: .5em;
+        margin-right: .35rem;
       }
     }
 
