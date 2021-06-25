@@ -39,6 +39,7 @@
       onMounted(() => {
         if (props.data.entries.length < 100) {
           filteredData.value = props.data.entries;
+          slowMode.value = false;
           return;
         }
 
