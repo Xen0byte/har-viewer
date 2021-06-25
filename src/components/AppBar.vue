@@ -45,6 +45,7 @@
         type="button"
         class="btn"
         title="Export"
+        style="display: none"
         @click="onExport"
       >
         <img :src="svgDownload">
