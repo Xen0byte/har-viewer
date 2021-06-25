@@ -5,10 +5,12 @@
   import RequestCard from "./RequestCard";
   import TabBar from "./TabBar";
   import RequestTab from "./tabs/RequestTab";
+  import ResponseTab from "./tabs/ResponseTab";
 
   export default {
     name: "HarViewer",
     components: {
+      ResponseTab,
       RequestTab,
       TabBar,
       RequestCard,
@@ -70,7 +72,7 @@
       onBeforeUnmount(() => {
         if (onScroll) {
           window.document.querySelector(".request-list")
-            .removeEventListener("scroll");
+            .removeEventListener("scroll", onScroll);
         }
       });
 
@@ -132,6 +134,10 @@
         <div class="tabs">
           <RequestTab
             v-if="currentTab === 'request'"
+            :data="selectedEntry"
+          />
+          <ResponseTab
+            v-if="currentTab === 'response'"
             :data="selectedEntry"
           />
         </div>

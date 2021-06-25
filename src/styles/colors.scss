@@ -10,6 +10,7 @@
   --color-warning: #ffc107;
   --color-warning-text: #2a2e33;
   --color-error: #dc3545;
+  --color-error-text: #f7f7f7;
 }
 
 html[data-theme="dark"] {
@@ -30,4 +31,5 @@ html[data-theme="nord"] {
   --color-warning: #ebcb8b;
   --color-warning-text: #2e3440;
   --color-error: #bf616a;
+  --color-error-text: #eceff4;
 }
