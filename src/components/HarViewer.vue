@@ -3,10 +3,14 @@
   import svgChevronLeft from "@mdi/svg/svg/chevron-left.svg";
 
   import RequestCard from "./RequestCard";
+  import TabBar from "./TabBar";
 
   export default {
     name: "HarViewer",
-    components: { RequestCard },
+    components: {
+      TabBar,
+      RequestCard,
+    },
     props: {
       data: {
         type: Object,
@@ -18,8 +22,10 @@
       const filteredData = ref([]);
       const slowMode = ref(false);
       const showDialog = ref(false);
+      const currentTab = ref("request");
 
       const onSelect = entry => {
+        currentTab.value = "request";
         selectedEntry.value = entry;
         if (window.innerWidth <= 475) {
           showDialog.value = true;
@@ -72,6 +78,7 @@
         slowMode,
         onSelect,
         showDialog,
+        currentTab,
       };
     },
   };
@@ -110,8 +117,18 @@
           <img :src="svgChevronLeft">
         </button>
       </div>
-      <div class="container">
-        {{ selectedEntry }}
+      <div
+        v-if="selectedEntry"
+        class="container"
+      >
+        <TabBar
+          :current-tab="currentTab"
+          :as-dialog="showDialog"
+          @change="tab => currentTab = tab"
+        />
+        <div class="tabs">
+          {{ selectedEntry.request.url }}
+        </div>
       </div>
     </div>
   </main>
@@ -133,6 +150,10 @@
       max-height: 100%;
     }
 
+    & .tabbar {
+      margin-bottom: .5rem;
+    }
+
     & > div {
       flex-grow: 1;
       width: 0;
@@ -149,6 +170,24 @@
       overflow-y: auto;
       width: 475px;
       max-width: 100%;
+    }
+
+    & .request-details {
+      height: 100%;
+
+      & .container {
+        padding: .25rem .5rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        & .tabs {
+          flex-grow: 1;
+          height: 0;
+          overflow-y: auto;
+          overflow-x: hidden;
+        }
+      }
     }
 
     @media (max-width: 475px) {
@@ -170,6 +209,7 @@
           padding: .5rem .75rem;
           position: sticky;
           top: 0;
+          margin-bottom: .5rem;
 
           & .btn {
             background-color: #023d70;
@@ -196,12 +236,6 @@
               background-color: #4da4f0;
             }
           }
-        }
-
-        & .container {
-          overflow-y: auto;
-          overflow-x: hidden;
-          max-height: calc(100vh - 56px);
         }
       }
 
