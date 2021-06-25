@@ -1,5 +1,5 @@
 <script>
-  import { ref, onMounted } from "vue";
+  import { ref, onMounted, onBeforeUnmount } from "vue";
 
   import RequestCard from "./RequestCard";
 
@@ -25,6 +25,8 @@
         }
       };
 
+      let onScroll;
+
       onMounted(() => {
         if (props.data.entries.length < 100) {
           filteredData.value = props.data.entries;
@@ -37,16 +39,28 @@
 
         let addedElement = initialItems;
 
-        window.document.querySelector(".request-list").onscroll = ({ target }) => {
-          if (addedElement < props.data.entries.length) {
-            const { scrollTop } = target;
+        const list = window.document.querySelector(".request-list");
 
-            if (scrollTop > target.getBoundingClientRect().height) {
-              filteredData.value.push(props.data.entries[addedElement]);
-              addedElement += 1;
+        onScroll = ({ target }) => {
+          const { scrollTop } = target;
+
+          if (scrollTop > target.scrollHeight - target.scrollHeight / 5) {
+            filteredData.value.push(props.data.entries[addedElement]);
+            addedElement += 1;
+
+            if (addedElement >= props.data.entries.length) {
+              list.removeEventListener("scroll", onScroll);
             }
           }
         };
+
+        list.addEventListener("scroll", onScroll);
+      });
+
+      onBeforeUnmount(() => {
+        if (onScroll) {
+          window.document.querySelector(".request-list").removeEventListener("scroll");
+        }
       });
 
       return {
