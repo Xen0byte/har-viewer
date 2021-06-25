@@ -2,6 +2,7 @@
   import svgDownload from "@mdi/svg/svg/download.svg";
   import svgUpload from "@mdi/svg/svg/upload.svg";
   import svgWeb from "@mdi/svg/svg/web.svg";
+  import svgTune from "@mdi/svg/svg/tune.svg";
 
   export default {
     name: "AppBar",
@@ -16,14 +17,17 @@
       const onExport = () => emit("action", "export");
       const onOpenFile = () => emit("action", "openFile");
       const onLoadUrl = () => emit("action", "loadUrl");
+      const onSortAndFilter = () => emit("action", "sort-and-filter");
 
       return {
         svgDownload,
         svgUpload,
         svgWeb,
+        svgTune,
         onExport,
         onOpenFile,
         onLoadUrl,
+        onSortAndFilter,
       };
     },
   };
@@ -50,6 +54,15 @@
       >
         <img :src="svgDownload">
         <span>Export</span>
+      </button>
+      <button
+        v-if="isLoaded"
+        type="button"
+        class="btn"
+        title="Sort and filter"
+        @click="onSortAndFilter"
+      >
+        <img :src="svgTune">
       </button>
       <button
         type="button"

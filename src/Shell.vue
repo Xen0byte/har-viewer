@@ -4,6 +4,7 @@
   import svgAlertCircleOutline from "@mdi/svg/svg/alert-circle-outline.svg";
 
   import AppBar from "./components/AppBar";
+  import PropDialog from "./components/dialogs/PropDialog";
   import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
 
@@ -13,6 +14,7 @@
   export default {
     name: "Shell",
     components: {
+      PropDialog,
       Footer,
       AppBar,
       HarViewer,
@@ -22,6 +24,7 @@
       const file = ref("");
       const isLoading = ref(false);
       const hasError = ref(null);
+      const showPropDialog = ref(false);
       const isStandalone = ref(window.matchMedia("(display-mode: standalone)").matches
         || (window.navigator.standalone)
         || document.referrer.includes("android-app://"));
@@ -34,6 +37,10 @@
         // workaround for 100vh on mobile browsers
         window.height = window.innerHeight;
       });
+
+      const onPropApply = () => {
+        showPropDialog.value = false;
+      };
 
       const openFile = () => {
         const fileInput = document.createElement("input");
@@ -97,6 +104,9 @@
           case "loadUrl":
             await loadUrl();
             break;
+          case "sort-and-filter":
+            showPropDialog.value = true;
+            break;
           default:
             // eslint-disable-next-line no-console
             console.error(`unsupported action: ${action}`);
@@ -113,6 +123,8 @@
         svgAlertCircleOutline,
         file,
         isStandalone,
+        showPropDialog,
+        onPropApply,
       };
     },
   };
@@ -144,6 +156,11 @@
   />
   <main v-if="!hasError && !isLoading && !data" />
   <Footer v-if="!isStandalone" />
+  <PropDialog
+    v-if="showPropDialog"
+    @apply="onPropApply"
+    @close="showPropDialog = false"
+  />
 </template>
 
 <style lang="scss">

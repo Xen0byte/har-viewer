@@ -27,15 +27,21 @@
         class="modal-container"
         @click.stop
       >
-        <h2 v-if="$slots.header">
-          <slot name="header" />
-        </h2>
-        <slot />
+        <div class="modal-header">
+          <h2 v-if="$slots.header">
+            <slot name="header" />
+          </h2>
+        </div>
+        <div class="modal-body">
+          <slot />
+        </div>
         <div
           v-if="$slots.footer"
           class="modal-footer"
         >
-          <slot name="footer" />
+          <div>
+            <slot name="footer" />
+          </div>
         </div>
       </div>
     </div>
@@ -49,12 +55,23 @@
   h2 {
     color: var(--color-primary-500);
     user-select: none;
-    margin: 0 0 1em;
+    margin: 0;
+  }
+
+  .modal-header {
+    background-color: var(--color-primary);
+    padding: .5rem;
+    color: white;
   }
 
   .modal-footer {
-    margin-top: 1.5em;
-    float: right;
+    padding: .5rem;
+    width: 100%;
+
+    & > div {
+      display: flex;
+      justify-content: flex-end;
+    }
 
     & ::v-deep(:not(:last-child)) {
       margin-right: .5em;
@@ -78,9 +95,12 @@
     height: 100vh;
   }
 
+  .modal-body {
+    padding: .75rem;
+  }
+
   .modal-container {
-    padding: 1em;
-    background-color: var(--color-background-card);
+    background-color: var(--color-background);
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     overflow: auto;
