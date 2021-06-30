@@ -51,11 +51,22 @@
       <h1>Cache</h1>
       {{ data.cache }}
     </section>
-    <section v-if="data.response.status !== 0">
+    <section>
       <h1>Size</h1>
-      <b>Headers</b>: {{ data.response.headersSize }} bytes<br>
-      <b>Body</b>: {{ data.response.bodySize }} bytes<br>
-      <b>Total</b>: {{ data.response._transferSize }} bytes
+      <table>
+        <tr>
+          <th>Headers</th>
+          <td>{{ data.response.headersSize }} bytes</td>
+        </tr>
+        <tr>
+          <th>Body</th>
+          <td>{{ data.response.bodySize === -1 ? data.response.content.size : data.response.bodySize }} bytes</td>
+        </tr>
+        <tr>
+          <th>Total</th>
+          <td>{{ data.response.headersSize + (data.response.bodySize === -1 ? data.response.content.size : data.response.bodySize) }} bytes</td>
+        </tr>
+      </table>
     </section>
   </article>
 </template>

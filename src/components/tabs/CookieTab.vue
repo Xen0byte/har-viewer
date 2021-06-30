@@ -19,7 +19,13 @@
           v-for="c in data.request.cookies"
           :key="c.name"
         >
-          <b>{{ c.name }}</b>: {{ c.value }}
+          <b>{{ c.name }}</b>
+          <ul>
+            <li>Value: {{ c.value }}</li>
+            <li>Domain: {{ c.domain }}</li>
+            <li>Path: {{ c.path }}</li>
+            <li>Expires: {{ c.expires }}</li>
+          </ul>
         </li>
       </ul>
     </section>
@@ -30,7 +36,13 @@
           v-for="c in data.response.cookies"
           :key="c.name"
         >
-          <b>{{ c.name }}</b>: {{ c.value }}
+          <b>{{ c.name }}</b>
+          <ul>
+            <li>Value: {{ c.value }}</li>
+            <li>Domain: {{ c.domain }}</li>
+            <li>Path: {{ c.path }}</li>
+            <li>Expires: {{ c.expires }}</li>
+          </ul>
         </li>
       </ul>
     </section>

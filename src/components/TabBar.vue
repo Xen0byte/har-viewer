@@ -180,6 +180,10 @@
       &.active {
         background-color: var(--color-active);
         color: #f8f9fa;
+
+        &:hover {
+          background-color: var(--color-active);
+        }
       }
 
       &:hover {

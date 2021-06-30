@@ -27,10 +27,24 @@
     <b>Request on {{ data.startedDateTime }}</b>
     <section style="margin-top: .5rem;">
       <h1>General</h1>
-      <b>Request URL</b>: {{ data.request.url.split("?")[0] }}<br>
-      <b>Version</b>: {{ data.request.httpVersion }}<br>
-      <b>Request method</b>: {{ data.request.method }}<br>
-      <b>Remote Address</b>: {{ data.serverIPAddress }}
+      <table>
+        <tr>
+          <th>Request URL</th>
+          <td v-text="data.request.url.split('?')[0]" />
+        </tr>
+        <tr>
+          <th>Request Method</th>
+          <td v-text="data.request.method" />
+        </tr>
+        <tr>
+          <th>HTTP Version</th>
+          <td v-text="data.request.httpVersion" />
+        </tr>
+        <tr>
+          <th>Remote Address</th>
+          <td v-text="data.serverIPAddress" />
+        </tr>
+      </table>
     </section>
     <section>
       <h1>Headers</h1>
@@ -56,9 +70,20 @@
     </section>
     <section>
       <h1>Size</h1>
-      <b>Headers</b>: {{ data.request.headersSize }} bytes<br>
-      <b>Body</b>: {{ data.request.bodySize }} bytes<br>
-      <b>Total</b>: {{ data.request.headersSize + data.request.bodySize }} bytes
+      <table>
+        <tr>
+          <th>Headers</th>
+          <td>{{ data.request.headersSize }} bytes</td>
+        </tr>
+        <tr>
+          <th>Body</th>
+          <td>{{ data.request.bodySize }} bytes</td>
+        </tr>
+        <tr>
+          <th>Total</th>
+          <td>{{ data.request.headersSize + data.request.bodySize }} bytes</td>
+        </tr>
+      </table>
     </section>
     <section v-if="data._initiator">
       <h1>Initiator</h1>
