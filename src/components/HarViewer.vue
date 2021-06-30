@@ -1,5 +1,5 @@
 <script>
-  import { ref, onMounted, onBeforeUnmount } from "vue";
+  import { ref } from "vue";
   import svgChevronLeft from "@mdi/svg/svg/chevron-left.svg";
 
   import RequestCard from "./RequestCard";
@@ -32,8 +32,7 @@
     },
     setup(props) {
       const selectedEntry = ref(null);
-      const filteredData = ref([]);
-      const slowMode = ref(false);
+      const filteredData = ref(props.data.entries);
       const showDialog = ref(false);
       const currentTab = ref("request");
 
@@ -45,51 +44,10 @@
         }
       };
 
-      let onScroll;
-
-      onMounted(() => {
-        if (props.data.entries.length < 100) {
-          filteredData.value = props.data.entries;
-          slowMode.value = false;
-          return;
-        }
-
-        slowMode.value = true;
-        const initialItems = 100;
-        filteredData.value = props.data.entries.slice(0, initialItems);
-
-        let addedElement = initialItems;
-
-        const list = window.document.querySelector(".request-list");
-
-        onScroll = ({ target }) => {
-          const { scrollTop } = target;
-
-          if (scrollTop > target.scrollHeight - target.scrollHeight / 5) {
-            filteredData.value.push(props.data.entries[addedElement]);
-            addedElement += 1;
-
-            if (addedElement >= props.data.entries.length) {
-              list.removeEventListener("scroll", onScroll);
-            }
-          }
-        };
-
-        list.addEventListener("scroll", onScroll);
-      });
-
-      onBeforeUnmount(() => {
-        if (onScroll) {
-          window.document.querySelector(".request-list")
-            .removeEventListener("scroll", onScroll);
-        }
-      });
-
       return {
         svgChevronLeft,
         selectedEntry,
         filteredData,
-        slowMode,
         onSelect,
         showDialog,
         currentTab,
@@ -99,12 +57,6 @@
 </script>
 
 <template>
-  <div
-    v-if="slowMode"
-    class="warning"
-  >
-    Your file contains more than 100 items - enabled slow mode!
-  </div>
   <main class="har-viewer">
     <aside class="request-list">
       <RequestCard
