@@ -33,9 +33,7 @@ more people can benefit from it.
 
 ## Roadmap
 
-- Filtering, Grouping and Sorting
-- Better mobile experience
-- Better exporting
+- Export Feature (filters, redact, postman)
 
 ## Contributing
 
