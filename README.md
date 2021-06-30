@@ -1,17 +1,40 @@
-# HAR Viewer
+<p align="center">
+  <a href="https://github.com/develerik/har-viewer">
+    <img src="src/assets/icon.svg" alt="Logo" width="80" height="80">
+  </a>
 
-[![license](https://img.shields.io/github/license/develerik/har-viewer.svg)](LICENSE)
+  <h3 align="center">HAR Viewer</h3>
 
-Simple viewer for HTTP Archives. All processing is done locally on your device.
+  <p align="center">
+    Simple viewer for HTTP Archives
+    <br />
+    <a href="https://github.com/develerik/har-viewer"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://develerik.github.io/har-viewer">View Demo</a>
+    ·
+    <a href="https://github.com/develerik/har-viewer/issues/new/choose">Report Bug</a>
+    ·
+    <a href="https://github.com/develerik/har-viewer/issues/new/choose">Request Feature</a>
+  </p>
+</p>
 
-## Table of Contents
+## About The Project
 
-- [Usage](#usage)
-- [Support](#support)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [Maintainers](#maintainers)
-- [License](#license)
+<div align="center">
+  <img align="center" src="docs/screenshot.png" alt="Logo" width="720">
+</div>
+<br />
+
+**HAR Viewer** is an easy to use viewer for HTTP Archive files. All processing is done locally on your device.
+
+The following features are supported:
+- Loading `.har` files from file or url
+- Filter entries on Method, Status Code, Domain and Resource Type
+- Sort entries by Status Code and Timing
+- Group entries by Method, Status Code, Status Type, Domain and Resource Type
+- Offline usage (PWA)
+- Usable UI on mobile devices
 
 ## Usage
 
@@ -21,7 +44,16 @@ Simple viewer for HTTP Archives. All processing is done locally on your device.
    - Option 2: Open a file from a remote url
 3. Analyze your file
 
-## Support
+## Roadmap
+
+- Export Feature (filters, redact, postman)
+- Handle files that contain multiple pages
+- Show general information about the creator of the file
+- Improve handling of large files
+
+See the [open issues](https://github.com/develerik/har-viewer/issues) for a list of proposed features (and known issues).
+
+## Get Support
 
 This project is maintained by [@develerik](https://github.com/develerik). Please understand that we won't be able to
 provide individual support via email. We also believe that help is much more valuable if it's shared publicly, so that
@@ -31,11 +63,16 @@ more people can benefit from it.
 - [**Requests a new feature**](https://github.com/develerik/har-viewer/issues/new?labels=enhancement&template=feature_request.md)
 - [**Report a security vulnerability**](https://github.com/develerik/har-viewer/issues/new?labels=vulnerability&template=vulnerability_report.md)
 
-## Roadmap
-
-- Export Feature (filters, redact, postman)
 
 ## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct.
 
