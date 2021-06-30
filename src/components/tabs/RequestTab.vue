@@ -29,7 +29,9 @@
       <h1>General</h1>
       <table>
         <tr>
-          <th>Request URL</th>
+          <th style="min-width: 140px;">
+            Request URL
+          </th>
           <td v-text="data.request.url.split('?')[0]" />
         </tr>
         <tr>
