@@ -35,7 +35,7 @@
       },
     },
     setup(props) {
-      const selectedEntry = ref(null);
+      const selectedIndex = ref(-1);
       const showDialog = ref(false);
       const currentTab = ref("request");
 
@@ -114,17 +114,22 @@
               group = o.request.method;
             } else if (groupBy === "status") {
               // eslint-disable-next-line no-underscore-dangle
-              group = `${o.response.status} - ${o.response.statusText || o.respose._error}`;
+              if (o.response.status === 0) {
+                // eslint-disable-next-line no-underscore-dangle
+                group = o.response.statusText || o.response._error || "Unknown";
+              } else {
+                group = o.response.status;
+              }
             } else if (groupBy === "status-type") {
-              if (props.data.response.status < 0 && props.data.response.status < 200) {
+              if (o.response.status < 0 && o.response.status < 200) {
                 group = "Informational";
-              } else if (props.data.response.status > 199 && props.data.response.status < 300) {
+              } else if (o.response.status > 199 && o.response.status < 300) {
                 group = "Success";
-              } else if (props.data.response.status > 299 && props.data.response.status < 400) {
+              } else if (o.response.status > 299 && o.response.status < 400) {
                 group = "Redirection";
-              } else if (props.data.response.status > 399 && props.data.response.status < 500) {
+              } else if (o.response.status > 399 && o.response.status < 500) {
                 group = "Client Error";
-              } else if (props.data.response.status > 499) {
+              } else if (o.response.status > 499) {
                 group = "Server Error";
               } else {
                 group = "Unknown";
@@ -156,9 +161,17 @@
 
       const groups = computed(() => uniqueArrayByProperty(filteredData.value, o => o.group));
 
-      const onSelect = entry => {
+      const selectedEntry = computed(() => {
+        if (selectedIndex.value === -1) {
+          return null;
+        }
+
+        return filteredData.value[selectedIndex.value];
+      });
+
+      const onSelect = idx => {
         currentTab.value = "request";
-        selectedEntry.value = entry;
+        selectedIndex.value = idx;
         if (window.innerWidth <= 475) {
           showDialog.value = true;
         }
@@ -167,6 +180,7 @@
       return {
         svgChevronLeft,
         selectedEntry,
+        selectedIndex,
         filteredData,
         groups,
         onSelect,
@@ -194,8 +208,8 @@
               v-for="(entry, i) in filteredData.filter(o => o.group === group)"
               :key="i"
               :data="entry"
-              :active="selectedEntry === entry"
-              @select="() => onSelect(entry)"
+              :active="selectedEntry === i"
+              @select="() => onSelect(i)"
             />
           </div>
         </template>
@@ -205,8 +219,8 @@
           v-for="(entry, i) in filteredData"
           :key="i"
           :data="entry"
-          :active="selectedEntry === entry"
-          @select="() => onSelect(entry)"
+          :active="selectedEntry === i"
+          @select="() => onSelect(i)"
         />
       </template>
     </aside>
