@@ -108,4 +108,14 @@
     max-height: 75vh;
     max-width: 75vw;
   }
+
+  @media (max-width: 475px) {
+    .modal-container {
+      width: 100vw;
+      height: 100vh;
+      max-width: 100vw;
+      max-height: 100vh;
+      border-radius: 0;
+    }
+  }
 </style>
