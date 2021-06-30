@@ -1,4 +1,6 @@
 <script>
+  import { computed } from "vue";
+
   export default {
     name: "ResponseContentTab",
     props: {
@@ -6,6 +8,15 @@
         type: Object,
         required: true,
       },
+    },
+    setup(props) {
+      const hasImage = computed(() => props.data.response.content.encoding === "base64"
+        && props.data.response.content.mimeType.startsWith("image/")
+        && props.data.response.content.text);
+
+      return {
+        hasImage,
+      };
     },
   };
 </script>
@@ -32,7 +43,7 @@
         v-if="data.response.content.comment"
         v-text="data.response.content.comment"
       />
-      <div v-if="data.response.content.encoding === 'base64' && data.response.content.mimeType.startsWith('image/') && data.response.content.text">
+      <div v-if="hasImage">
         <img :src="`data:${data.response.content.mimeType};base64,${data.response.content.text}`">
       </div>
       <div v-else>

@@ -6,28 +6,39 @@
   export default {
     name: "PropDialog",
     components: { Modal },
+    props: {
+      filter: {
+        type: Object,
+        default: () => ({}),
+      },
+    },
     emits: ["apply", "close"],
-    setup(_, { emit }) {
-      const methods = ref("");
-      const status = ref("");
-      const resType = ref("");
+    setup(props, { emit }) {
+      const methods = ref(props.filter.filter.methods);
+      const status = ref(props.filter.filter.status);
+      const resType = ref(props.filter.filter.resType);
+      const domains = ref(props.filter.filter.domains);
 
-      const sortBy = ref("");
-      const groupBy = ref("");
+      const sortBy = ref(props.filter.sortBy);
+      const groupBy = ref(props.filter.groupBy);
 
       const onClose = () => emit("close");
-      const onApply = () => emit("apply", {
-        filter: {
-          methods: methods.value,
-          status: status.value,
-          resType: resType.value,
-        },
-        sortBy: sortBy.value,
-        groupBy: groupBy.value,
-      });
+      const onApply = () => {
+        emit("apply", {
+          filter: {
+            methods: methods.value.toLowerCase(),
+            status: status.value,
+            resType: resType.value.toLowerCase(),
+            domains: domains.value.toLowerCase(),
+          },
+          sortBy: sortBy.value,
+          groupBy: groupBy.value,
+        });
+      };
       const onReset = () => {
         methods.value = "";
         status.value = "";
+        domains.value = "";
         resType.value = "";
         sortBy.value = "";
         groupBy.value = "";
@@ -36,6 +47,7 @@
       return {
         methods,
         status,
+        domains,
         resType,
         sortBy,
         groupBy,
@@ -56,47 +68,55 @@
       class="form"
       @submit.prevent="onApply"
     >
-      <fieldset style="margin-right: .75rem;">
+      <fieldset style="margin-right: .75rem; max-width: 300px;">
         <legend>Filter</legend>
-        <b>Methods</b><br>
+        <b>Methods</b>
         <input
           v-model="methods"
+          style="margin-bottom: .5rem;"
           type="text"
-        ><br>
-        <b>Status</b><br>
+        >
+        <b>Status</b>
         <input
           v-model="status"
+          style="margin-bottom: .5rem;"
           type="text"
-        ><br>
-        <b>Resource Type</b><br>
+        >
+        <b>Domains</b>
+        <input
+          v-model="domains"
+          style="margin-bottom: .5rem;"
+          type="text"
+        >
+        <b>Resource Types</b>
         <input
           v-model="resType"
           type="text"
         >
       </fieldset>
-      <div style="min-width: 175px;">
-        <b>Sort By</b><br>
-        <select v-model="sortBy">
+      <div style="max-width: 200px; padding: .5rem">
+        <b>Sort By</b>
+        <select
+          v-model="sortBy"
+          style="margin-bottom: .5rem;"
+        >
           <option value="">
             Nothing
           </option>
-          <option value="method">
-            Method
-          </option>
           <option value="status">
-            Status
+            Status (Ascending)
           </option>
-          <option value="status-type">
-            Status Type
+          <option value="status-reverse">
+            Status (Descending)
           </option>
-          <option value="resource-type">
-            Resource Type
+          <option value="timing">
+            Timing (Ascending)
           </option>
-          <option value="domain">
-            Domain
+          <option value="timing-reverse">
+            Timing (Descending)
           </option>
-        </select><br>
-        <b>Group By</b><br>
+        </select>
+        <b>Group By</b>
         <select v-model="groupBy">
           <option value="">
             Nothing
@@ -152,11 +172,16 @@
   .form {
     display: flex;
     user-select: none;
+    flex-direction: column;
   }
 
   fieldset {
     border-color: var(--color-background-dark);
     border-radius: .25rem;
+  }
+
+  select {
+    cursor: pointer;
   }
 
   input, select {
@@ -168,6 +193,7 @@
     color: var(--color-text);
     width: 100%;
     appearance: none;
+    margin-top: .25rem;
   }
 
   .btn {

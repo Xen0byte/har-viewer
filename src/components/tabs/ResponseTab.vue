@@ -1,5 +1,5 @@
 <script>
-  import { ref } from "vue";
+  import { ref, computed } from "vue";
 
   export default {
     name: "ResponseTab",
@@ -15,8 +15,13 @@
       filteredHeaders.value = props.data.response.headers
         .filter(h => h.name !== "set-cookie");
 
+      const totalResponseSize = computed(() => props.data.response.headersSize + (props.data.response.bodySize === -1
+        ? props.data.response.content.size
+        : props.data.response.bodySize));
+
       return {
         filteredHeaders,
+        totalResponseSize,
       };
     },
   };
@@ -64,7 +69,7 @@
         </tr>
         <tr>
           <th>Total</th>
-          <td>{{ data.response.headersSize + (data.response.bodySize === -1 ? data.response.content.size : data.response.bodySize) }} bytes</td>
+          <td>{{ totalResponseSize }} bytes</td>
         </tr>
       </table>
     </section>

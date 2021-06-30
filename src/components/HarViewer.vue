@@ -1,5 +1,5 @@
 <script>
-  import { ref } from "vue";
+  import { ref, computed } from "vue";
   import svgChevronLeft from "@mdi/svg/svg/chevron-left.svg";
 
   import RequestCard from "./RequestCard";
@@ -29,12 +29,132 @@
         type: Object,
         default: () => ({}),
       },
+      filter: {
+        type: Object,
+        default: () => ({}),
+      },
     },
     setup(props) {
       const selectedEntry = ref(null);
-      const filteredData = ref(props.data.entries);
       const showDialog = ref(false);
       const currentTab = ref("request");
+
+      const compare = (a, b) => {
+        if (a < b) {
+          return -1;
+        }
+
+        if (a > b) {
+          return 1;
+        }
+
+        return 0;
+      };
+
+      const filteredData = computed(() => {
+        const {
+          filter,
+          sortBy,
+          groupBy,
+        } = props.filter;
+        let clone = [...props.data.entries];
+
+        if (filter) {
+          if (filter.methods) {
+            const methods = filter.methods.split(",");
+            clone = clone.filter(o => methods.includes(o.request.method.toLowerCase()));
+          }
+
+          if (filter.status) {
+            const status = filter.status.split(",");
+            clone = clone.filter(o => status.includes(o.response.status.toString()));
+          }
+
+          if (filter.resType) {
+            const resTypes = filter.resType.split(",");
+            // eslint-disable-next-line no-underscore-dangle
+            clone = clone.filter(o => resTypes.includes(o._resourceType.toLowerCase()));
+          }
+
+          if (filter.domains) {
+            const domains = filter.domains.split(",");
+            clone = clone.filter(o => domains.includes((new URL(o.request.url)).hostname.toLowerCase()));
+          }
+        }
+
+        if (sortBy) {
+          let sortFunc;
+
+          switch (sortBy) {
+            case "status":
+              sortFunc = (a, b) => compare(a.response.status, b.response.status);
+              break;
+            case "status-reverse":
+              sortFunc = (a, b) => compare(b.response.status, a.response.status);
+              break;
+            case "timing":
+              sortFunc = (a, b) => compare(a.time, b.time);
+              break;
+            case "timing-reverse":
+              sortFunc = (a, b) => compare(b.time, a.time);
+              break;
+            default:
+              sortFunc = null;
+              break;
+          }
+
+          clone = clone.sort(sortFunc);
+        }
+
+        if (groupBy) {
+          clone = clone.map(o => {
+            let group = "";
+
+            if (groupBy === "method") {
+              group = o.request.method;
+            } else if (groupBy === "status") {
+              // eslint-disable-next-line no-underscore-dangle
+              group = `${o.response.status} - ${o.response.statusText || o.respose._error}`;
+            } else if (groupBy === "status-type") {
+              if (props.data.response.status < 0 && props.data.response.status < 200) {
+                group = "Informational";
+              } else if (props.data.response.status > 199 && props.data.response.status < 300) {
+                group = "Success";
+              } else if (props.data.response.status > 299 && props.data.response.status < 400) {
+                group = "Redirection";
+              } else if (props.data.response.status > 399 && props.data.response.status < 500) {
+                group = "Client Error";
+              } else if (props.data.response.status > 499) {
+                group = "Server Error";
+              } else {
+                group = "Unknown";
+              }
+            } else if (groupBy === "resource-type") {
+              // eslint-disable-next-line no-underscore-dangle
+              group = o._resourceType;
+            } else if (groupBy === "domain") {
+              group = (new URL(o.request.url)).hostname;
+            }
+
+            return {
+              ...o,
+              group,
+            };
+          });
+        }
+
+        return clone;
+      });
+
+      const uniqueArrayByProperty = (arr, cb) => arr.reduce((prev, item) => {
+        const v = cb(item);
+        if (!prev.includes(v)) {
+          prev.push(v);
+        }
+        return prev;
+      }, []);
+
+      const groups = computed(() => uniqueArrayByProperty(filteredData.value, o => o.group));
 
       const onSelect = entry => {
         currentTab.value = "request";
@@ -48,6 +168,7 @@
         svgChevronLeft,
         selectedEntry,
         filteredData,
+        groups,
         onSelect,
         showDialog,
         currentTab,
@@ -59,13 +180,35 @@
 <template>
   <main class="har-viewer">
     <aside class="request-list">
-      <RequestCard
-        v-for="(entry, i) in filteredData"
-        :key="i"
-        :data="entry"
-        :active="selectedEntry === entry"
-        @select="() => onSelect(entry)"
-      />
+      <template v-if="groups.length !== 0">
+        <template
+          v-for="group in groups"
+          :key="group"
+        >
+          <b
+            class="group-label"
+            v-text="group"
+          />
+          <div class="group">
+            <RequestCard
+              v-for="(entry, i) in filteredData.filter(o => o.group === group)"
+              :key="i"
+              :data="entry"
+              :active="selectedEntry === entry"
+              @select="() => onSelect(entry)"
+            />
+          </div>
+        </template>
+      </template>
+      <template v-else>
+        <RequestCard
+          v-for="(entry, i) in filteredData"
+          :key="i"
+          :data="entry"
+          :active="selectedEntry === entry"
+          @select="() => onSelect(entry)"
+        />
+      </template>
     </aside>
     <div
       class="request-details"
@@ -131,6 +274,18 @@
   lang="scss"
   scoped
 >
+  .group-label {
+    color: var(--color-text);
+  }
+
+  .group {
+    margin-top: .5rem;
+
+    &:not(:last-of-type) {
+      margin-bottom: 1.5rem;
+    }
+  }
+
   .har-viewer {
     display: flex;
     flex-grow: 1;

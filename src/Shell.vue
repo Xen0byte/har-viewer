@@ -25,6 +25,16 @@
       const isLoading = ref(false);
       const hasError = ref(null);
       const showPropDialog = ref(false);
+      const propFilter = ref({
+        filter: {
+          methods: "",
+          status: "",
+          resType: "",
+          domains: "",
+        },
+        sortBy: "",
+        groupBy: "",
+      });
       const isStandalone = ref(window.matchMedia("(display-mode: standalone)").matches
         || (window.navigator.standalone)
         || document.referrer.includes("android-app://"));
@@ -38,7 +48,8 @@
         window.height = window.innerHeight;
       });
 
-      const onPropApply = () => {
+      const onPropApply = filter => {
+        propFilter.value = filter;
         showPropDialog.value = false;
       };
 
@@ -125,6 +136,7 @@
         isStandalone,
         showPropDialog,
         onPropApply,
+        propFilter,
       };
     },
   };
@@ -153,11 +165,13 @@
   <HarViewer
     v-if="!isLoading && !hasError && !!data"
     :data="data"
+    :filter="propFilter"
   />
   <main v-if="!hasError && !isLoading && !data" />
   <Footer v-if="!isStandalone" />
   <PropDialog
     v-if="showPropDialog"
+    :filter="propFilter"
     @apply="onPropApply"
     @close="showPropDialog = false"
   />
