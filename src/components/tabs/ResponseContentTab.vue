@@ -43,15 +43,19 @@
         v-if="data.response.content.comment"
         v-text="data.response.content.comment"
       />
-      <div v-if="hasImage">
-        <img :src="`data:${data.response.content.mimeType};base64,${data.response.content.text}`">
-      </div>
-      <div v-else>
-        <details v-if="data.response.content.text">
+      <div v-if="data.response.content.text">
+        <details>
           <summary style="user-select: none;">
             Show content
           </summary>
-          <code style="font-family: monospace;">
+          <img
+            v-if="hasImage"
+            :src="`data:${data.response.content.mimeType};base64,${data.response.content.text}`"
+          >
+          <code
+            v-else
+            style="font-family: monospace;"
+          >
             {{ data.response.content.text.replace(")]}'\n", "") }}
           </code>
         </details>
