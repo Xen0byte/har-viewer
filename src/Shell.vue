@@ -25,6 +25,7 @@
       const isLoading = ref(false);
       const hasError = ref(null);
       const showPropDialog = ref(false);
+      const propAttached = ref(false);
       const propFilter = ref({
         filter: {
           methods: "",
@@ -51,6 +52,11 @@
       const onPropApply = filter => {
         propFilter.value = filter;
         showPropDialog.value = false;
+      };
+
+      const onPropAttach = () => {
+        showPropDialog.value = false;
+        propAttached.value = !propAttached.value;
       };
 
       const openFile = () => {
@@ -136,7 +142,9 @@
         isStandalone,
         showPropDialog,
         onPropApply,
+        onPropAttach,
         propFilter,
+        propAttached,
       };
     },
   };
@@ -162,19 +170,30 @@
     <img :src="svgAlertCircleOutline">
     <span v-text="hasError" />
   </main>
-  <HarViewer
+  <main
     v-if="!isLoading && !hasError && !!data"
-    :data="data"
-    :filter="propFilter"
-  />
+    class="main"
+  >
+    <HarViewer
+      :data="data"
+      :filter="propFilter"
+    />
+    <aside
+      v-if="showPropDialog || propAttached"
+      class="propdialog-container"
+    >
+      <PropDialog
+        v-if="showPropDialog || propAttached"
+        :filter="propFilter"
+        :is-attached="propAttached"
+        @apply="onPropApply"
+        @close="showPropDialog = false"
+        @attach="onPropAttach"
+      />
+    </aside>
+  </main>
   <main v-if="!hasError && !isLoading && !data" />
   <Footer v-if="!isStandalone" />
-  <PropDialog
-    v-if="showPropDialog"
-    :filter="propFilter"
-    @apply="onPropApply"
-    @close="showPropDialog = false"
-  />
 </template>
 
 <style lang="scss">
@@ -193,6 +212,16 @@
     align-items: center;
     justify-content: center;
     user-select: none;
+  }
+
+  .propdialog-container {
+    height: 100%;
+    border-left: var(--color-background-dark) solid 2px;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: row;
   }
 
   .error {

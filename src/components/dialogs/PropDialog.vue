@@ -1,5 +1,7 @@
 <script>
   import { ref } from "vue";
+  import svgPin from "@mdi/svg/svg/pin.svg";
+  import svgPinOff from "@mdi/svg/svg/pin-off.svg";
 
   import Modal from "../Modal";
 
@@ -11,8 +13,12 @@
         type: Object,
         default: () => ({}),
       },
+      isAttached: {
+        type: Boolean,
+        default: false,
+      },
     },
-    emits: ["apply", "close"],
+    emits: ["apply", "close", "attach"],
     setup(props, { emit }) {
       const methods = ref(props.filter.filter.methods);
       const status = ref(props.filter.filter.status);
@@ -35,6 +41,7 @@
           groupBy: groupBy.value,
         });
       };
+
       const onReset = () => {
         methods.value = "";
         status.value = "";
@@ -43,6 +50,8 @@
         sortBy.value = "";
         groupBy.value = "";
       };
+
+      const onAttach = () => emit("attach");
 
       return {
         methods,
@@ -54,21 +63,38 @@
         onClose,
         onApply,
         onReset,
+        onAttach,
+        svgPin,
+        svgPinOff,
       };
     },
   };
 </script>
 
 <template>
-  <modal>
+  <modal :is-attached="isAttached">
     <template #header>
-      Filter / Sort / Group
+      <div class="dialog-header">
+        <span v-if="isAttached" />
+        <span v-else>Filter / Sort / Group</span>
+        <button
+          class="btn btn-icon"
+          type="button"
+          @click="onAttach"
+        >
+          <img
+            v-if="isAttached"
+            :src="svgPinOff"
+          >
+          <img
+            v-else
+            :src="svgPin"
+          >
+        </button>
+      </div>
     </template>
-    <form
-      class="form"
-      @submit.prevent="onApply"
-    >
-      <fieldset style="margin-right: .75rem; max-width: 300px;">
+    <form class="form">
+      <fieldset class="filter-group">
         <legend>Filter</legend>
         <b>Methods</b>
         <input
@@ -94,7 +120,7 @@
           type="text"
         >
       </fieldset>
-      <div style="max-width: 200px; padding: .5rem">
+      <div style="max-width: 300px; padding: .5rem">
         <b>Sort By</b>
         <select
           v-model="sortBy"
@@ -148,6 +174,7 @@
         Reset
       </button>
       <button
+        v-if="!isAttached"
         class="btn"
         type="button"
         @click="onClose"
@@ -175,9 +202,30 @@
     flex-direction: column;
   }
 
-  fieldset {
+  .attached {
+    & .btn-icon > img {
+      filter: var(--filter-background-text);
+    }
+  }
+
+  .btn-icon {
+    background-color: unset !important;
+
+    & > img {
+      filter: var(--filter-primary-text);
+    }
+  }
+
+  .dialog-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .filter-group {
     border-color: var(--color-background-dark);
     border-radius: .25rem;
+    margin-right: .75rem; max-width: 300px;
   }
 
   select {
@@ -199,6 +247,7 @@
   .btn {
     &.btn-reset {
       background-color: var(--color-background-dark);
+      color: var(--color-text);
     }
 
     background-color: var(--color-primary);

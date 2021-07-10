@@ -163,7 +163,7 @@
     & .btn {
       background-color: var(--color-background-dark);
       border: none;
-      color: #f8f9fa;
+      color: var(--color-text);
       padding: .375rem .5rem;
       cursor: pointer;
       font-size: 1rem;

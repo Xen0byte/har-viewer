@@ -50,7 +50,6 @@ The following features are supported:
 - Handle files that contain multiple pages
 - Show general information about the creator of the file
 - Improve handling of large files
-- Make filter dialog attachable to main view
 - More filter options (allow ranges, allow excludes) and better explain them
 
 See the [open issues](https://github.com/develerik/har-viewer/issues) for a list of proposed features (and known issues).

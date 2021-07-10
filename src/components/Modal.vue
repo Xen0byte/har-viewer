@@ -3,6 +3,12 @@
 
   export default {
     name: "Modal",
+    props: {
+      isAttached: {
+        type: Boolean,
+        default: false,
+      },
+    },
     emits: ["close"],
     setup(_, { emit }) {
       const emitClose = () => emit("close");
@@ -19,12 +25,12 @@
 
 <template>
   <div
-    class="modal-mask"
+    :class="{ 'modal-mask': !isAttached, attached: isAttached }"
     @click="emitClose"
   >
-    <div class="modal-wrapper">
+    <div :class="{ 'modal-wrapper': !isAttached }">
       <div
-        class="modal-container"
+        :class="{ 'modal-container': !isAttached }"
         @click.stop
       >
         <div class="modal-header">
@@ -53,7 +59,7 @@
   scoped
 >
   h2 {
-    color: var(--color-primary-500);
+    color: var(--color-primary-text);
     user-select: none;
     margin: 0;
   }
@@ -62,6 +68,17 @@
     background-color: var(--color-primary);
     padding: .5rem;
     color: white;
+  }
+
+  .attached {
+    & .modal-header {
+      background-color: unset;
+      padding-bottom: 0;
+    }
+
+    & .modal-body {
+      padding-top: 0;
+    }
   }
 
   .modal-footer {

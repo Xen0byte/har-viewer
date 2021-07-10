@@ -192,7 +192,7 @@
 </script>
 
 <template>
-  <main class="har-viewer">
+  <div class="har-viewer">
     <aside class="request-list">
       <template v-if="groups.length !== 0">
         <template
@@ -281,7 +281,7 @@
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <style
@@ -303,7 +303,7 @@
   .har-viewer {
     display: flex;
     flex-grow: 1;
-    height: 0;
+    height: 100%;
     margin-top: .5rem;
     margin-bottom: .5rem;
 
@@ -326,7 +326,7 @@
     }
 
     & .request-list {
-      padding: .25rem .5rem;
+      padding: 0 .5rem .5rem;
       height: 100%;
       max-height: 100%;
       overflow-y: auto;
@@ -338,7 +338,7 @@
       height: 100%;
 
       & .container {
-        padding: .25rem .5rem;
+        padding: .5rem;
         height: 100%;
         display: flex;
         flex-direction: column;
