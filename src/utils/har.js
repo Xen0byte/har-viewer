@@ -58,11 +58,6 @@ export function checkHar(harContent) {
     }
   }
 
-  // eslint-disable-next-line no-param-reassign
-  delete harContent.log.version; // TODO: add when meta view is built
-  // eslint-disable-next-line no-param-reassign
-  delete harContent.log.creator; // TODO: add when meta view is built
-
   return harContent.log;
 }
 

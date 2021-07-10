@@ -4,6 +4,7 @@
   import svgAlertCircleOutline from "@mdi/svg/svg/alert-circle-outline.svg";
 
   import AppBar from "./components/AppBar";
+  import InfoDialog from "./components/dialogs/InfoDialog";
   import PropDialog from "./components/dialogs/PropDialog";
   import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
@@ -14,6 +15,7 @@
   export default {
     name: "Shell",
     components: {
+      InfoDialog,
       PropDialog,
       Footer,
       AppBar,
@@ -26,6 +28,7 @@
       const hasError = ref(null);
       const showPropDialog = ref(false);
       const propAttached = ref(false);
+      const showInfoDialog = ref(false);
       const propFilter = ref({
         filter: {
           methods: "",
@@ -124,6 +127,9 @@
           case "sort-and-filter":
             showPropDialog.value = true;
             break;
+          case "info":
+            showInfoDialog.value = true;
+            break;
           default:
             // eslint-disable-next-line no-console
             console.error(`unsupported action: ${action}`);
@@ -145,6 +151,7 @@
         onPropAttach,
         propFilter,
         propAttached,
+        showInfoDialog,
       };
     },
   };
@@ -194,6 +201,12 @@
   </main>
   <main v-if="!hasError && !isLoading && !data" />
   <Footer v-if="!isStandalone" />
+  <InfoDialog
+    v-if="showInfoDialog && data"
+    :creator="data.creator"
+    :version="data.version"
+    @close="showInfoDialog = false"
+  />
 </template>
 
 <style lang="scss">
