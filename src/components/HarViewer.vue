@@ -314,7 +314,7 @@
               v-for="(entry, i) in filteredData.filter(o => o.group === group)"
               :key="i"
               :data="entry"
-              :active="selectedEntry === i"
+              :active="selectedIndex === i"
               @select="() => onSelect(i)"
             />
           </div>
@@ -325,7 +325,7 @@
           v-for="(entry, i) in filteredData"
           :key="i"
           :data="entry"
-          :active="selectedEntry === i"
+          :active="selectedIndex === i"
           @select="() => onSelect(i)"
         />
       </template>
