@@ -62,23 +62,129 @@
         if (filter) {
           if (filter.methods) {
             const methods = filter.methods.split(",");
-            clone = clone.filter(o => methods.includes(o.request.method.toLowerCase()));
+            const includes = methods.filter(m => !m.startsWith("!"));
+            const excludes = methods.filter(m => m.startsWith("!"))
+              .map(m => m.replace("!", ""));
+
+            clone = clone.filter(o => {
+              const include = includes.includes(o.request.method.toLowerCase());
+              const exclude = excludes.includes(o.request.method.toLowerCase());
+
+              if (include) {
+                return true;
+              }
+
+              if (exclude) {
+                return false;
+              }
+
+              return !(includes.length !== 0 && !include);
+            });
           }
 
           if (filter.status) {
             const status = filter.status.split(",");
-            clone = clone.filter(o => status.includes(o.response.status.toString()));
+            const includes = status.filter(m => !m.startsWith("!") && !m.includes("-"));
+            const includeRanges = status.filter(m => !m.startsWith("!") && m.includes("-"))
+              .map(m => {
+                const parts = m.split("-");
+                return [Number(parts[0]), Number(parts[1])];
+              });
+            const excludes = status.filter(m => m.startsWith("!") && !m.includes("-"))
+              .map(m => m.replace("!", ""));
+            const excludeRanges = status.filter(m => m.startsWith("!") && m.includes("-"))
+              .map(m => {
+                const parts = m.replace("!", "")
+                  .split("-");
+                return [Number(parts[0]), Number(parts[1])];
+              });
+
+            const isInRanges = (code, ranges) => {
+              for (let i = 0; i < ranges.length; i++) {
+                if (code >= ranges[i][0] && code <= ranges[i][1]) {
+                  return true;
+                }
+              }
+
+              return false;
+            };
+
+            clone = clone.filter(o => {
+              const include = includes.includes(o.response.status.toString())
+                || isInRanges(o.response.status, includeRanges);
+              const exclude = excludes.includes(o.response.status.toString())
+                || isInRanges(o.response.status, excludeRanges);
+
+              if (include) {
+                return true;
+              }
+
+              if (exclude) {
+                return false;
+              }
+
+              return !((includes.length !== 0 || includeRanges.length) !== 0 && !include);
+            });
           }
 
           if (filter.resType) {
             const resTypes = filter.resType.split(",");
-            // eslint-disable-next-line no-underscore-dangle
-            clone = clone.filter(o => resTypes.includes(o._resourceType.toLowerCase()));
+            const includes = resTypes.filter(m => !m.startsWith("!"));
+            const excludes = resTypes.filter(m => m.startsWith("!"))
+              .map(m => m.replace("!", ""));
+
+            clone = clone.filter(o => {
+              // eslint-disable-next-line no-underscore-dangle
+              const include = includes.includes(o._resourceType.toLowerCase());
+              // eslint-disable-next-line no-underscore-dangle
+              const exclude = excludes.includes(o._resourceType.toLowerCase());
+
+              if (include) {
+                return true;
+              }
+
+              if (exclude) {
+                return false;
+              }
+
+              return !(includes.length !== 0 && !include);
+            });
           }
 
           if (filter.domains) {
             const domains = filter.domains.split(",");
-            clone = clone.filter(o => domains.includes((new URL(o.request.url)).hostname.toLowerCase()));
+            const includes = domains.filter(m => !m.startsWith("!"));
+            const excludes = domains.filter(m => m.startsWith("!"))
+              .map(m => m.replace("!", ""));
+
+            const regexMatch = (domain, patterns) => {
+              for (let i = 0; i < patterns.length; i++) {
+                const match = new RegExp(`^${patterns[i].replace(/\*/g, ".*")}$`).test(domain);
+
+                if (match) {
+                  return true;
+                }
+              }
+
+              return false;
+            };
+
+            clone = clone.filter(o => {
+              const include = includes.includes((new URL(o.request.url)).hostname.toLowerCase())
+                || regexMatch((new URL(o.request.url)).hostname.toLowerCase(), includes);
+              const exclude = excludes.includes((new URL(o.request.url)).hostname.toLowerCase())
+                || regexMatch((new URL(o.request.url)).hostname.toLowerCase(), excludes);
+
+              if (include) {
+                return true;
+              }
+
+              if (exclude) {
+                return false;
+              }
+
+              return !(includes.length !== 0 && !include);
+            });
           }
         }
 
@@ -153,7 +259,7 @@
 
       const uniqueArrayByProperty = (arr, cb) => arr.reduce((prev, item) => {
         const v = cb(item);
-        if (!prev.includes(v)) {
+        if (!prev.includes(v) && v !== undefined) {
           prev.push(v);
         }
         return prev;
@@ -326,7 +432,7 @@
     }
 
     & .request-list {
-      padding: 0 .5rem .5rem;
+      padding: .5rem;
       height: 100%;
       max-height: 100%;
       overflow-y: auto;

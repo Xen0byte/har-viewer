@@ -101,23 +101,27 @@
           v-model="methods"
           style="margin-bottom: .5rem;"
           type="text"
+          title="Multiple methods can be specified separated by commas. Use ! to exclude methods."
         >
         <b>Status</b>
         <input
           v-model="status"
           style="margin-bottom: .5rem;"
           type="text"
+          title="Multiple status can be specified separated by commas or using ranges. Use ! to exclude status."
         >
         <b>Domains</b>
         <input
           v-model="domains"
           style="margin-bottom: .5rem;"
           type="text"
+          title="Multiple domains can be specified separated by commas. Use ! to exclude domains or * as wildcard."
         >
         <b>Resource Types</b>
         <input
           v-model="resType"
           type="text"
+          title="Multiple resource types can be specified separated by commas. Use ! to exclude resource types."
         >
       </fieldset>
       <div style="max-width: 300px; padding: .5rem">
