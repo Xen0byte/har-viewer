@@ -163,7 +163,6 @@ if (isDev) {
     hot: true,
     host: "0.0.0.0",
     historyApiFallback: true,
-    transportMode: "ws",
   };
 } else {
   const { CleanWebpackPlugin } = require("clean-webpack-plugin");
