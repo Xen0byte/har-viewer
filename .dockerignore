@@ -1,0 +1,15 @@
+.github
+dist
+docs
+node_modules
+scripts
+
+.eslintignore
+.eslintrc.yml
+.gitignore
+.nvmrc
+CONTRIBUTING.md
+Dockerfile
+LICENSE
+README.md
+report.html
