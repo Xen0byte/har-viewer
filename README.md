@@ -1,4 +1,4 @@
-<p align="center">
+<div align="center">
   <a href="https://github.com/develerik/har-viewer">
     <img src="src/assets/icon.svg" alt="Logo" width="80" height="80">
   </a>
@@ -17,7 +17,7 @@
     ·
     <a href="https://github.com/develerik/har-viewer/issues/new/choose">Request Feature</a>
   </p>
-</p>
+</div>
 
 ## About The Project
 
