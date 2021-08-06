@@ -230,6 +230,10 @@
   .propdialog-container {
     height: 100%;
     border-left: var(--color-background-dark) solid 2px;
+
+    @media (max-width: 475px) {
+      border-left: unset;
+    }
   }
 
   .main {

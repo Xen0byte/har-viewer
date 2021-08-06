@@ -78,7 +78,7 @@
         <span v-if="isAttached" />
         <span v-else>Filter / Sort / Group</span>
         <button
-          class="btn btn-icon"
+          class="btn btn-icon btn-attach"
           type="button"
           @click="onAttach"
         >
@@ -200,10 +200,23 @@
   lang="scss"
   scoped
 >
+  @media (max-width: 475px) {
+    .btn-attach {
+      display: none !important;
+    }
+
+    ::v-deep(.modal-footer) {
+      & > div {
+        justify-content: center;
+      }
+    }
+  }
+
   .form {
     display: flex;
     user-select: none;
     flex-direction: column;
+    align-items: center;
   }
 
   .attached {

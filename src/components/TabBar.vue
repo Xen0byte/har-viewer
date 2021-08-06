@@ -153,7 +153,7 @@
     & .nav-select {
       padding: .5rem;
       background-color: var(--color-background-dark);
-      border-color: var(--color-background-dark);
+      border: 0;
       color: var(--color-text);
       width: 100%;
       outline: none;

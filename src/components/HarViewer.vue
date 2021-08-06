@@ -437,11 +437,13 @@
       max-height: 100%;
       overflow-y: auto;
       width: 475px;
-      max-width: 100%;
+      max-width: 100vw;
+      z-index: 1;
     }
 
     & .request-details {
       height: 100%;
+      z-index: 2;
 
       & .container {
         padding: .5rem;
