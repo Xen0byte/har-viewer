@@ -1,0 +1,11 @@
+@import "colors";
+@import "scroll";
+@import "reset";
+@import "grid";
+
+.overflow-text {
+  overflow-wrap: anywhere;
+  user-select: text;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

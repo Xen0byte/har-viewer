@@ -22,7 +22,10 @@
 </script>
 
 <template>
-  <article v-if="data.response.content">
+  <article
+    v-if="data.response.content"
+    class="overflow-text"
+  >
     <section>
       <h1>Size</h1>
       {{ data.response.content.size }} bytes
@@ -68,12 +71,7 @@
   lang="scss"
   scoped
 >
-  article {
-    overflow-wrap: anywhere;
-    user-select: text;
-
-    & section:not(:last-of-type) {
-      margin-bottom: .5rem;
-    }
+  section:not(:last-of-type) {
+    margin-bottom: .5rem;
   }
 </style>

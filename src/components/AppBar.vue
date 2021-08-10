@@ -51,7 +51,7 @@
       <button
         v-if="isLoaded"
         type="button"
-        class="btn"
+        class=" btn-primary-dark"
         title="Export"
         style="display: none"
         @click="onExport"
@@ -62,7 +62,7 @@
       <button
         v-if="isLoaded"
         type="button"
-        class="btn"
+        class="btn btn-primary-dark"
         title="Show Info"
         @click="onShowInfo"
       >
@@ -71,7 +71,7 @@
       <button
         v-if="isLoaded"
         type="button"
-        class="btn"
+        class="btn btn-primary-dark"
         title="Filter / Sort / Group"
         @click="onSortAndFilter"
       >
@@ -79,7 +79,7 @@
       </button>
       <button
         type="button"
-        class="btn"
+        class="btn btn-primary-dark"
         title="Open File"
         @click="onOpenFile"
       >
@@ -88,7 +88,7 @@
       </button>
       <button
         type="button"
-        class="btn"
+        class="btn btn-primary-dark"
         title="Load URL"
         @click="onLoadUrl"
       >
@@ -103,28 +103,6 @@
   lang="scss"
   scoped
 >
-  .btn {
-    background-color: var(--color-primary-dark);
-    border: none;
-    color: #ffffff;
-    padding: .375rem .75rem;
-    cursor: pointer;
-    font-size: 1rem;
-    line-height: 1.5;
-    font-weight: 400;
-    border-radius: .25rem;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transition: background-color .15s ease-in-out;
-
-    &:hover {
-      background-color: var(--color-primary-light);
-    }
-  }
-
   .appbar {
     display: flex;
     align-items: center;
@@ -156,7 +134,7 @@
     }
 
     & .brand > h1 {
-      color: white;
+      color: var(--color-primary-text);
       font-size: 1.25rem;
       font-weight: 400;
       line-height: 1.5;

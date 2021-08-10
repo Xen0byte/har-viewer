@@ -28,7 +28,7 @@
 </script>
 
 <template>
-  <article>
+  <article class="overflow-text">
     <div v-if="data.response.status !== 0">
       <b> {{ data.response.status }} {{ data.response.statusText }} {{ data.response.httpVersion }}</b>
     </div>
@@ -81,9 +81,6 @@
   scoped
 >
   article {
-    overflow-wrap: anywhere;
-    user-select: text;
-
     & section:not(:last-of-type) {
       margin-bottom: .5rem;
     }

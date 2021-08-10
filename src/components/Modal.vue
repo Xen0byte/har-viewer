@@ -61,13 +61,12 @@
   h2 {
     color: var(--color-primary-text);
     user-select: none;
-    margin: 0;
   }
 
   .modal-header {
     background-color: var(--color-primary);
     padding: .5rem;
-    color: white;
+    color: var(--color-primary-text);
   }
 
   .attached {

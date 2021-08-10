@@ -44,7 +44,6 @@
     class="tabbar"
   >
     <select
-      class="nav-select"
       :value="currentTab"
       @change="e => onChange(e.target.value)"
     >
@@ -86,7 +85,7 @@
   >
     <button
       :class="{ active: currentTab === 'request' }"
-      class="btn"
+      class="btn btn-dark"
       type="button"
       @click="onChange('request')"
     >
@@ -95,7 +94,7 @@
     <button
       v-if="hasPostData"
       :class="{ active: currentTab === 'post-data' }"
-      class="btn"
+      class="btn btn-dark"
       type="button"
       @click="onChange('post-data')"
     >
@@ -103,7 +102,7 @@
     </button>
     <button
       :class="{ active: currentTab === 'response' }"
-      class="btn"
+      class="btn btn-dark"
       type="button"
       @click="onChange('response')"
     >
@@ -112,7 +111,7 @@
     <button
       v-if="hasResponseContent"
       :class="{ active: currentTab === 'response-content' }"
-      class="btn"
+      class="btn btn-dark"
       type="button"
       @click="onChange('response-content')"
     >
@@ -121,7 +120,7 @@
     <button
       v-if="hasCookies"
       :class="{ active: currentTab === 'cookies' }"
-      class="btn"
+      class="btn btn-dark"
       type="button"
       @click="onChange('cookies')"
     >
@@ -130,7 +129,7 @@
     <button
       v-if="hasTimings"
       :class="{ active: currentTab === 'timing' }"
-      class="btn"
+      class="btn btn-dark"
       type="button"
       @click="onChange('timing')"
     >
@@ -150,44 +149,12 @@
       margin-right: .35rem;
     }
 
-    & .nav-select {
-      padding: .5rem;
-      background-color: var(--color-background-dark);
-      border: 0;
-      color: var(--color-text);
-      width: 100%;
-      outline: none;
-      appearance: none;
-    }
-
-    & .btn {
-      background-color: var(--color-background-dark);
-      border: none;
-      color: var(--color-text);
-      padding: .375rem .5rem;
-      cursor: pointer;
-      font-size: 1rem;
-      line-height: 1.5;
-      font-weight: 400;
-      border-radius: .25rem;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      transition: background-color .15s ease-in-out;
-
-      &.active {
-        background-color: var(--color-active);
-        color: #f8f9fa;
-
-        &:hover {
-          background-color: var(--color-active);
-        }
-      }
+    & .btn.active {
+      background-color: var(--color-active);
+      color: #f8f9fa;
 
       &:hover {
-        background-color: var(--color-primary-light);
+        background-color: var(--color-active);
       }
     }
   }

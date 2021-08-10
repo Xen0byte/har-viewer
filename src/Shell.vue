@@ -172,14 +172,14 @@
   </main>
   <main
     v-if="hasError && !isLoading"
-    class="error"
+    class="error column"
   >
     <img :src="svgAlertCircleOutline">
     <span v-text="hasError" />
   </main>
   <main
     v-if="!isLoading && !hasError && !!data"
-    class="main"
+    class="row"
   >
     <HarViewer
       :data="data"
@@ -211,8 +211,6 @@
 
 <style lang="scss">
   body {
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
     max-height: 100vh;
     overflow: hidden;
@@ -236,14 +234,8 @@
     }
   }
 
-  .main {
-    display: flex;
-    flex-direction: row;
-  }
-
   .error {
     color: #df7b6e;
-    flex-direction: column;
 
     & > span {
       font-weight: 600;

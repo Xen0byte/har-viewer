@@ -23,7 +23,7 @@
 </script>
 
 <template>
-  <article>
+  <article class="overflow-text">
     <b>Request on {{ data.startedDateTime }}</b>
     <section style="margin-top: .5rem;">
       <h1>General</h1>
@@ -121,12 +121,7 @@
   lang="scss"
   scoped
 >
-  article {
-    overflow-wrap: anywhere;
-    user-select: text;
-
-    & section:not(:last-of-type) {
-      margin-bottom: .5rem;
-    }
+  section:not(:last-of-type) {
+    margin-bottom: .5rem;
   }
 </style>

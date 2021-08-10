@@ -85,7 +85,7 @@
       </div>
     </div>
     <div
-      class="url"
+      class="url overflow-text"
       v-text="data.request.url.split('?')[0]"
     />
   </div>
@@ -126,10 +126,7 @@
     }
 
     & > .url {
-      overflow-wrap: anywhere;
-      text-overflow: ellipsis;
       white-space: nowrap;
-      overflow: hidden;
     }
 
     & .tag {

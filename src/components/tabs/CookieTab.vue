@@ -11,7 +11,7 @@
 </script>
 
 <template>
-  <article>
+  <article class="overflow-text">
     <section v-if="data.request.cookies.length !== 0">
       <h1>Sent</h1>
       <ul>
@@ -53,12 +53,7 @@
   lang="scss"
   scoped
 >
-  article {
-    overflow-wrap: anywhere;
-    user-select: text;
-
-    & section:not(:last-of-type) {
-      margin-bottom: .5rem;
-    }
+  section:not(:last-of-type) {
+    margin-bottom: .5rem;
   }
 </style>

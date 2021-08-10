@@ -339,7 +339,7 @@
         class="navbar"
       >
         <button
-          class="btn"
+          class="btn btn-primary-dark"
           type="button"
           @click="showDialog = false; selectedEntry = null"
         >
@@ -348,7 +348,7 @@
       </div>
       <div
         v-if="selectedEntry"
-        class="container"
+        class="container column"
       >
         <TabBar
           :current-tab="currentTab"
@@ -448,8 +448,6 @@
       & .container {
         padding: .5rem;
         height: 100%;
-        display: flex;
-        flex-direction: column;
 
         & .tabs {
           flex-grow: 1;
@@ -485,30 +483,8 @@
           top: 0;
           margin-bottom: .5rem;
 
-          & .btn {
-            background-color: var(--color-primary-dark);
-            border: none;
-            color: #ffffff;
-            padding: .375rem .75rem;
-            cursor: pointer;
-            font-size: 1rem;
-            line-height: 1.5;
-            font-weight: 400;
-            border-radius: .25rem;
-            user-select: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            transition: background-color .15s ease-in-out;
-
-            & > img {
-              filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(66deg) brightness(117%) contrast(100%);
-            }
-
-            &:hover {
-              background-color: var(--color-primary-light);
-            }
+          & .btn > img {
+            filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(66deg) brightness(117%) contrast(100%);
           }
         }
       }

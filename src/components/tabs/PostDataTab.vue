@@ -11,7 +11,10 @@
 </script>
 
 <template>
-  <article v-if="data.request.postData">
+  <article
+    v-if="data.request.postData"
+    class="overflow-text"
+  >
     <section>
       <h1>Type</h1>
       {{ data.request.postData.mimeType }}
@@ -34,12 +37,7 @@
   lang="scss"
   scoped
 >
-  article {
-    overflow-wrap: anywhere;
-    user-select: text;
-
-    & section:not(:last-of-type) {
-      margin-bottom: .5rem;
-    }
+  section:not(:last-of-type) {
+    margin-bottom: .5rem;
   }
 </style>

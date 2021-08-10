@@ -1,0 +1,32 @@
+div {
+  // noinspection CssUnknownProperty
+  scrollbar-color: var(--color-primary) rgba(0, 0, 0, 0);
+  // noinspection CssUnknownProperty
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 7.5px;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}

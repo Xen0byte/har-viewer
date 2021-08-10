@@ -16,7 +16,7 @@
 </script>
 
 <template>
-  <article>
+  <article class="overflow-text">
     <div class="timing">
       <div
         v-if="data.timings.blocked !== -1"
@@ -68,13 +68,8 @@
   lang="scss"
   scoped
 >
-  article {
-    overflow-wrap: anywhere;
-    user-select: text;
-
-    & section:not(:last-of-type) {
-      margin-bottom: .5rem;
-    }
+  section:not(:last-of-type) {
+    margin-bottom: .5rem;
   }
 
   .timing {

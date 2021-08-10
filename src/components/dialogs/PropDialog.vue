@@ -74,7 +74,7 @@
 <template>
   <modal :is-attached="isAttached">
     <template #header>
-      <div class="dialog-header">
+      <div class="dialog-header row">
         <span v-if="isAttached" />
         <span v-else>Filter / Sort / Group</span>
         <button
@@ -93,7 +93,7 @@
         </button>
       </div>
     </template>
-    <form class="form">
+    <form class="form column">
       <fieldset class="filter-group">
         <legend>Filter</legend>
         <b>Methods</b>
@@ -179,14 +179,14 @@
       </button>
       <button
         v-if="!isAttached"
-        class="btn"
+        class="btn btn-primary"
         type="button"
         @click="onClose"
       >
         Cancel
       </button>
       <button
-        class="btn"
+        class="btn btn-primary"
         type="button"
         @click="onApply"
       >
@@ -213,9 +213,7 @@
   }
 
   .form {
-    display: flex;
     user-select: none;
-    flex-direction: column;
     align-items: center;
   }
 
@@ -234,8 +232,6 @@
   }
 
   .dialog-header {
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
   }
 
@@ -245,19 +241,7 @@
     margin-right: .75rem; max-width: 300px;
   }
 
-  select {
-    cursor: pointer;
-  }
-
   input, select {
-    background-color: var(--color-background-dark);
-    border: none;
-    border-radius: .25rem;
-    padding: .5rem;
-    outline: none;
-    color: var(--color-text);
-    width: 100%;
-    appearance: none;
     margin-top: .25rem;
   }
 
@@ -265,26 +249,10 @@
     &.btn-reset {
       background-color: var(--color-background-dark);
       color: var(--color-text);
-    }
 
-    background-color: var(--color-primary);
-    border: none;
-    color: #ffffff;
-    padding: .375rem .75rem;
-    cursor: pointer;
-    font-size: 1rem;
-    line-height: 1.5;
-    font-weight: 400;
-    border-radius: .25rem;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transition: background-color .15s ease-in-out;
-
-    &:hover {
-      background-color: var(--color-primary-light);
+      &:hover {
+        background-color: var(--color-primary-light);
+      }
     }
   }
 </style>
