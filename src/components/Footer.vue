@@ -13,7 +13,10 @@
 </script>
 
 <template>
-  <footer class="footer row is-unselectable">
+  <footer
+    class="footer row is-unselectable"
+    role="contentinfo"
+  >
     <div>
       <span>
         <a

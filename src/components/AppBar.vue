@@ -39,7 +39,10 @@
 
 <template>
   <header class="appbar">
-    <div class="brand">
+    <div
+      class="brand"
+      role="banner"
+    >
       <h1>
         HTTP Archive Viewer
       </h1>
@@ -49,14 +52,15 @@
     </div>
     <div class="actions">
       <button
-        v-if="isLoaded"
+        v-if="isLoaded && false"
         type="button"
         class=" btn-primary-dark"
-        title="Export"
-        style="display: none"
         @click="onExport"
       >
-        <img :src="svgDownload">
+        <img
+          alt="Download Icon"
+          :src="svgDownload"
+        >
         <span>Export</span>
       </button>
       <button
@@ -66,7 +70,11 @@
         title="Show Info"
         @click="onShowInfo"
       >
-        <img :src="svgInformation">
+        <img
+          alt="Information Icon"
+          role="none"
+          :src="svgInformation"
+        >
       </button>
       <button
         v-if="isLoaded"
@@ -75,24 +83,34 @@
         title="Filter / Sort / Group"
         @click="onSortAndFilter"
       >
-        <img :src="svgTune">
+        <img
+          alt="Settings Icon"
+          role="none"
+          :src="svgTune"
+        >
       </button>
       <button
         type="button"
         class="btn btn-primary-dark"
-        title="Open File"
         @click="onOpenFile"
       >
-        <img :src="svgUpload">
+        <img
+          alt="Upload Icon"
+          role="none"
+          :src="svgUpload"
+        >
         <span>Open File</span>
       </button>
       <button
         type="button"
         class="btn btn-primary-dark"
-        title="Load URL"
         @click="onLoadUrl"
       >
-        <img :src="svgWeb">
+        <img
+          alt="Web Icon"
+          role="none"
+          :src="svgWeb"
+        >
         <span>Load URL</span>
       </button>
     </div>

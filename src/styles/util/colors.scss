@@ -1,6 +1,6 @@
 :root {
   --color-background: #ffffff;
-  --color-background-dark: #d1d1d1;
+  --color-background-dark: #f1f1f1;
   --color-text: #343a40;
 
   --color-primary-light: #4da4f0;
@@ -10,12 +10,14 @@
 
   --color-active: #0359a2;
 
-  --color-success: #28a745;
-  --color-info: #17a2b8;
+  --color-success: #218739;
+  --color-success-text: #ffffff;
+  --color-info: #128091;
+  --color-info-text: #ffffff;
   --color-warning: #ffc107;
   --color-warning-text: #2a2e33;
   --color-error: #dc3545;
-  --color-error-text: #f7f7f7;
+  --color-error-text: #ffffff;
 
   --color-timing-blocked: #aaaaaa;
   --color-timing-dns: #249588;
@@ -39,7 +41,7 @@ html[data-theme="dark"] {
 }
 
 html[data-theme="nord"] {
-  --color-background: #4c566a;
+  --color-background: #3b4252;
   --color-background-dark: #2e3440;
   --color-text: #eceff4;
 
@@ -48,10 +50,12 @@ html[data-theme="nord"] {
   --color-primary-dark: #3b4252;
   --color-primary-text: #eceff4;
 
-  --color-active: #3b4252;
+  --color-active: #4c566a;
 
   --color-success: #a3be8c;
+  --color-success-text: #2e3440;
   --color-info: #88c0d0;
+  --color-info-text: #eceff4;
   --color-warning: #ebcb8b;
   --color-warning-text: #2e3440;
   --color-error: #bf616a;

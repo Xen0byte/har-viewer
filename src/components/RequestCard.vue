@@ -75,6 +75,7 @@
     class="request-card"
     :class="{ active }"
     @click="onSelect"
+    @keydown.enter="onSelect"
   >
     <div class="details">
       <b v-text="data.request.method" />
@@ -127,6 +128,7 @@
 
     & > .url {
       white-space: nowrap;
+      user-select: none;
     }
 
     & .tag {
@@ -143,10 +145,12 @@
 
     & .tag-success {
       background-color: var(--color-success);
+      color: var(--color-success-text);
     }
 
     & .tag-info {
       background-color: var(--color-info);
+      color: var(--color-info-text);
     }
 
     & .tag-warning {

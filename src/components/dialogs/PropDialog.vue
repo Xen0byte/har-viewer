@@ -80,14 +80,17 @@
         <button
           class="btn btn-icon btn-attach"
           type="button"
+          :title="isAttached ? 'Detach filter from main window' : 'Attach filter to main window'"
           @click="onAttach"
         >
           <img
             v-if="isAttached"
+            role="none"
             :src="svgPinOff"
           >
           <img
             v-else
+            role="none"
             :src="svgPin"
           >
         </button>
@@ -96,37 +99,52 @@
     <form class="form column">
       <fieldset class="filter-group">
         <legend>Filter</legend>
-        <b>Methods</b>
+        <label for="methods">
+          <b>Methods</b>
+        </label>
         <input
+          id="methods"
           v-model="methods"
           style="margin-bottom: .5rem;"
           type="text"
           title="Multiple methods can be specified separated by commas. Use ! to exclude methods."
         >
-        <b>Status</b>
+        <label for="status">
+          <b>Status</b>
+        </label>
         <input
+          id="status"
           v-model="status"
           style="margin-bottom: .5rem;"
           type="text"
           title="Multiple status can be specified separated by commas or using ranges. Use ! to exclude status."
         >
-        <b>Domains</b>
+        <label for="domains">
+          <b>Domains</b>
+        </label>
         <input
+          id="domains"
           v-model="domains"
           style="margin-bottom: .5rem;"
           type="text"
           title="Multiple domains can be specified separated by commas. Use ! to exclude domains or * as wildcard."
         >
-        <b>Resource Types</b>
+        <label for="resource-types">
+          <b>Resource Types</b>
+        </label>
         <input
+          id="resource-types"
           v-model="resType"
           type="text"
           title="Multiple resource types can be specified separated by commas. Use ! to exclude resource types."
         >
       </fieldset>
       <div style="max-width: 300px; padding: .5rem">
-        <b>Sort By</b>
+        <label for="sort">
+          <b>Sort By</b>
+        </label>
         <select
+          id="sort"
           v-model="sortBy"
           style="margin-bottom: .5rem;"
         >
@@ -146,8 +164,13 @@
             Timing (Descending)
           </option>
         </select>
-        <b>Group By</b>
-        <select v-model="groupBy">
+        <label for="group">
+          <b>Group By</b>
+        </label>
+        <select
+          id="group"
+          v-model="groupBy"
+        >
           <option value="">
             Nothing
           </option>

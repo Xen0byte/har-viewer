@@ -39,7 +39,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-webpack": "^0.13.1",
     "eslint-plugin-import": "^2.24.0",
-    "eslint-plugin-vue": "^7.15.2",
+    "eslint-plugin-vue": "^7.16.0",
     "execa": "^5.1.1",
     "favicons": "https://github.com/dermoumi/favicons.git",
     "favicons-webpack-plugin": "^5.0.2",

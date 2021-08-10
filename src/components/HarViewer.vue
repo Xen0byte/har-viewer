@@ -299,7 +299,10 @@
 
 <template>
   <div class="har-viewer">
-    <aside class="request-list">
+    <aside
+      class="request-list"
+      role="navigation"
+    >
       <template v-if="groups.length !== 0">
         <template
           v-for="group in groups"
@@ -315,6 +318,8 @@
               :key="i"
               :data="entry"
               :active="selectedIndex === i"
+              tabindex="0"
+              role="button"
               @select="() => onSelect(i)"
             />
           </div>
@@ -326,6 +331,8 @@
           :key="i"
           :data="entry"
           :active="selectedIndex === i"
+          tabindex="0"
+          role="button"
           @select="() => onSelect(i)"
         />
       </template>
@@ -359,7 +366,10 @@
           :has-timings="Object.keys(selectedEntry.timings).length !== 0"
           @change="tab => currentTab = tab"
         />
-        <div class="tabs">
+        <div
+          class="tabs"
+          role="tabpanel"
+        >
           <RequestTab
             v-if="currentTab === 'request'"
             :data="selectedEntry"

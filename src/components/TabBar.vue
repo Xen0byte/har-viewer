@@ -82,11 +82,13 @@
   <nav
     v-else
     class="tabbar"
+    role="tablist"
   >
     <button
       :class="{ active: currentTab === 'request' }"
       class="btn btn-dark"
       type="button"
+      role="tab"
       @click="onChange('request')"
     >
       Request
@@ -96,6 +98,7 @@
       :class="{ active: currentTab === 'post-data' }"
       class="btn btn-dark"
       type="button"
+      role="tab"
       @click="onChange('post-data')"
     >
       Post Data
@@ -104,6 +107,7 @@
       :class="{ active: currentTab === 'response' }"
       class="btn btn-dark"
       type="button"
+      role="tab"
       @click="onChange('response')"
     >
       Response
@@ -113,6 +117,7 @@
       :class="{ active: currentTab === 'response-content' }"
       class="btn btn-dark"
       type="button"
+      role="tab"
       @click="onChange('response-content')"
     >
       Response Content
@@ -122,6 +127,7 @@
       :class="{ active: currentTab === 'cookies' }"
       class="btn btn-dark"
       type="button"
+      role="tab"
       @click="onChange('cookies')"
     >
       Cookies
@@ -131,6 +137,7 @@
       :class="{ active: currentTab === 'timing' }"
       class="btn btn-dark"
       type="button"
+      role="tab"
       @click="onChange('timing')"
     >
       Timings

@@ -31,6 +31,7 @@
     <div :class="{ 'modal-wrapper': !isAttached }">
       <div
         :class="{ 'modal-container': !isAttached }"
+        role="dialog"
         @click.stop
       >
         <div class="modal-header">
