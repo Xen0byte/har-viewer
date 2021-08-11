@@ -13,6 +13,9 @@ globals:
   HOMEPAGE: false
   LICENSE: false
   SW_URL: false
+  # TODO: remove on eslint-vue support
+  defineEmits: false
+  defineProps: false
 
 extends:
   - plugin:import/errors

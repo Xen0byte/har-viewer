@@ -48,6 +48,7 @@ The following features are supported:
 
 - Export Feature (filters, redact, postman)
 - Handle files that contain multiple pages
+- Support initial filter on file load to improve loading times for large files
 
 See the [open issues](https://github.com/develerik/har-viewer/issues) for a list of proposed features (and known issues).
 
