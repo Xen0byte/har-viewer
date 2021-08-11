@@ -1,93 +1,83 @@
-<script>
+<script setup>
   import { computed } from "vue";
 
-  export default {
-    name: "RequestCard",
-    props: {
-      data: {
-        type: Object,
-        default: () => ({}),
-      },
-      active: {
-        type: Boolean,
-        default: false,
-      },
+  const props = defineProps({
+    data: {
+      type: Object,
+      required: true,
     },
-    emits: [
-      "select",
-    ],
-    setup(props, { emit }) {
-      const statusType = computed(() => {
-        if (props.data.response.status < 0 && props.data.response.status < 200) {
-          return "info";
-        }
-
-        if (props.data.response.status > 199 && props.data.response.status < 300) {
-          return "success";
-        }
-
-        if (props.data.response.status > 299 && props.data.response.status < 400) {
-          return "info";
-        }
-
-        if (props.data.response.status > 399 && props.data.response.status < 500) {
-          return "warning";
-        }
-
-        if (props.data.response.status > 499
-          // eslint-disable-next-line no-underscore-dangle
-          || (props.data.response.status === 0 && props.data.response._error)) {
-          return "error";
-        }
-
-        return "unknown";
-      });
-
-      const status = computed(() => {
-        if (props.data.response.status === 0) {
-          // eslint-disable-next-line no-underscore-dangle
-          if (props.data.response._error) {
-            // eslint-disable-next-line no-underscore-dangle
-            return props.data.response._error.replace("net::", "");
-          }
-
-          return "UNKNOWN";
-        }
-
-        return props.data.response.status;
-      });
-
-      const onSelect = () => emit("select");
-      const calcDuration = x => `${Math.round(x)} ms`;
-
-      return {
-        onSelect,
-        calcDuration,
-        statusType,
-        status,
-      };
+    active: {
+      type: Boolean,
+      default: false,
     },
+  });
+
+  const emit = defineEmits(["select"]);
+
+  const statusTypesMap = {
+    informationalResponse: [1, 199, "info"],
+    success: [200, 299, "success"],
+    redirection: [300, 399, "info"],
+    clientErrors: [400, 499, "warning"],
+    serverErrors: [500, 599, "error"],
   };
+
+  const statusTypes = Object.keys(statusTypesMap);
+
+  const statusType = computed(() => {
+    for (let i = 0; i < statusTypes.length; i++) {
+      const typeData = statusTypesMap[statusTypes[i]];
+      if (props.data.response.status >= typeData[0] && props.data.response.status <= typeData[1]) {
+        return typeData[2];
+      }
+    }
+
+    // eslint-disable-next-line no-underscore-dangle
+    if (props.data.response.status === 0 && props.data.response._error) {
+      return "error";
+    }
+
+    return "unknown";
+  });
+
+  const status = computed(() => {
+    if (props.data.response.status !== 0) {
+      return props.data.response.status;
+    }
+
+    // eslint-disable-next-line no-underscore-dangle
+    if (props.data.response._error) {
+      // eslint-disable-next-line no-underscore-dangle
+      return props.data.response._error.replace("net::", "");
+    }
+
+    return "UNKNOWN";
+  });
+
+  const url = computed(() => props.data.request.url.split("?")[0]);
+
+  const onSelect = () => emit("select");
+  const calcDuration = x => `${Math.round(x)} ms`;
 </script>
 
 <template>
   <div
     class="request-card"
-    :class="{ active }"
+    :class="{ active: props.active }"
     @click="onSelect"
     @keydown.enter="onSelect"
   >
     <div class="details">
-      <b v-text="data.request.method" />
-      <span v-text="calcDuration(data.time)" />
-      <span v-text="data._resourceType" />
+      <b v-text="props.data.request.method" />
+      <span v-text="calcDuration(props.data.time)" />
+      <span v-text="props.data._resourceType" />
       <div :class="`tag tag-${statusType}`">
         <b v-text="status" />
       </div>
     </div>
-    <div
+    <span
       class="url overflow-text"
-      v-text="data.request.url.split('?')[0]"
+      v-text="url"
     />
   </div>
 </template>
@@ -105,12 +95,6 @@
     border-style: dashed;
     color: var(--color-text);
     padding: 1rem;
-
-    &.active {
-      background-color: var(--color-primary) !important;
-      border-color: var(--color-primary) !important;
-      color: var(--color-primary-text);
-    }
 
     @media (min-width: 476px) {
       &:hover {

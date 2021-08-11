@@ -96,9 +96,4 @@
   button:not(:last-of-type) {
     margin-right: .35rem;
   }
-
-  .active {
-    background-color: var(--color-primary);
-    color: var(--color-primary-text);
-  }
 </style>
