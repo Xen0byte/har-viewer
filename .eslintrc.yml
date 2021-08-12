@@ -13,9 +13,11 @@ globals:
   HOMEPAGE: false
   LICENSE: false
   SW_URL: false
-  # TODO: remove on eslint-vue support
-  defineEmits: false
-  defineProps: false
+  # vue 3.2 syntax
+  defineEmits: readonly
+  defineProps: readonly
+  defineExpose: readonly
+  withDefaults: readonly
 
 extends:
   - plugin:import/errors

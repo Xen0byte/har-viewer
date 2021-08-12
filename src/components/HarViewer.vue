@@ -319,9 +319,7 @@
               v-memo="[i === selectedIndex]"
               :data="entry"
               :active="selectedIndex === i"
-              tabindex="0"
-              role="button"
-              @select="() => onSelect(i)"
+              @click="() => onSelect(i)"
             />
           </div>
         </template>
@@ -333,9 +331,7 @@
           v-memo="[i === selectedIndex]"
           :data="entry"
           :active="selectedIndex === i"
-          tabindex="0"
-          role="button"
-          @select="() => onSelect(i)"
+          @click="() => onSelect(i)"
         />
       </template>
     </aside>
