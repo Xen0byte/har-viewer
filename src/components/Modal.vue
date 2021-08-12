@@ -1,6 +1,9 @@
 <script setup>
   import { onMounted } from "vue";
 
+  // TODO: remove on firefox and safari support.
+  import dialogPolyfill from "dialog-polyfill";
+
   const props = defineProps({
     isAttached: {
       type: Boolean,
@@ -15,37 +18,38 @@
       return;
     }
 
+    // TODO: remove on firefox and safari support.
+    dialogPolyfill.registerDialog(dialog);
+
     dialog.addEventListener("cancel", e => e.preventDefault());
     dialog.showModal();
   });
 </script>
 
 <template>
-  <div :class="{ 'modal-mask': !props.isAttached, attached: props.isAttached }">
-    <div :class="{ 'modal-wrapper': !props.isAttached }">
-      <component
-        :is="props.isAttached ? 'div' : 'dialog'"
-        :class="{ 'modal-container': !props.isAttached }"
-      >
-        <div class="modal-header">
-          <h2
-            v-if="$slots.header"
-            class="is-unselectable"
-          >
-            <slot name="header" />
-          </h2>
-        </div>
-        <div class="modal-body">
-          <slot />
-        </div>
-        <div
-          v-if="$slots.footer"
-          class="modal-footer"
+  <div :class="{ attached: props.isAttached }">
+    <component
+      :is="props.isAttached ? 'div' : 'dialog'"
+      :class="{ 'modal-container': !props.isAttached }"
+    >
+      <div class="modal-header">
+        <h2
+          v-if="$slots.header"
+          class="is-unselectable"
         >
-          <slot name="footer" />
-        </div>
-      </component>
-    </div>
+          <slot name="header" />
+        </h2>
+      </div>
+      <div class="modal-body">
+        <slot />
+      </div>
+      <div
+        v-if="$slots.footer"
+        class="modal-footer"
+      >
+        <slot name="footer" />
+      </div>
+    </component>
   </div>
 </template>
 
@@ -57,7 +61,19 @@
     color: var(--color-primary-text);
   }
 
+  dialog {
+    position: fixed;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
   dialog::backdrop {
+    background-color: rgba(0, 0, 0, .25);
+    backdrop-filter: blur(1px);
+  }
+
+  // TODO: remove on firefox and safari support.
+  dialog + .backdrop {
     background-color: rgba(0, 0, 0, .25);
     backdrop-filter: blur(1px);
   }
@@ -89,22 +105,6 @@
     & ::v-deep(:not(:last-child)) {
       margin-right: .35em;
     }
-  }
-
-  .modal-mask {
-    position: fixed;
-    z-index: 9998;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-  }
-
-  .modal-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
   }
 
   .modal-body {

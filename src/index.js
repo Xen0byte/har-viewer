@@ -1,5 +1,8 @@
 import { createApp } from "vue";
 
+// TODO: remove on firefox and safari support.
+import "dialog-polyfill/dist/dialog-polyfill.css";
+
 import "./styles/index.scss";
 
 import Shell from "./Shell";
