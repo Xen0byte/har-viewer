@@ -99,7 +99,7 @@
       </div>
       <div v-if="data._initiator.type === 'script'">
         <details style="margin-top: .25rem">
-          <summary style="user-select: none;">
+          <summary class="is-unselectable">
             Call Stack
           </summary>
           <ul>

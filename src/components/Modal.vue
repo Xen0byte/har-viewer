@@ -35,7 +35,10 @@
         @click.stop
       >
         <div class="modal-header">
-          <h2 v-if="$slots.header">
+          <h2
+            v-if="$slots.header"
+            class="is-unselectable"
+          >
             <slot name="header" />
           </h2>
         </div>
@@ -61,7 +64,6 @@
 >
   h2 {
     color: var(--color-primary-text);
-    user-select: none;
   }
 
   .modal-header {

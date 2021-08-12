@@ -48,7 +48,7 @@
       />
       <div v-if="data.response.content.text">
         <details>
-          <summary style="user-select: none;">
+          <summary class="is-unselectable">
             Show content
           </summary>
           <img

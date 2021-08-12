@@ -84,7 +84,7 @@
       </div>
     </div>
     <div
-      class="url overflow-text"
+      class="url overflow-text is-unselectable"
       v-text="url"
     />
   </div>
@@ -120,8 +120,6 @@
 
     & > .url {
       white-space: nowrap;
-      user-select: none;
-      text-align: left;
     }
   }
 

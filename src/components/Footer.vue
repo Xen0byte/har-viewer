@@ -1,15 +1,9 @@
-<script>
-  export default {
-    setup() {
-      return {
-        app: APP,
-        authorName: AUTHOR_NAME,
-        authorUrl: AUTHOR_URL,
-        homepage: HOMEPAGE,
-        license: LICENSE,
-      };
-    },
-  };
+<script setup>
+  const app = APP;
+  const authorName = AUTHOR_NAME;
+  const authorUrl = AUTHOR_URL;
+  const homepage = HOMEPAGE;
+  const license = LICENSE;
 </script>
 
 <template>
@@ -50,9 +44,8 @@
   scoped
 >
   .footer {
-    user-select: none;
     justify-content: space-between;
-    padding: .25em .25em;
+    padding: .25em;
     background-color: var(--color-background-dark);
     color: var(--color-text);
 

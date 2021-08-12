@@ -503,12 +503,4 @@
       }
     }
   }
-
-  .warning {
-    background-color: #ffc107;
-    color: #2a2e33;
-    padding-left: .5rem;
-    padding-right: .5rem;
-    user-select: none;
-  }
 </style>

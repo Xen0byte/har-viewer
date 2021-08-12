@@ -179,7 +179,7 @@
   </main>
   <main
     v-if="!isLoading && !hasError && !!data"
-    class="row"
+    class="row is-unselectable"
   >
     <HarViewer
       :data="data"
@@ -222,7 +222,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    user-select: none;
   }
 
   .propdialog-container {

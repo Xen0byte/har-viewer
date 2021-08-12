@@ -96,7 +96,7 @@
         </button>
       </div>
     </template>
-    <form class="form column">
+    <form class="form column is-unselectable">
       <fieldset class="filter-group">
         <legend>Filter</legend>
         <label for="methods">
@@ -236,7 +236,6 @@
   }
 
   .form {
-    user-select: none;
     align-items: center;
   }
 

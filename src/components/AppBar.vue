@@ -40,7 +40,7 @@
 <template>
   <header class="appbar">
     <div
-      class="brand"
+      class="brand is-unselectable"
       role="banner"
     >
       <h1>
@@ -156,7 +156,6 @@
       font-size: 1.25rem;
       font-weight: 400;
       line-height: 1.5;
-      user-select: none;
     }
   }
 
