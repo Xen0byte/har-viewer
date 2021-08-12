@@ -86,6 +86,7 @@
           style="margin-bottom: .5rem;"
           type="text"
           title="Multiple methods can be specified separated by commas. Use ! to exclude methods."
+          @keyup.enter="onApply"
         >
         <label for="status">
           Status
@@ -96,6 +97,7 @@
           style="margin-bottom: .5rem;"
           type="text"
           title="Multiple status can be specified separated by commas or using ranges. Use ! to exclude status."
+          @keyup.enter="onApply"
         >
         <label for="domains">
           Domains
@@ -106,6 +108,7 @@
           style="margin-bottom: .5rem;"
           type="text"
           title="Multiple domains can be specified separated by commas. Use ! to exclude domains or * as wildcard."
+          @keyup.enter="onApply"
         >
         <label for="resource-types">
           Resource Types
@@ -115,6 +118,7 @@
           v-model="resType"
           type="text"
           title="Multiple resource types can be specified separated by commas. Use ! to exclude resource types."
+          @keyup.enter="onApply"
         >
       </fieldset>
       <div style="max-width: 300px; padding: .5rem">
