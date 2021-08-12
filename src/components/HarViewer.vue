@@ -52,6 +52,27 @@
         return 0;
       };
 
+      const statusTypeOrder = {
+        Informational: 0,
+        Success: 1,
+        Redirection: 2,
+        "Client Error": 3,
+        "Server Error": 4,
+        Unknown: 5,
+      };
+
+      const methodOrder = {
+        GET: 0,
+        POST: 1,
+        PATCH: 2,
+        PUT: 3,
+        DELETE: 4,
+        OPTIONS: 5,
+        HEAD: 6,
+        CONNECT: 7,
+        TRACE: 8,
+      };
+
       const filteredData = computed(() => {
         const {
           filter,
@@ -210,7 +231,7 @@
               break;
           }
 
-          clone = clone.sort(sortFunc);
+          clone.sort(sortFunc);
         }
 
         if (groupBy) {
@@ -253,6 +274,16 @@
               group,
             };
           });
+
+          if (groupBy === "status") {
+            clone.sort((a, b) => ((a.group > b.group) ? 1 : -1));
+          } else if (groupBy === "resource-type" || groupBy === "domain") {
+            clone.sort((a, b) => ((a.group > b.group) ? 1 : -1));
+          } else if (groupBy === "status-type") {
+            clone.sort((a, b) => ((statusTypeOrder[a.group] > statusTypeOrder[b.group]) ? 1 : -1));
+          } else if (groupBy === "method") {
+            clone.sort((a, b) => ((methodOrder[a.group] > methodOrder[b.group]) ? 1 : -1));
+          }
         }
 
         return clone;
