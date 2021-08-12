@@ -348,7 +348,10 @@
           type="button"
           @click="showDialog = false; selectedEntry = null"
         >
-          <img :src="svgChevronLeft">
+          <img
+            class="icon"
+            :src="svgChevronLeft"
+          >
         </button>
       </div>
       <div
@@ -484,16 +487,11 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 56px;
           background: var(--color-primary);
           padding: .5rem .75rem;
           position: sticky;
           top: 0;
           margin-bottom: .5rem;
-
-          & .btn > img {
-            filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(66deg) brightness(117%) contrast(100%);
-          }
         }
       }
 

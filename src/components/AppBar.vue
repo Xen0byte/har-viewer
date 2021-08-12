@@ -1,40 +1,18 @@
-<script>
+<script setup>
   import svgDownload from "@mdi/svg/svg/download.svg";
   import svgUpload from "@mdi/svg/svg/upload.svg";
   import svgWeb from "@mdi/svg/svg/web.svg";
   import svgTune from "@mdi/svg/svg/tune.svg";
   import svgInformation from "@mdi/svg/svg/information.svg";
 
-  export default {
-    name: "AppBar",
-    props: {
-      isLoaded: {
-        type: Boolean,
-        default: false,
-      },
+  const props = defineProps({
+    isLoaded: {
+      type: Boolean,
+      default: false,
     },
-    emits: ["action"],
-    setup(_, { emit }) {
-      const onExport = () => emit("action", "export");
-      const onOpenFile = () => emit("action", "openFile");
-      const onLoadUrl = () => emit("action", "loadUrl");
-      const onShowInfo = () => emit("action", "info");
-      const onSortAndFilter = () => emit("action", "sort-and-filter");
+  });
 
-      return {
-        svgDownload,
-        svgUpload,
-        svgWeb,
-        svgTune,
-        svgInformation,
-        onExport,
-        onShowInfo,
-        onOpenFile,
-        onLoadUrl,
-        onSortAndFilter,
-      };
-    },
-  };
+  const emit = defineEmits(["action"]);
 </script>
 
 <template>
@@ -52,51 +30,56 @@
     </div>
     <div class="actions">
       <button
-        v-if="isLoaded && false"
+        v-if="props.isLoaded && false"
         type="button"
         class=" btn-primary-dark"
-        @click="onExport"
+        @click="emit('action', 'export')"
       >
         <img
           alt="Download Icon"
+          role="none"
+          class="icon"
           :src="svgDownload"
         >
         <span>Export</span>
       </button>
       <button
-        v-if="isLoaded"
+        v-if="props.isLoaded"
         type="button"
         class="btn btn-primary-dark"
         title="Show Info"
-        @click="onShowInfo"
+        @click="emit('action', 'info')"
       >
         <img
           alt="Information Icon"
           role="none"
+          class="icon"
           :src="svgInformation"
         >
       </button>
       <button
-        v-if="isLoaded"
+        v-if="props.isLoaded"
         type="button"
         class="btn btn-primary-dark"
         title="Filter / Sort / Group"
-        @click="onSortAndFilter"
+        @click="emit('action', 'sort-and-filter')"
       >
         <img
           alt="Settings Icon"
           role="none"
+          class="icon"
           :src="svgTune"
         >
       </button>
       <button
         type="button"
         class="btn btn-primary-dark"
-        @click="onOpenFile"
+        @click="emit('action', 'openFile')"
       >
         <img
           alt="Upload Icon"
           role="none"
+          class="icon"
           :src="svgUpload"
         >
         <span>Open File</span>
@@ -104,11 +87,12 @@
       <button
         type="button"
         class="btn btn-primary-dark"
-        @click="onLoadUrl"
+        @click="emit('action', 'loadUrl')"
       >
         <img
           alt="Web Icon"
           role="none"
+          class="icon"
           :src="svgWeb"
         >
         <span>Load URL</span>
@@ -125,69 +109,53 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 56px;
     background: var(--color-primary);
-    padding: .5rem .75rem;
+    padding: .5rem .5rem .5rem .75rem;
+  }
 
-    & .brand {
-      h1:last-child {
-        display: none;
-      }
+  .brand > h1 {
+    color: var(--color-primary-text);
+    font-size: 1.25rem;
+    font-weight: 400;
+
+    &:last-child {
+      display: none;
     }
+  }
 
-    & .actions {
-      display: flex;
+  .actions {
+    display: flex;
 
-      & button > span {
-        margin-left: .5rem;
-      }
-
-      & button > img {
-        filter: invert(99%) sepia(1%) saturate(2%) hue-rotate(66deg) brightness(117%) contrast(100%);
-      }
-
-      & button:not(:last-child) {
-        margin-right: .35rem;
-      }
-    }
-
-    & .brand > h1 {
-      color: var(--color-primary-text);
-      font-size: 1.25rem;
-      font-weight: 400;
-      line-height: 1.5;
+    & > *:not(:last-child) {
+      margin-right: .35rem;
     }
   }
 
   @media (max-width: 280px) {
     .appbar {
       padding: .5rem .5rem;
+    }
 
-      & .actions button:not(:last-child) {
-        margin-right: .25em;
-      }
+    .actions > *:not(:last-child) {
+      margin-right: .25em;
     }
   }
 
   @media (max-width: 375px) {
-    .appbar {
-      & .brand {
-        h1:first-child {
-          display: none;
-        }
+    .brand > h1 {
+      &:first-child {
+        display: none;
+      }
 
-        h1:last-child {
-          display: inline-block;
-        }
+      &:last-child {
+        display: inline-block;
       }
     }
   }
 
   @media (max-width: 579px) {
-    .appbar {
-      & .actions button > span {
-        display: none;
-      }
+    .actions button > span {
+      display: none;
     }
   }
 </style>

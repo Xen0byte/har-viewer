@@ -16,11 +16,19 @@
   justify-content: center;
 
   transition: background-color .15s ease-in-out;
+
+  & .icon + span {
+    margin-left: .5rem;
+  }
 }
 
 .btn-primary {
   background-color: var(--color-primary);
   color: var(--color-primary-text);
+
+  & > .icon {
+    filter: var(--filter-primary-text);
+  }
 
   &:hover {
     background-color: var(--color-primary-light);
@@ -29,7 +37,11 @@
 
 .btn-primary-dark {
   background-color: var(--color-primary-dark);
-  color: #ffffff;
+  color: var(--color-primary-dark-text);
+
+  & > .icon {
+    filter: var(--filter-primary-dark-text);
+  }
 
   &:hover {
     background-color: var(--color-primary-light);
