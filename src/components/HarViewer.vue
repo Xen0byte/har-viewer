@@ -466,7 +466,7 @@
           overflow-y: auto;
           overflow-x: hidden;
           background-color: var(--color-background-dark);
-          border-radius: .25rem;
+          border-radius: 5px;
           padding: 1rem;
           color: var(--color-text);
         }

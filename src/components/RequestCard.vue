@@ -98,7 +98,7 @@
     cursor: pointer;
     background-color: var(--color-background-dark);
     border-color: var(--color-background-dark);
-    border-radius: .25rem;
+    border-radius: 5px;
     border-width: 2px;
     border-style: dashed;
     color: var(--color-text);

@@ -1,90 +1,67 @@
-<script>
+<script setup>
   import { ref } from "vue";
   import svgPin from "@mdi/svg/svg/pin.svg";
   import svgPinOff from "@mdi/svg/svg/pin-off.svg";
 
   import Modal from "../Modal";
 
-  export default {
-    name: "PropDialog",
-    components: { Modal },
-    props: {
+  const props = defineProps({
+    filter: {
+      type: Object,
+      default: () => ({}),
+    },
+    isAttached: {
+      type: Boolean,
+      default: false,
+    },
+  });
+
+  const emit = defineEmits(["apply", "close", "attach"]);
+
+  const methods = ref(props.filter.filter.methods);
+  const status = ref(props.filter.filter.status);
+  const resType = ref(props.filter.filter.resType);
+  const domains = ref(props.filter.filter.domains);
+
+  const sortBy = ref(props.filter.sortBy);
+  const groupBy = ref(props.filter.groupBy);
+
+  const onApply = () => {
+    emit("apply", {
       filter: {
-        type: Object,
-        default: () => ({}),
+        methods: methods.value.toLowerCase(),
+        status: status.value,
+        resType: resType.value.toLowerCase(),
+        domains: domains.value.toLowerCase(),
       },
-      isAttached: {
-        type: Boolean,
-        default: false,
-      },
-    },
-    emits: ["apply", "close", "attach"],
-    setup(props, { emit }) {
-      const methods = ref(props.filter.filter.methods);
-      const status = ref(props.filter.filter.status);
-      const resType = ref(props.filter.filter.resType);
-      const domains = ref(props.filter.filter.domains);
+      sortBy: sortBy.value,
+      groupBy: groupBy.value,
+    });
+  };
 
-      const sortBy = ref(props.filter.sortBy);
-      const groupBy = ref(props.filter.groupBy);
-
-      const onClose = () => emit("close");
-      const onApply = () => {
-        emit("apply", {
-          filter: {
-            methods: methods.value.toLowerCase(),
-            status: status.value,
-            resType: resType.value.toLowerCase(),
-            domains: domains.value.toLowerCase(),
-          },
-          sortBy: sortBy.value,
-          groupBy: groupBy.value,
-        });
-      };
-
-      const onReset = () => {
-        methods.value = "";
-        status.value = "";
-        domains.value = "";
-        resType.value = "";
-        sortBy.value = "";
-        groupBy.value = "";
-      };
-
-      const onAttach = () => emit("attach");
-
-      return {
-        methods,
-        status,
-        domains,
-        resType,
-        sortBy,
-        groupBy,
-        onClose,
-        onApply,
-        onReset,
-        onAttach,
-        svgPin,
-        svgPinOff,
-      };
-    },
+  const onReset = () => {
+    methods.value = "";
+    status.value = "";
+    domains.value = "";
+    resType.value = "";
+    sortBy.value = "";
+    groupBy.value = "";
   };
 </script>
 
 <template>
-  <modal :is-attached="isAttached">
+  <modal :is-attached="props.isAttached">
     <template #header>
       <div class="dialog-header row">
-        <span v-if="isAttached" />
-        <span v-else>Filter / Sort / Group</span>
+        <span v-text="!props.isAttached ? 'Filter / Sort / Group' : ''" />
         <button
           class="btn btn-icon btn-attach"
           type="button"
-          :title="isAttached ? 'Detach filter from main window' : 'Attach filter to main window'"
-          @click="onAttach"
+          :title="props.isAttached ? 'Detach filter from main window' : 'Attach filter to main window'"
+          @click="emit('attach')"
         >
           <img
-            v-if="isAttached"
+            v-if="props.isAttached"
             role="none"
             :src="svgPinOff"
           >
@@ -96,11 +73,11 @@
         </button>
       </div>
     </template>
-    <form class="form column is-unselectable">
+    <form class="column is-unselectable">
       <fieldset class="filter-group">
         <legend>Filter</legend>
         <label for="methods">
-          <b>Methods</b>
+          Methods
         </label>
         <input
           id="methods"
@@ -110,7 +87,7 @@
           title="Multiple methods can be specified separated by commas. Use ! to exclude methods."
         >
         <label for="status">
-          <b>Status</b>
+          Status
         </label>
         <input
           id="status"
@@ -120,7 +97,7 @@
           title="Multiple status can be specified separated by commas or using ranges. Use ! to exclude status."
         >
         <label for="domains">
-          <b>Domains</b>
+          Domains
         </label>
         <input
           id="domains"
@@ -130,7 +107,7 @@
           title="Multiple domains can be specified separated by commas. Use ! to exclude domains or * as wildcard."
         >
         <label for="resource-types">
-          <b>Resource Types</b>
+          Resource Types
         </label>
         <input
           id="resource-types"
@@ -141,7 +118,7 @@
       </fieldset>
       <div style="max-width: 300px; padding: .5rem">
         <label for="sort">
-          <b>Sort By</b>
+          Sort By
         </label>
         <select
           id="sort"
@@ -165,7 +142,7 @@
           </option>
         </select>
         <label for="group">
-          <b>Group By</b>
+          Group By
         </label>
         <select
           id="group"
@@ -201,10 +178,10 @@
         Reset
       </button>
       <button
-        v-if="!isAttached"
+        v-if="!props.isAttached"
         class="btn btn-primary"
         type="button"
-        @click="onClose"
+        @click="emit('close')"
       >
         Cancel
       </button>
@@ -223,26 +200,12 @@
   lang="scss"
   scoped
 >
-  @media (max-width: 475px) {
-    .btn-attach {
-      display: none !important;
-    }
-
-    ::v-deep(.modal-footer) {
-      & > div {
-        justify-content: center;
-      }
-    }
+  label {
+    font-weight: 600;
   }
 
-  .form {
-    align-items: center;
-  }
-
-  .attached {
-    & .btn-icon > img {
-      filter: var(--filter-background-text);
-    }
+  .attached .btn-icon > img {
+    filter: var(--filter-background-text);
   }
 
   .btn-icon {
@@ -259,21 +222,31 @@
 
   .filter-group {
     border-color: var(--color-background-dark);
-    border-radius: .25rem;
+    border-radius: 5px;
     margin-right: .75rem; max-width: 300px;
   }
 
   input, select {
-    margin-top: .25rem;
+    margin-top: .1rem;
   }
 
-  .btn {
-    &.btn-reset {
-      background-color: var(--color-background-dark);
-      color: var(--color-text);
+  .btn.btn-reset {
+    background-color: var(--color-background-dark);
+    color: var(--color-text);
 
-      &:hover {
-        background-color: var(--color-primary-light);
+    &:hover {
+      background-color: var(--color-primary-light);
+    }
+  }
+
+  @media (max-width: 475px) {
+    .btn-attach {
+      display: none !important;
+    }
+
+    ::v-deep(.modal-footer) {
+      & > div {
+        justify-content: center;
       }
     }
   }

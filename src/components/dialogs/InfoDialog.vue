@@ -1,47 +1,42 @@
-<script>
+<script setup>
   import Modal from "../Modal";
 
-  export default {
-    name: "InfoDialog",
-    components: { Modal },
-    props: {
-      creator: {
-        type: Object,
-        default: () => ({}),
-      },
-      version: {
-        type: String,
-        default: "",
-      },
+  const props = defineProps({
+    creator: {
+      type: Object,
+      default: () => ({}),
     },
-    emits: ["close"],
-    setup(_, { emit }) {
-      const onClose = () => emit("close");
+    version: {
+      type: String,
+      default: "",
+    },
+  });
 
-      return {
-        onClose,
-      };
-    },
-  };
+  const emit = defineEmits(["close"]);
 </script>
 
 <template>
   <Modal>
     <template #header>
-      <div class="dialog-header">
-        <span>Info</span>
-      </div>
+      <span>Info</span>
     </template>
-    <div class="details column">
-      HAR Version: {{ version }}<br>
-      Creator: {{ creator.name }} ({{ creator.version }})
-    </div>
+    <table class="column">
+      <tbody>
+        <tr>
+          <th>Creator</th>
+          <td v-text="`${props.creator.name} (${props.creator.version})`" />
+        </tr>
+        <tr>
+          <th>HAR Version</th>
+          <td v-text="props.version" />
+        </tr>
+      </tbody>
+    </table>
     <template #footer>
       <button
-        v-if="!isAttached"
         class="btn btn-primary"
         type="button"
-        @click="onClose"
+        @click="emit('close')"
       >
         Close
       </button>

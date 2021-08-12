@@ -3,6 +3,8 @@
 
   import Modal from "../Modal";
 
+  // TODO: refactor and add again
+
   export default {
     name: "ExportDialog",
     components: { Modal },

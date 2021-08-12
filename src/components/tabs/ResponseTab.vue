@@ -89,7 +89,7 @@
       padding: 1rem;
       background-color: var(--color-error);
       color: var(--color-error-text);
-      border-radius: .25rem;
+      border-radius: 5px;
     }
   }
 </style>

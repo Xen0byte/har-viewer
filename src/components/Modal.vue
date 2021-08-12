@@ -1,38 +1,31 @@
-<script>
-  import { onMounted, onBeforeUnmount } from "vue";
+<script setup>
+  import { onMounted } from "vue";
 
-  export default {
-    name: "Modal",
-    props: {
-      isAttached: {
-        type: Boolean,
-        default: false,
-      },
+  const props = defineProps({
+    isAttached: {
+      type: Boolean,
+      default: false,
     },
-    emits: ["close"],
-    setup(_, { emit }) {
-      const emitClose = () => emit("close");
+  });
 
-      onMounted(() => document.addEventListener("keyup", emitClose));
-      onBeforeUnmount(() => document.removeEventListener("keyup", emitClose));
+  onMounted(() => {
+    const dialog = document.querySelector("dialog");
 
-      return {
-        emitClose,
-      };
-    },
-  };
+    if (!dialog) {
+      return;
+    }
+
+    dialog.addEventListener("cancel", e => e.preventDefault());
+    dialog.showModal();
+  });
 </script>
 
 <template>
-  <div
-    :class="{ 'modal-mask': !isAttached, attached: isAttached }"
-    @click="emitClose"
-  >
-    <div :class="{ 'modal-wrapper': !isAttached }">
-      <div
-        :class="{ 'modal-container': !isAttached }"
-        role="dialog"
-        @click.stop
+  <div :class="{ 'modal-mask': !props.isAttached, attached: props.isAttached }">
+    <div :class="{ 'modal-wrapper': !props.isAttached }">
+      <component
+        :is="props.isAttached ? 'div' : 'dialog'"
+        :class="{ 'modal-container': !props.isAttached }"
       >
         <div class="modal-header">
           <h2
@@ -49,11 +42,9 @@
           v-if="$slots.footer"
           class="modal-footer"
         >
-          <div>
-            <slot name="footer" />
-          </div>
+          <slot name="footer" />
         </div>
-      </div>
+      </component>
     </div>
   </div>
 </template>
@@ -64,6 +55,11 @@
 >
   h2 {
     color: var(--color-primary-text);
+  }
+
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, .25);
+    backdrop-filter: blur(1px);
   }
 
   .modal-header {
@@ -86,14 +82,11 @@
   .modal-footer {
     padding: .5rem;
     width: 100%;
-
-    & > div {
-      display: flex;
-      justify-content: flex-end;
-    }
+    display: flex;
+    justify-content: flex-end;
 
     & ::v-deep(:not(:last-child)) {
-      margin-right: .5em;
+      margin-right: .35em;
     }
   }
 
@@ -104,7 +97,6 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .modal-wrapper {
@@ -122,10 +114,12 @@
   .modal-container {
     background-color: var(--color-background);
     border-radius: 5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     overflow: auto;
     max-height: 75vh;
     max-width: 75vw;
+    padding: 0;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
   }
 
   @media (max-width: 475px) {

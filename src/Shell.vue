@@ -185,7 +185,8 @@
       :data="data"
       :filter="propFilter"
     />
-    <aside
+    <component
+      :is="propAttached ? 'aside' : 'div'"
       v-if="showPropDialog || propAttached"
       class="propdialog-container"
     >
@@ -197,7 +198,7 @@
         @close="showPropDialog = false"
         @attach="onPropAttach"
       />
-    </aside>
+    </component>
   </main>
   <main v-if="!hasError && !isLoading && !data" />
   <Footer v-if="!isStandalone" />
