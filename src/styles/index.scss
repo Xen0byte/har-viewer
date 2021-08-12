@@ -7,10 +7,21 @@
 
 body {
   background-color: var(--color-background);
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+main {
+  flex-grow: 1;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 ::selection {
-  color: #2a2e33;
+  color: var(--color-primary-light-text);
   background: var(--color-primary-light);
 }
 

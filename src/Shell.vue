@@ -1,4 +1,4 @@
-<script>
+<script setup>
   import { ref, onMounted, onBeforeMount } from "vue";
   import svgLoading from "@mdi/svg/svg/loading.svg";
   import svgAlertCircleOutline from "@mdi/svg/svg/alert-circle-outline.svg";
@@ -10,150 +10,116 @@
   import Footer from "./components/Footer";
 
   import { parseHarFile, checkHar } from "./utils/har";
-  import { getSystemTheme, switchTheme } from "./utils/theme";
+  import { getSystemTheme, switchTheme, isPWA } from "./utils/theme";
 
-  export default {
-    name: "Shell",
-    components: {
-      InfoDialog,
-      PropDialog,
-      Footer,
-      AppBar,
-      HarViewer,
+  const data = ref(null);
+  const file = ref("");
+  const isLoading = ref(false);
+  const hasError = ref(null);
+  const showPropDialog = ref(false);
+  const propAttached = ref(false);
+  const showInfoDialog = ref(false);
+  const propFilter = ref({
+    filter: {
+      methods: "",
+      status: "",
+      resType: "",
+      domains: "",
     },
-    setup() {
-      const data = ref(null);
-      const file = ref("");
-      const isLoading = ref(false);
-      const hasError = ref(null);
-      const showPropDialog = ref(false);
-      const propAttached = ref(false);
-      const showInfoDialog = ref(false);
-      const propFilter = ref({
-        filter: {
-          methods: "",
-          status: "",
-          resType: "",
-          domains: "",
-        },
-        sortBy: "",
-        groupBy: "",
-      });
-      const isStandalone = ref(window.matchMedia("(display-mode: standalone)").matches
-        || (window.navigator.standalone)
-        || document.referrer.includes("android-app://"));
+    sortBy: "",
+    groupBy: "",
+  });
+  const isStandalone = isPWA();
 
-      onBeforeMount(() => {
-        switchTheme(getSystemTheme());
-      });
+  onBeforeMount(() => switchTheme(getSystemTheme()));
+  onMounted(() => {
+    // workaround for 100vh on mobile browsers
+    window.height = window.innerHeight;
+  });
 
-      onMounted(() => {
-        // workaround for 100vh on mobile browsers
-        window.height = window.innerHeight;
-      });
+  const onPropApply = filter => {
+    propFilter.value = filter;
+    showPropDialog.value = false;
+  };
 
-      const onPropApply = filter => {
-        propFilter.value = filter;
-        showPropDialog.value = false;
-      };
+  const onPropAttach = () => {
+    showPropDialog.value = false;
+    propAttached.value = !propAttached.value;
+  };
 
-      const onPropAttach = () => {
-        showPropDialog.value = false;
-        propAttached.value = !propAttached.value;
-      };
+  const openFile = () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".har";
 
-      const openFile = () => {
-        const fileInput = document.createElement("input");
-        fileInput.type = "file";
-        fileInput.accept = ".har";
+    fileInput.onchange = async ({ target: input }) => {
+      if (!input.files || input.files.length !== 1) {
+        return;
+      }
 
-        fileInput.onchange = async ({ target: input }) => {
-          if (!input.files || input.files.length !== 1) {
-            return;
-          }
+      isLoading.value = true;
 
-          isLoading.value = true;
+      try {
+        data.value = await parseHarFile(input.files[0]);
+        hasError.value = null;
+        file.value = input.files[0].name;
+      } catch (e) {
+        data.value = null;
+        hasError.value = e.message;
+        file.value = "";
+      } finally {
+        isLoading.value = false;
+      }
+    };
 
-          try {
-            data.value = await parseHarFile(input.files[0]);
-            hasError.value = null;
-            file.value = input.files[0].name;
-          } catch (e) {
-            data.value = null;
-            hasError.value = e.message;
-            file.value = "";
-          } finally {
-            isLoading.value = false;
-          }
-        };
+    fileInput.click();
+  };
 
-        fileInput.click();
-      };
+  const loadUrl = async () => {
+    // eslint-disable-next-line no-alert
+    const url = window.prompt("Enter the URL of the HAR file to load:");
 
-      const loadUrl = async () => {
-        // eslint-disable-next-line no-alert
-        const url = window.prompt("Enter the URL of the HAR file to load:");
+    if (!url) {
+      return;
+    }
 
-        if (!url) {
-          return;
-        }
+    isLoading.value = true;
 
-        isLoading.value = true;
+    try {
+      const res = await window.fetch(url);
+      const resData = await res.json();
 
-        try {
-          const res = await window.fetch(url);
-          const resData = await res.json();
+      data.value = checkHar(resData);
+      hasError.value = null;
+      file.value = url;
+    } catch (e) {
+      file.value = "";
+      data.value = null;
+      hasError.value = e.message;
+    } finally {
+      isLoading.value = false;
+    }
+  };
 
-          data.value = checkHar(resData);
-          hasError.value = null;
-          file.value = url;
-        } catch (e) {
-          file.value = "";
-          data.value = null;
-          hasError.value = e.message;
-        } finally {
-          isLoading.value = false;
-        }
-      };
-
-      const onAction = async action => {
-        switch (action) {
-          case "openFile":
-            openFile();
-            break;
-          case "loadUrl":
-            await loadUrl();
-            break;
-          case "sort-and-filter":
-            showPropDialog.value = true;
-            break;
-          case "info":
-            showInfoDialog.value = true;
-            break;
-          default:
-            // eslint-disable-next-line no-console
-            console.error(`unsupported action: ${action}`);
-            break;
-        }
-      };
-
-      return {
-        data,
-        isLoading,
-        hasError,
-        onAction,
-        svgLoading,
-        svgAlertCircleOutline,
-        file,
-        isStandalone,
-        showPropDialog,
-        onPropApply,
-        onPropAttach,
-        propFilter,
-        propAttached,
-        showInfoDialog,
-      };
-    },
+  const onAction = async action => {
+    switch (action) {
+      case "openFile":
+        openFile();
+        break;
+      case "loadUrl":
+        await loadUrl();
+        break;
+      case "sort-and-filter":
+        showPropDialog.value = true;
+        break;
+      case "info":
+        showInfoDialog.value = true;
+        break;
+      default:
+        // eslint-disable-next-line no-console
+        console.error(`unsupported action: ${action}`);
+        break;
+    }
   };
 </script>
 
@@ -168,13 +134,19 @@
     v-if="isLoading"
     class="loading"
   >
-    <img :src="svgLoading">
+    <img
+      alt="Loading..."
+      :src="svgLoading"
+    >
   </main>
   <main
     v-if="hasError && !isLoading"
     class="error column"
   >
-    <img :src="svgAlertCircleOutline">
+    <img
+      role="none"
+      :src="svgAlertCircleOutline"
+    >
     <span v-text="hasError" />
   </main>
   <main
@@ -191,7 +163,6 @@
       class="propdialog-container"
     >
       <PropDialog
-        v-if="showPropDialog || propAttached"
         :filter="propFilter"
         :is-attached="propAttached"
         @apply="onPropApply"
@@ -210,21 +181,10 @@
   />
 </template>
 
-<style lang="scss">
-  body {
-    min-height: 100vh;
-    max-height: 100vh;
-    overflow: hidden;
-  }
-
-  main {
-    flex-grow: 1;
-    height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
+<style
+  lang="scss"
+  scoped
+>
   .propdialog-container {
     height: 100%;
     border-left: var(--color-background-dark) solid 2px;
@@ -235,7 +195,7 @@
   }
 
   .error {
-    color: #df7b6e;
+    color: var(--color-background-error);
 
     & > span {
       font-weight: 600;
@@ -243,7 +203,7 @@
     }
 
     & > img {
-      filter: invert(71%) sepia(36%) saturate(1149%) hue-rotate(309deg) brightness(89%) contrast(95%);
+      filter: var(--filter-background-error);
       height: 128px;
       width: 128px;
     }
@@ -251,7 +211,7 @@
 
   .loading {
     & > img {
-      filter: invert(57%) sepia(74%) saturate(1464%) hue-rotate(182deg) brightness(98%) contrast(92%);
+      filter: var(--filter-primary-light);
       animation: spin 1s linear infinite;
       height: 64px;
       width: 64px;

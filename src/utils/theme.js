@@ -16,8 +16,17 @@ const getSystemTheme = () => window.localStorage.getItem("theme")
   || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark" : "light");
 
-export { switchTheme, getSystemTheme };
+/**
+ * Determines whether the app is running in standalone mode or not.
+ * @returns {boolean}
+ */
+const isPWA = () => window.matchMedia("(display-mode: standalone)").matches
+  || (window.navigator.standalone)
+  || document.referrer.includes("android-app://");
+
+export { switchTheme, getSystemTheme, isPWA };
 export default {
   switchTheme,
   getSystemTheme,
+  isPWA,
 };
