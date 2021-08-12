@@ -445,7 +445,7 @@
       height: 100%;
       max-height: 100%;
       overflow-y: auto;
-      width: 475px;
+      width: 450px;
       max-width: 100vw;
       z-index: 1;
     }

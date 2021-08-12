@@ -59,7 +59,7 @@
       return props.data.response._error.replace("net::", "");
     }
 
-    return "UNKNOWN";
+    return "unknown";
   });
 
   const url = computed(() => props.data.request.url.split("?")[0]);
@@ -79,9 +79,10 @@
       <b v-text="props.data.request.method" />
       <span v-text="duration" />
       <span v-text="props.data._resourceType" />
-      <div :class="`tag tag-${statusType}`">
-        <b v-text="statusCode" />
-      </div>
+      <div
+        :class="`tag tag-${statusType}`"
+        v-text="statusCode"
+      />
     </div>
     <div
       class="url overflow-text is-unselectable"
@@ -102,7 +103,7 @@
     border-width: 2px;
     border-style: dashed;
     color: var(--color-text);
-    padding: .6rem;
+    padding: .65rem;
 
     @media (min-width: 476px) {
       &:hover {
@@ -115,7 +116,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: .25rem;
+      margin-bottom: .3rem;
     }
 
     & > .url {
