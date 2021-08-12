@@ -36,6 +36,7 @@
     },
     setup(props) {
       const selectedIndex = ref(-1);
+      const selectedGroup = ref("");
       const showDialog = ref(false);
       const currentTab = ref("request");
 
@@ -272,12 +273,15 @@
           return null;
         }
 
-        return filteredData.value[selectedIndex.value];
+        return selectedGroup.value
+          ? filteredData.value.filter(o => o.group === selectedGroup.value)[selectedIndex.value]
+          : filteredData.value[selectedIndex.value];
       });
 
-      const onSelect = idx => {
+      const onSelect = (idx, group = null) => {
         currentTab.value = "request";
         selectedIndex.value = idx;
+        selectedGroup.value = group;
         if (window.innerWidth <= 475) {
           showDialog.value = true;
         }
@@ -287,6 +291,7 @@
         svgChevronLeft,
         selectedEntry,
         selectedIndex,
+        selectedGroup,
         filteredData,
         groups,
         onSelect,
@@ -317,8 +322,8 @@
               v-for="(entry, i) in filteredData.filter(o => o.group === group)"
               :key="i"
               :data="entry"
-              :active="selectedIndex === i"
-              @click="() => onSelect(i)"
+              :active="selectedIndex === i && selectedGroup === group"
+              @click="() => onSelect(i, group)"
             />
           </div>
         </template>
@@ -445,7 +450,7 @@
       height: 100%;
       max-height: 100%;
       overflow-y: auto;
-      width: 450px;
+      width: 475px;
       max-width: 100vw;
       z-index: 1;
     }

@@ -61,12 +61,6 @@
     color: var(--color-primary-text);
   }
 
-  dialog {
-    position: fixed;
-    top: 50%;
-    transform: translate(0, -50%);
-  }
-
   dialog::backdrop {
     background-color: rgba(0, 0, 0, .25);
     backdrop-filter: blur(1px);
