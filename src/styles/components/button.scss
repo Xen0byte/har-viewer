@@ -20,6 +20,11 @@
   & .icon + span {
     margin-left: .5rem;
   }
+
+  &:disabled {
+    filter: opacity(.5);
+    pointer-events: none;
+  }
 }
 
 .btn-primary {
@@ -51,6 +56,10 @@
 .btn-dark {
   background-color: var(--color-background-dark);
   color: var(--color-text);
+
+  & > .icon {
+    filter: var(--filter-text);
+  }
 
   &:hover {
     background-color: var(--color-primary-light);

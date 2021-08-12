@@ -1,0 +1,10 @@
+.spinner > img {
+  filter: var(--filter-primary-light);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

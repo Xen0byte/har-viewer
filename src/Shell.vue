@@ -5,11 +5,11 @@
 
   import AppBar from "./components/AppBar";
   import InfoDialog from "./components/dialogs/InfoDialog";
+  import OpenDialog from "./components/dialogs/OpenDialog";
   import PropDialog from "./components/dialogs/PropDialog";
   import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
 
-  import { parseHarFile, checkHar } from "./utils/har";
   import { getSystemTheme, switchTheme, isPWA } from "./utils/theme";
 
   const data = ref(null);
@@ -19,6 +19,7 @@
   const showPropDialog = ref(false);
   const propAttached = ref(false);
   const showInfoDialog = ref(false);
+  const showOpenDialog = ref(false);
   const propFilter = ref({
     filter: {
       methods: "",
@@ -47,53 +48,16 @@
     propAttached.value = !propAttached.value;
   };
 
-  const openFile = () => {
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = ".har";
-
-    fileInput.onchange = async ({ target: input }) => {
-      if (!input.files || input.files.length !== 1) {
-        return;
-      }
-
-      isLoading.value = true;
-
-      try {
-        data.value = await parseHarFile(input.files[0]);
-        hasError.value = null;
-        file.value = input.files[0].name;
-      } catch (e) {
-        data.value = null;
-        hasError.value = e.message;
-        file.value = "";
-      } finally {
-        isLoading.value = false;
-      }
-    };
-
-    fileInput.click();
-  };
-
-  const loadUrl = async () => {
-    // eslint-disable-next-line no-alert
-    const url = window.prompt("Enter the URL of the HAR file to load:");
-
-    if (!url) {
-      return;
-    }
-
+  const onOpenFile = async payload => {
+    showOpenDialog.value = false;
     isLoading.value = true;
 
-    try {
-      const res = await window.fetch(url);
-      const resData = await res.json();
+    file.value = payload.src;
 
-      data.value = checkHar(resData);
+    try {
+      data.value = payload.data;
       hasError.value = null;
-      file.value = url;
     } catch (e) {
-      file.value = "";
       data.value = null;
       hasError.value = e.message;
     } finally {
@@ -103,11 +67,8 @@
 
   const onAction = async action => {
     switch (action) {
-      case "openFile":
-        openFile();
-        break;
-      case "loadUrl":
-        await loadUrl();
+      case "open":
+        showOpenDialog.value = true;
         break;
       case "sort-and-filter":
         showPropDialog.value = true;
@@ -116,8 +77,6 @@
         showInfoDialog.value = true;
         break;
       default:
-        // eslint-disable-next-line no-console
-        console.error(`unsupported action: ${action}`);
         break;
     }
   };
@@ -132,7 +91,7 @@
   </app-bar>
   <main
     v-if="isLoading"
-    class="loading"
+    class="spinner"
   >
     <img
       alt="Loading..."
@@ -148,6 +107,7 @@
       :src="svgAlertCircleOutline"
     >
     <span v-text="hasError" />
+    <span v-text="file" />
   </main>
   <main
     v-if="!isLoading && !hasError && !!data"
@@ -179,6 +139,11 @@
     :version="data.version"
     @close="showInfoDialog = false"
   />
+  <OpenDialog
+    v-if="showOpenDialog"
+    @open="onOpenFile"
+    @close="showOpenDialog = false"
+  />
 </template>
 
 <style
@@ -209,18 +174,8 @@
     }
   }
 
-  .loading {
-    & > img {
-      filter: var(--filter-primary-light);
-      animation: spin 1s linear infinite;
-      height: 64px;
-      width: 64px;
-    }
-
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
+  .spinner > img {
+    height: 64px;
+    width: 64px;
   }
 </style>

@@ -171,6 +171,13 @@
     </form>
     <template #footer>
       <button
+        class="btn btn-primary"
+        type="button"
+        @click="onApply"
+      >
+        Apply
+      </button>
+      <button
         class="btn btn-reset"
         type="button"
         @click="onReset"
@@ -184,13 +191,6 @@
         @click="emit('close')"
       >
         Cancel
-      </button>
-      <button
-        class="btn btn-primary"
-        type="button"
-        @click="onApply"
-      >
-        Apply
       </button>
     </template>
   </modal>

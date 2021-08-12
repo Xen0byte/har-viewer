@@ -1,5 +1,8 @@
-input, select {
-  padding: .5rem;
+input[type=text], select {
+  padding: .375rem .75rem;
+
+  font-weight: 400;
+  font-size: 1rem;
 
   border: none;
   border-radius: 5px;
@@ -10,10 +13,27 @@ input, select {
   color: var(--color-text);
 
   width: 100%;
+}
 
-  font-weight: 600;
+input[type=radio] {
+  width: .9rem;
+  height: .9rem;
+
+  border-radius: 50%;
+  appearance: none;
+
+  color-adjust: exact;
+
+  background-color: white;
+
+  &:checked {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='1.75' fill='%23fff'/%3e%3c/svg%3e");
+  }
 }
 
 select {
+  padding: .375rem .75rem;
   cursor: pointer;
 }

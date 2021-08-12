@@ -34,6 +34,7 @@
   --filter-primary-text: invert(100%) sepia(4%) saturate(0%) hue-rotate(5deg) brightness(103%) contrast(100%);
   --filter-primary-dark-text: invert(100%) sepia(4%) saturate(0%) hue-rotate(5deg) brightness(103%) contrast(100%);
   --filter-background-error: invert(33%) sepia(67%) saturate(5171%) hue-rotate(338deg) brightness(91%) contrast(88%);
+  --filter-text: invert(18%) sepia(10%) saturate(724%) hue-rotate(169deg) brightness(100%) contrast(87%);
 }
 
 html[data-theme="dark"] {
@@ -47,6 +48,7 @@ html[data-theme="dark"] {
   --filter-primary-text: invert(100%) sepia(1%) saturate(4534%) hue-rotate(174deg) brightness(91%) contrast(117%);
   --filter-primary-dark-text: invert(100%) sepia(1%) saturate(4534%) hue-rotate(174deg) brightness(91%) contrast(117%);
   --filter-background-error: invert(69%) sepia(17%) saturate(1398%) hue-rotate(306deg) brightness(91%) contrast(103%);
+  --filter-text: invert(100%) sepia(1%) saturate(2490%) hue-rotate(174deg) brightness(99%) contrast(98%);
 }
 
 html[data-theme="nord"] {
@@ -84,4 +86,5 @@ html[data-theme="nord"] {
   --filter-primary-text: invert(91%) sepia(20%) saturate(735%) hue-rotate(187deg) brightness(109%) contrast(91%);
   --filter-primary-dark-text: invert(91%) sepia(20%) saturate(735%) hue-rotate(187deg) brightness(109%) contrast(91%);
   --filter-background-error: invert(48%) sepia(31%) saturate(852%) hue-rotate(305deg) brightness(89%) contrast(85%);
+  --filter-text: invert(98%) sepia(10%) saturate(780%) hue-rotate(176deg) brightness(97%) contrast(97%);
 }

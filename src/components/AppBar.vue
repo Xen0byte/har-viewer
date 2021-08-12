@@ -1,7 +1,6 @@
 <script setup>
   import svgDownload from "@mdi/svg/svg/download.svg";
-  import svgUpload from "@mdi/svg/svg/upload.svg";
-  import svgWeb from "@mdi/svg/svg/web.svg";
+  import svgFolderOpen from "@mdi/svg/svg/folder-open-outline.svg";
   import svgTune from "@mdi/svg/svg/tune.svg";
   import svgInformation from "@mdi/svg/svg/information.svg";
 
@@ -74,28 +73,15 @@
       <button
         type="button"
         class="btn btn-primary-dark"
-        @click="emit('action', 'openFile')"
+        @click="emit('action', 'open')"
       >
         <img
-          alt="Upload Icon"
+          alt="Open Icon"
           role="none"
           class="icon"
-          :src="svgUpload"
+          :src="svgFolderOpen"
         >
         <span>Open File</span>
-      </button>
-      <button
-        type="button"
-        class="btn btn-primary-dark"
-        @click="emit('action', 'loadUrl')"
-      >
-        <img
-          alt="Web Icon"
-          role="none"
-          class="icon"
-          :src="svgWeb"
-        >
-        <span>Load URL</span>
       </button>
     </div>
   </header>
