@@ -103,6 +103,7 @@
     class="error column"
   >
     <img
+      alt="Error Symbol"
       role="none"
       :src="svgAlertCircleOutline"
     >

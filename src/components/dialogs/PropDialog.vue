@@ -63,11 +63,13 @@
         >
           <img
             v-if="props.isAttached"
+            alt="Detach Icon"
             role="none"
             :src="svgPinOff"
           >
           <img
             v-else
+            alt="Attach Icon"
             role="none"
             :src="svgPin"
           >

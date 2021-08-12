@@ -30,11 +30,13 @@
   <div :class="{ attached: props.isAttached }">
     <component
       :is="props.isAttached ? 'div' : 'dialog'"
+      :aria-labelledby="!props.isAttached ? 'dialog-header' : null"
       :class="{ 'modal-container': !props.isAttached }"
     >
       <div class="modal-header">
         <h2
           v-if="$slots.header"
+          id="dialog-header"
           class="is-unselectable"
         >
           <slot name="header" />

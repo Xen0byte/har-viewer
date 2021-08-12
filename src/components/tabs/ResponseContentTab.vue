@@ -53,6 +53,7 @@
           </summary>
           <img
             v-if="hasImage"
+            alt="Response Content"
             :src="`data:${data.response.content.mimeType};base64,${data.response.content.text}`"
           >
           <code
