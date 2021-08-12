@@ -1,7 +1,7 @@
 <script setup>
   import { ref } from "vue";
 
-  import svgUpload from "@mdi/svg/svg/upload.svg";
+  import svgUpload from "@mdi/svg/svg/upload-outline.svg";
   import svgLoading from "@mdi/svg/svg/loading.svg";
 
   import { parseHarFile, checkHar } from "../../utils/har";

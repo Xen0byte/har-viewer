@@ -1,7 +1,8 @@
 <script setup>
   import { ref } from "vue";
-  import svgPin from "@mdi/svg/svg/pin.svg";
-  import svgPinOff from "@mdi/svg/svg/pin-off.svg";
+
+  import svgPin from "@mdi/svg/svg/pin-outline.svg";
+  import svgPinOff from "@mdi/svg/svg/pin-off-outline.svg";
 
   import Modal from "../Modal";
 

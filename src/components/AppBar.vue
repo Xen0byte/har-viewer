@@ -1,8 +1,8 @@
 <script setup>
   import svgDownload from "@mdi/svg/svg/download.svg";
   import svgFolderOpen from "@mdi/svg/svg/folder-open-outline.svg";
-  import svgTune from "@mdi/svg/svg/tune.svg";
-  import svgInformation from "@mdi/svg/svg/information.svg";
+  import svgFilterMenu from "@mdi/svg/svg/filter-menu-outline.svg";
+  import svgInformation from "@mdi/svg/svg/information-outline.svg";
 
   const props = defineProps({
     isLoaded: {
@@ -67,7 +67,7 @@
           alt="Settings Icon"
           role="none"
           class="icon"
-          :src="svgTune"
+          :src="svgFilterMenu"
         >
       </button>
       <button
