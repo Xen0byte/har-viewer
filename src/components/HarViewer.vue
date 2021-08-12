@@ -316,7 +316,6 @@
             <RequestCard
               v-for="(entry, i) in filteredData.filter(o => o.group === group)"
               :key="i"
-              v-memo="[i === selectedIndex]"
               :data="entry"
               :active="selectedIndex === i"
               @click="() => onSelect(i)"
@@ -328,7 +327,6 @@
         <RequestCard
           v-for="(entry, i) in filteredData"
           :key="i"
-          v-memo="[i === selectedIndex]"
           :data="entry"
           :active="selectedIndex === i"
           @click="() => onSelect(i)"
