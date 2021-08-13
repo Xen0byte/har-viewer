@@ -237,7 +237,7 @@
             group = o.response.status;
           }
         } else if (groupBy === "status-type") {
-          if (o.response.status < 0 && o.response.status < 200) {
+          if (o.response.status > 0 && o.response.status < 200) {
             group = "Informational";
           } else if (o.response.status > 199 && o.response.status < 300) {
             group = "Success";
