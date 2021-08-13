@@ -6,13 +6,16 @@ env:
   es2021: true
 
 globals:
-  APP: false
-  AUTHOR_NAME: false
-  AUTHOR_URL: false
-  DEBUG: false
-  HOMEPAGE: false
-  LICENSE: false
-  SW_URL: false
+  DEBUG: readonly
+  # app details
+  APP: readonly
+  AUTHOR_NAME: readonly
+  AUTHOR_URL: readonly
+  HOMEPAGE: readonly
+  LICENSE: readonly
+  VERSION: readonly
+  # service worker
+  SW_URL: readonly
   # vue 3.2 syntax
   defineEmits: readonly
   defineProps: readonly

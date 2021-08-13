@@ -4,6 +4,7 @@
   const authorUrl = AUTHOR_URL;
   const homepage = HOMEPAGE;
   const license = LICENSE;
+  const version = VERSION;
 </script>
 
 <template>
@@ -18,7 +19,7 @@
           title="Homepage"
           target="_blank"
           rel="noreferrer"
-        ><b v-text="app" /></a> by
+        ><b v-text="app" /></a> v{{ version }} by
         <a
           :href="authorUrl"
           target="_blank"
