@@ -85,7 +85,6 @@
         <input
           id="methods"
           v-model="methods"
-          style="margin-bottom: .5rem;"
           type="text"
           title="Multiple methods can be specified separated by commas. Use ! to exclude methods."
           @keyup.enter="onApply"
@@ -96,7 +95,6 @@
         <input
           id="status"
           v-model="status"
-          style="margin-bottom: .5rem;"
           type="text"
           title="Multiple status can be specified separated by commas or using ranges. Use ! to exclude status."
           @keyup.enter="onApply"
@@ -107,7 +105,6 @@
         <input
           id="domains"
           v-model="domains"
-          style="margin-bottom: .5rem;"
           type="text"
           title="Multiple domains can be specified separated by commas. Use ! to exclude domains or * as wildcard."
           @keyup.enter="onApply"
@@ -123,14 +120,13 @@
           @keyup.enter="onApply"
         >
       </fieldset>
-      <div style="max-width: 300px; padding: .5rem">
+      <div class="sort-group">
         <label for="sort">
           Sort By
         </label>
         <select
           id="sort"
           v-model="sortBy"
-          style="margin-bottom: .5rem;"
         >
           <option value="">
             Nothing
@@ -230,7 +226,22 @@
   .filter-group {
     border-color: var(--color-background-dark);
     border-radius: 5px;
-    margin-right: .75rem; max-width: 300px;
+
+    & > input:not(:last-of-type) {
+      margin-bottom: .5rem;
+    }
+  }
+
+  form {
+    max-width: 300px;
+  }
+
+  .sort-group {
+    padding: .5rem;
+
+    & > select:not(:last-of-type) {
+      margin-bottom: .5rem;
+    }
   }
 
   input, select {
