@@ -9,6 +9,7 @@
   import PostDataTab from "./tabs/PostDataTab";
   import RequestTab from "./tabs/RequestTab";
   import ResponseContentTab from "./tabs/ResponseContentTab";
+  import WebsocketTab from "./tabs/WebsocketTab";
   import ResponseTab from "./tabs/ResponseTab";
   import TimingTab from "./tabs/TimingTab";
 
@@ -304,6 +305,7 @@
     "post-data": PostDataTab,
     response: ResponseTab,
     "response-content": ResponseContentTab,
+    websocket: WebsocketTab,
     cookies: CookieTab,
     timing: TimingTab,
   };
@@ -382,6 +384,7 @@
           :has-response-content="selectedEntry.response.content.size !== 0"
           :has-cookies="selectedEntry.request.cookies.length !== 0 || selectedEntry.response.cookies.length !== 0"
           :has-timings="Object.keys(selectedEntry.timings).length !== 0"
+          :has-websocket="!!selectedEntry._webSocketMessages"
           @change="tab => currentTab = tab"
         />
         <div

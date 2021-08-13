@@ -51,6 +51,7 @@ The following features are supported:
 - Support initial filter on file load to improve loading times for large files
 - Settings dialog
 - Increase filter / sort / group performance
+- Show websocket data
 
 See the [open issues](https://github.com/develerik/har-viewer/issues) for a list of proposed features
 (and known issues).

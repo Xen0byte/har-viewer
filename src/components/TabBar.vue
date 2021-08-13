@@ -18,6 +18,10 @@
       type: Boolean,
       default: false,
     },
+    hasWebsocket: {
+      type: Boolean,
+      default: false,
+    },
     hasCookies: {
       type: Boolean,
       default: false,
@@ -39,6 +43,7 @@
     { name: "post-data", displayName: "Post Data" },
     { name: "response", displayName: "Response" },
     { name: "response-content", displayName: "Response Content" },
+    { name: "websocket", displayName: "Websocket" },
     { name: "cookies", displayName: "Cookies" },
     { name: "timing", displayName: "Timing" },
   ];
@@ -47,6 +52,7 @@
   const enabledTabs = computed(() => availableTabs.filter(tab => (
     !(tab.name === "post-data" && !props.hasPostData)
     && !(tab.name === "response-content" && !props.hasResponseContent)
+    && !(tab.name === "websocket" && !props.hasWebsocket)
     && !(tab.name === "cookies" && !props.hasCookies)
     && !(tab.name === "timings" && !props.hasTimings)
   )));
