@@ -159,6 +159,7 @@
           id="urlPath"
           v-model="loadUrl"
           type="text"
+          @keyup.enter="onOpen"
         >
         <div
           v-if="!!hasError"
