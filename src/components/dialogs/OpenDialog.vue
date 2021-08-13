@@ -2,6 +2,7 @@
   import { ref } from "vue";
 
   import svgUpload from "@mdi/svg/svg/upload-outline.svg";
+  import svgDownload from "@mdi/svg/svg/download-outline.svg";
   import svgLoading from "@mdi/svg/svg/loading.svg";
 
   import { parseHarFile, checkHar } from "../../utils/har";
@@ -14,6 +15,7 @@
   const loadedFile = ref("");
   const isLoading = ref(false);
   const hasError = ref(false);
+  const filterEnabled = ref(false);
 
   let data = null;
   let src = "";
@@ -26,7 +28,7 @@
     try {
       // eslint-disable-next-line no-new
       new URL(uri);
-    } catch (_) {
+    } catch (e) {
       hasError.value = "Invalid URL";
       return;
     }
@@ -42,6 +44,7 @@
       isLoading.value = "Parsing file...";
       data = checkHar(resData);
       src = loadedFile.value;
+      filterEnabled.value = true;
     } catch (e) {
       hasError.value = e.message;
     } finally {
@@ -58,7 +61,10 @@
       return;
     }
 
-    emit("open", { src, data });
+    emit("open", {
+      src,
+      data,
+    });
   };
 
   const openFile = () => {
@@ -71,6 +77,7 @@
         return;
       }
 
+      filterEnabled.value = false;
       hasError.value = false;
       loadedFile.value = input.files[0].name;
       isLoading.value = "Parsing file...";
@@ -78,6 +85,7 @@
       try {
         data = await parseHarFile(input.files[0]);
         src = loadFrom.value;
+        filterEnabled.value = true;
       } catch (e) {
         hasError.value = e.message;
       } finally {
@@ -137,7 +145,7 @@
           <button
             class="btn btn-dark"
             type="button"
-            aria-label="Open file dialog"
+            title="Open file dialog"
             @click="openFile"
           >
             <img
@@ -154,13 +162,31 @@
         >
           Enter the URL you want to load the file from:
         </label>
-        <input
+        <div
           v-if="loadFrom === 'url'"
-          id="urlPath"
-          v-model="loadUrl"
-          type="text"
-          @keyup.enter="onOpen"
+          class="file-input"
         >
+          <input
+            id="urlPath"
+            v-model="loadUrl"
+            type="text"
+            @keyup.enter="() => loadFromUrl(loadUrl)"
+            @change="filterEnabled = false"
+          >
+          <button
+            class="btn btn-dark"
+            type="button"
+            title="Pre-Download file"
+            @click="() => loadFromUrl(loadUrl)"
+          >
+            <img
+              alt="Download Icon"
+              role="none"
+              class="icon"
+              :src="svgDownload"
+            >
+          </button>
+        </div>
         <div
           v-if="!!hasError"
           class="error"
@@ -213,10 +239,6 @@
       min-width: unset;
       max-width: unset;
     }
-  }
-
-  #urlPath {
-    margin-top: .25rem;
   }
 
   .error {

@@ -3,7 +3,7 @@
     <img src="src/assets/icon.svg" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">HAR Viewer</h3>
+<h3 align="center">HAR Viewer</h3>
 
   <p align="center">
     Simple viewer for HTTP Archives
@@ -29,6 +29,7 @@
 **HAR Viewer** is an easy to use viewer for HTTP Archive files. All processing is done locally on your device.
 
 The following features are supported:
+
 - Loading `.har` files from file or url
 - Filter entries on Method, Status Code, Domain and Resource Type
 - Sort entries by Status Code and Timing
@@ -40,8 +41,8 @@ The following features are supported:
 
 1. Visit [https://develerik.github.io/har-viewer](https://develerik.github.io/har-viewer)
 2. Open a `.har` file
-   - Option 1: Open a file from your local device
-   - Option 2: Open a file from a remote url
+  - Option 1: Open a file from your local device
+  - Option 2: Open a file from a remote url
 3. Analyze your file
 
 ## Roadmap
@@ -51,7 +52,8 @@ The following features are supported:
 - Support initial filter on file load to improve loading times for large files
 - Settings dialog
 
-See the [open issues](https://github.com/develerik/har-viewer/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/develerik/har-viewer/issues) for a list of proposed features
+(and known issues).
 
 ## Get Support
 
@@ -60,14 +62,15 @@ provide individual support via email. We also believe that help is much more val
 more people can benefit from it.
 
 - [**Report a bug**](https://github.com/develerik/har-viewer/issues/new?labels=bug&template=bug_report.md)
-- [**Requests a new feature**](https://github.com/develerik/har-viewer/issues/new?labels=enhancement&template=feature_request.md)
-- [**Report a security vulnerability**](https://github.com/develerik/har-viewer/issues/new?labels=vulnerability&template=vulnerability_report.md)
-
+- [**Requests a new
+  feature**](https://github.com/develerik/har-viewer/issues/new?labels=enhancement&template=feature_request.md)
+- [**Report a security
+  vulnerability**](https://github.com/develerik/har-viewer/issues/new?labels=vulnerability&template=vulnerability_report.md)
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create.
-Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any
+contributions you make are **greatly appreciated**.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
