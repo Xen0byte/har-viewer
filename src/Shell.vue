@@ -73,6 +73,10 @@
       case "sort-and-filter":
         showPropDialog.value = true;
         break;
+      case "sort-and-filter_attached":
+        onPropAttach();
+        showPropDialog.value = true;
+        break;
       case "info":
         showInfoDialog.value = true;
         break;

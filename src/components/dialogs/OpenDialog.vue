@@ -245,7 +245,8 @@
       <button
         class="btn btn-primary"
         type="button"
-        :disabled="!(loadFrom === 'file' && loadedFile && !hasError) && !(loadFrom === 'url' && loadUrl)"
+        :disabled="!(loadFrom === 'file' && loadedFile && !hasError)
+          && !(loadFrom === 'url' && loadUrl && !hasError)"
         @click="onOpen"
       >
         Open

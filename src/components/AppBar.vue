@@ -61,7 +61,8 @@
         type="button"
         class="btn btn-primary-dark"
         title="Filter / Sort / Group"
-        @click="emit('action', 'sort-and-filter')"
+        @click.exact="emit('action', 'sort-and-filter')"
+        @click.shift="emit('action', 'sort-and-filter_attached')"
       >
         <img
           alt="Settings Icon"
