@@ -48,7 +48,6 @@ The following features are supported:
 ## Roadmap
 
 - Export Feature (filters, redact, postman)
-- Handle files that contain multiple pages
 - Support initial filter on file load to improve loading times for large files
 - Settings dialog
 

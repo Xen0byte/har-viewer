@@ -17,6 +17,9 @@
   const hasError = ref(false);
   const filterEnabled = ref(false);
 
+  const page = ref("");
+  const pages = ref([]);
+
   let data = null;
   let src = "";
 
@@ -44,6 +47,7 @@
       isLoading.value = "Parsing file...";
       data = checkHar(resData);
       src = loadedFile.value;
+      pages.value = data.pages;
       filterEnabled.value = true;
     } catch (e) {
       hasError.value = e.message;
@@ -53,7 +57,7 @@
   };
 
   const onOpen = async () => {
-    if (loadFrom.value === "url") {
+    if (!filterEnabled.value && loadFrom.value === "url") {
       await loadFromUrl(loadUrl.value);
     }
 
@@ -61,9 +65,15 @@
       return;
     }
 
+    if (page.value) {
+      data.entries = data.entries.filter(e => e.pageref === page.value);
+      data.pages = data.pages.filter(p => p.id === page.value);
+    }
+
     emit("open", {
       src,
       data,
+      filter: {},
     });
   };
 
@@ -85,6 +95,7 @@
       try {
         data = await parseHarFile(input.files[0]);
         src = loadFrom.value;
+        pages.value = data.pages;
         filterEnabled.value = true;
       } catch (e) {
         hasError.value = e.message;
@@ -193,6 +204,29 @@
           v-text="hasError"
         />
       </div>
+      <fieldset
+        class="initial-filter"
+        :disabled="!filterEnabled"
+      >
+        <legend>Initial Filter</legend>
+        <label for="pages">
+          Page
+        </label>
+        <select
+          id="pages"
+          v-model="page"
+        >
+          <option value="">
+            All
+          </option>
+          <option
+            v-for="p in pages"
+            :key="p.id"
+            :value="p.id"
+            v-text="p.title"
+          />
+        </select>
+      </fieldset>
     </form>
     <template #footer>
       <div
@@ -264,6 +298,24 @@
     & > span {
       margin-left: .5rem;
       color: var(--color-text);
+    }
+  }
+
+  label {
+    font-weight: 600;
+  }
+
+  .initial-filter {
+    margin-top: .5rem;
+    border-color: var(--color-background-dark);
+    border-radius: 5px;
+
+    & > input:not(:last-of-type) {
+      margin-bottom: .5rem;
+    }
+
+    & > input[type=text], select {
+      margin-top: .1rem;
     }
   }
 

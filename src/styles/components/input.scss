@@ -13,6 +13,11 @@ input[type=text], select {
   color: var(--color-text);
 
   width: 100%;
+
+  &:disabled {
+    filter: opacity(.5);
+    pointer-events: none;
+  }
 }
 
 input[type=radio] {
