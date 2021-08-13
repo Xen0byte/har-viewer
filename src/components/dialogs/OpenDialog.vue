@@ -118,17 +118,26 @@
         <label for="url">URL</label>
       </div>
       <div class="load-file">
-        <div class="file-input">
+        <label
+          v-if="loadFrom === 'file'"
+          for="filePath"
+        >
+          Select the file you want to open:
+        </label>
+        <div
+          v-if="loadFrom === 'file'"
+          class="file-input"
+        >
           <input
-            v-if="loadFrom === 'file'"
+            id="filePath"
             v-model="loadedFile"
             type="text"
             readonly
           >
           <button
-            v-if="loadFrom === 'file'"
             class="btn btn-dark"
             type="button"
+            aria-label="Open file dialog"
             @click="openFile"
           >
             <img
@@ -139,12 +148,19 @@
             >
           </button>
         </div>
+        <label
+          v-if="loadFrom === 'url'"
+          for="urlPath"
+        >
+          Enter the URL you want to load the file from:
+        </label>
         <input
           v-if="loadFrom === 'url'"
+          id="urlPath"
           v-model="loadUrl"
           type="text"
         >
-        <span
+        <div
           v-if="!!hasError"
           class="error"
           v-text="hasError"
@@ -189,15 +205,23 @@
   scoped
 >
   form {
-    min-width: 350px;
+    min-width: 400px;
+    max-width: 400px;
 
     @media (max-width: 475px) {
       min-width: unset;
+      max-width: unset;
     }
   }
 
+  #urlPath {
+    margin-top: .25rem;
+  }
+
   .error {
-    margin-right: 1.5rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-top: .25rem;
     color: var(--color-background-error);
   }
 
@@ -231,15 +255,12 @@
     }
   }
 
-  .load-file {
-    min-height: 85px;
-
-    input {
-      height: 36px;
-    }
+  .load-file input {
+    height: 36px;
   }
 
   .file-input {
+    margin-top: .25rem;
     display: flex;
 
     & > input {
