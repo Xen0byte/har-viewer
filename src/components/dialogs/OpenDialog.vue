@@ -189,8 +189,11 @@
   scoped
 >
   form {
-    min-width: 400px;
-    max-width: 400px;
+    min-width: 350px;
+
+    @media (max-width: 475px) {
+      min-width: unset;
+    }
   }
 
   .error {
