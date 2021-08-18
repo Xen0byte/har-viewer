@@ -42,13 +42,30 @@
 
   const filteredData = ref([]);
 
+  let filter = null;
   const applyFilters = filters => {
+    if (!filters.filter || filter === filters.filter) {
+      const clone = [...filteredData.value];
+
+      if (filters.sortBy) {
+        sortBy(clone, filters.sortBy);
+      } else {
+        sortBy(clone);
+      }
+
+      if (filters.groupBy) {
+        groupBy(clone, filters.groupBy);
+      } else {
+        groupBy(clone);
+      }
+
+      filteredData.value = clone;
+      return;
+    }
+
     const clone = [...data.value.entries];
 
-    // TODO: don't apply filter if nothing changed
-    if (filters.filter) {
-      filterBy(clone, filters.filter);
-    }
+    filterBy(clone, filters.filter);
 
     if (filters.sortBy) {
       sortBy(clone, filters.sortBy);
@@ -58,12 +75,13 @@
       groupBy(clone, filters.groupBy);
     }
 
+    filter = filters.filter;
     filteredData.value = clone;
   };
 
-  const onPropApply = filter => {
-    applyFilters(filter);
-    propFilter.value = filter;
+  const onPropApply = filters => {
+    applyFilters(filters);
+    propFilter.value = filters;
     showPropDialog.value = false;
   };
 

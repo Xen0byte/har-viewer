@@ -150,7 +150,7 @@ export function filterBy(arr, filter) {
  * Sort an array of har entries.
  *
  * @param {object[]} arr - The har entries to sort.
- * @param {string} prop - THe name of the propery to sort by.
+ * @param {string} prop - THe name of the propery to sort by (leave empty to unsort).
  */
 export function sortBy(arr, prop) {
   let sortFunc;
@@ -169,22 +169,29 @@ export function sortBy(arr, prop) {
       sortFunc = (a, b) => compare(b.time, a.time);
       break;
     default:
-      sortFunc = null;
+      sortFunc = (a, b) => compare(a.id, b.id);
       break;
   }
 
-  if (sortFunc) {
-    arr.sort(sortFunc);
-  }
+  arr.sort(sortFunc);
 }
 
 /**
  * Group an array of har entries.
  *
  * @param {object[]} arr - The har entries to group.
- * @param {string} prop - THe name of the propery to group by.
+ * @param {string} prop - THe name of the propery to group by (leave empty to ungroup).
  */
 export function groupBy(arr, prop) {
+  if (!prop) {
+    for (let i = 0; i < arr.length; i++) {
+      // eslint-disable-next-line no-param-reassign
+      delete arr[i].group;
+    }
+
+    return;
+  }
+
   for (let i = 0; i < arr.length; i++) {
     let group = "";
 

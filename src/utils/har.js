@@ -60,6 +60,12 @@ export function checkHar(harContent) {
     }
   }
 
+  // add id needed for selecting and restoring original order
+  for (let i = 0; i < harContent.log.entries.length; i++) {
+    // eslint-disable-next-line no-param-reassign
+    harContent.log.entries[i].id = i;
+  }
+
   return harContent.log;
 }
 

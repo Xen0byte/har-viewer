@@ -22,22 +22,15 @@
     },
   });
 
-  const selectedIndex = ref(-1);
-  const selectedGroup = ref("");
+  const selectedId = ref(-1);
   const showDialog = ref(false);
   const currentTab = ref("request");
 
   const groups = computed(() => uniqueArrayByProperty(props.data, o => o.group));
 
-  const selectedEntry = computed(() => {
-    if (selectedIndex.value === -1) {
-      return null;
-    }
-
-    return selectedGroup.value
-      ? props.data.filter(o => o.group === selectedGroup.value)[selectedIndex.value]
-      : props.data[selectedIndex.value];
-  });
+  const selectedEntry = computed(() => (selectedId.value !== -1
+    ? props.data[selectedId.value]
+    : null));
 
   const tabViews = {
     request: RequestTab,
@@ -49,10 +42,9 @@
     timing: TimingTab,
   };
 
-  const onSelect = (idx, group = null) => {
+  const onSelect = id => {
     currentTab.value = "request";
-    selectedIndex.value = idx;
-    selectedGroup.value = group;
+    selectedId.value = id;
     if (window.innerWidth <= 475) {
       showDialog.value = true;
     }
@@ -73,22 +65,22 @@
           />
           <div class="group">
             <RequestCard
-              v-for="(entry, i) in props.data.filter(o => o.group === group)"
-              :key="i"
+              v-for="entry in props.data.filter(o => o.group === group)"
+              :key="entry.id"
               :data="entry"
-              :active="selectedIndex === i && selectedGroup === group"
-              @click="() => onSelect(i, group)"
+              :active="selectedId === entry.id"
+              @click="() => onSelect(entry.id)"
             />
           </div>
         </template>
       </template>
       <template v-else>
         <RequestCard
-          v-for="(entry, i) in props.data"
-          :key="i"
+          v-for="entry in props.data"
+          :key="entry.id"
           :data="entry"
-          :active="selectedIndex === i"
-          @click="() => onSelect(i)"
+          :active="selectedId === entry.id"
+          @click="() => onSelect(entry.id)"
         />
       </template>
     </aside>
