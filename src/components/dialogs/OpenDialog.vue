@@ -94,7 +94,7 @@
 
       try {
         data = await parseHarFile(input.files[0]);
-        src = loadFrom.value;
+        src = loadedFile.value;
         pages.value = data.pages;
         filterEnabled.value = true;
       } catch (e) {

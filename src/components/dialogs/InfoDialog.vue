@@ -6,6 +6,10 @@
       type: Object,
       default: () => ({}),
     },
+    file: {
+      type: String,
+      default: "",
+    },
     version: {
       type: String,
       default: "",
@@ -22,6 +26,10 @@
     </template>
     <table class="column">
       <tbody>
+        <tr>
+          <th>File</th>
+          <td v-text="props.file" />
+        </tr>
         <tr>
           <th>Creator</th>
           <td v-text="`${props.creator.name} (${props.creator.version})`" />

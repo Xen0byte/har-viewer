@@ -182,6 +182,7 @@
   <InfoDialog
     v-if="showInfoDialog && data"
     :creator="data.creator"
+    :file="file"
     :version="data.version"
     @close="showInfoDialog = false"
   />
