@@ -1,0 +1,17 @@
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+
+  & ul {
+    margin-block-start: .25rem;
+    margin-block-end: .25rem;
+  }
+}
+
+.data-table {
+  & th {
+    padding-right: .75rem;
+    font-weight: 600;
+  }
+}

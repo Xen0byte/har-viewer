@@ -24,7 +24,7 @@
     <template #header>
       <span>Info</span>
     </template>
-    <table class="column">
+    <table>
       <tbody>
         <tr>
           <th>File</th>
