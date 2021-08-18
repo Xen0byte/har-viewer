@@ -161,8 +161,9 @@ const config = {
 if (isDev) {
   config.devServer = {
     hot: true,
-    host: "0.0.0.0",
+    host: "local-ipv4",
     historyApiFallback: true,
+    allowedHosts: "all",
   };
 } else {
   const { CleanWebpackPlugin } = require("clean-webpack-plugin");
