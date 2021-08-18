@@ -1,36 +1,25 @@
-<script>
+<script setup>
   import { ref, computed } from "vue";
 
-  export default {
-    name: "ResponseTab",
-    props: {
-      data: {
-        type: Object,
-        required: true,
-      },
+  const props = defineProps({
+    data: {
+      type: Object,
+      required: true,
     },
-    setup(props) {
-      const filteredHeaders = ref([]);
+  });
 
-      filteredHeaders.value = props.data.response.headers
-        .filter(h => h.name !== "set-cookie");
+  const filteredHeaders = ref(props.data.response.headers
+    .filter(h => h.name.toLowerCase() !== "cookie"));
 
-      const totalResponseSize = computed(() => props.data.response.headersSize + (props.data.response.bodySize === -1
-        ? props.data.response.content.size
-        : props.data.response.bodySize));
-
-      return {
-        filteredHeaders,
-        totalResponseSize,
-      };
-    },
-  };
+  const totalResponseSize = computed(() => props.data.response.headersSize + (props.data.response.bodySize === -1
+    ? props.data.response.content.size
+    : props.data.response.bodySize));
 </script>
 
 <template>
-  <article class="overflow-text">
+  <div class="tab-content overflow-text">
     <div v-if="data.response.status !== 0">
-      <b> {{ data.response.status }} {{ data.response.statusText }} {{ data.response.httpVersion }}</b>
+      <i> {{ data.response.status }} {{ data.response.statusText }} {{ data.response.httpVersion }}</i>
     </div>
     <section
       v-if="data.response._error"
@@ -59,37 +48,33 @@
     <section>
       <h1>Size</h1>
       <table>
-        <tr>
-          <th>Headers</th>
-          <td>{{ data.response.headersSize }} bytes</td>
-        </tr>
-        <tr>
-          <th>Body</th>
-          <td>{{ data.response.bodySize === -1 ? data.response.content.size : data.response.bodySize }} bytes</td>
-        </tr>
-        <tr>
-          <th>Total</th>
-          <td>{{ totalResponseSize }} bytes</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>Headers</th>
+            <td>{{ data.response.headersSize }} bytes</td>
+          </tr>
+          <tr>
+            <th>Body</th>
+            <td>{{ data.response.bodySize === -1 ? data.response.content.size : data.response.bodySize }} bytes</td>
+          </tr>
+          <tr>
+            <th>Total</th>
+            <td>{{ totalResponseSize }} bytes</td>
+          </tr>
+        </tbody>
       </table>
     </section>
-  </article>
+  </div>
 </template>
 
 <style
   lang="scss"
   scoped
 >
-  article {
-    & section:not(:last-of-type) {
-      margin-bottom: .5rem;
-    }
-
-    & .error {
-      padding: 1rem;
-      background-color: var(--color-error);
-      color: var(--color-error-text);
-      border-radius: 5px;
-    }
+  .error {
+    padding: 1rem;
+    background-color: var(--color-error);
+    color: var(--color-error-text);
+    border-radius: 5px;
   }
 </style>
