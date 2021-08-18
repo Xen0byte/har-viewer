@@ -3,9 +3,8 @@
 /**
  * Finds all unique property values in an array of objects.
  *
- * @param arr {Object[]} - The data array.
- * @param cb {function} - Lamda returning the property to reduce on.
- *
+ * @param {object[]} arr - The data array.
+ * @param {Function} cb - Lamda returning the property to reduce on.
  * @returns {Array} An array of unique reducted property values.
  */
 export function uniqueArrayByProperty(arr, cb) {
@@ -23,9 +22,8 @@ export function uniqueArrayByProperty(arr, cb) {
 /**
  * Compare two values.
  *
- * @param a {string|number} - The first value to compare.
- * @param b {string|number} - The second value to compare.
- *
+ * @param {string|number} a - The first value to compare.
+ * @param {string|number} b - The second value to compare.
  * @returns {number}
  *   <ul>
  *      <li>0 if a is equal to b.</li>

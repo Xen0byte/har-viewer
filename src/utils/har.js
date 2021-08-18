@@ -25,8 +25,7 @@ const errInvalid = new Error("invalid HAR file");
  * Read a file's contents.
  *
  * @param {File} file - The file to read.
- *
- * @return {Promise<string|Error>}
+ * @returns {Promise<string|Error>} The file contents or an error.
  */
 async function readFile(file) {
   return new Promise((resolve, reject) => {
@@ -41,9 +40,8 @@ async function readFile(file) {
 /**
  * Check if object is a valid HAR file.
  *
- * @param {Object} harContent - The HAR file contents
- *
- * @return {Promise<Object|Error>}
+ * @param {object} harContent - The HAR file contents.
+ * @returns {Promise<object|Error>} The checked har file.
  */
 export function checkHar(harContent) {
   // check required keys
@@ -69,8 +67,7 @@ export function checkHar(harContent) {
  * Parse a given HAR file.
  *
  * @param {File} file - The HAR file to parse.
- *
- * @return {Promise<Object|Error>}
+ * @returns {Promise<object|Error>} The parsed har file or an error.
  */
 export async function parseHarFile(file) {
   if (file.type && file.type !== "application/json") {

@@ -25,11 +25,13 @@ globals:
 extends:
   - plugin:import/errors
   - plugin:import/warnings
+  - plugin:jsdoc/recommended
   - plugin:vue/vue3-recommended
   - airbnb-base
 
 plugins:
   - import
+  - jsdoc
   - vue
 
 settings:

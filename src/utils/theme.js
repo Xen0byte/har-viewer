@@ -3,7 +3,7 @@
 /**
  * Switch the currently active theme.
  *
- * @param {string} theme The theme to switch to.
+ * @param {string} theme -The theme to switch to.
  */
 export function switchTheme(theme) {
   document.querySelector("html").dataset.theme = theme;
@@ -12,7 +12,7 @@ export function switchTheme(theme) {
 /**
  * Gets the preferred system theme.
  *
- * @returns {string}
+ * @returns {string} The currently selected theme.
  */
 export function getSystemTheme() {
   return window.localStorage.getItem("theme")
@@ -22,7 +22,7 @@ export function getSystemTheme() {
 /**
  * Determines whether the app is running in standalone mode or not.
  *
- * @returns {boolean}
+ * @returns {boolean} A boolean indicating whether the app is running in standalone mode or not.
  */
 export function isPWA() {
   return window.matchMedia("(display-mode: standalone)").matches

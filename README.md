@@ -50,7 +50,6 @@ The following features are supported:
 - Export Feature (filters, redact, postman)
 - Support initial filter on file load to improve loading times for large files
 - Settings dialog
-- Increase filter / sort / group performance
 - Show websocket data
 - Add sort by request size
 
