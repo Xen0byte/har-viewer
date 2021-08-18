@@ -97,10 +97,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-
-    & ::v-deep(:not(:last-child)) {
-      margin-right: .35em;
-    }
+    gap: .35rem;
   }
 
   .modal-body {

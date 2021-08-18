@@ -112,10 +112,7 @@
 
   .actions {
     display: flex;
-
-    & > *:not(:last-child) {
-      margin-right: .35rem;
-    }
+    gap: .35rem;
   }
 
   @media (max-width: 280px) {
@@ -123,8 +120,8 @@
       padding: .5rem .5rem;
     }
 
-    .actions > *:not(:last-child) {
-      margin-right: .25em;
+    .actions {
+      gap: .25rem;
     }
   }
 

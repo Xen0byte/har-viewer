@@ -14,6 +14,7 @@
   import TimingTab from "./tabs/TimingTab";
 
   import { uniqueArrayByProperty } from "../utils/array";
+  import { viewerTabs } from "../utils/constants";
 
   const props = defineProps({
     data: {
@@ -41,6 +42,17 @@
     cookies: CookieTab,
     timing: TimingTab,
   };
+
+  const enabledTabs = computed(() => viewerTabs.filter(tab => (selectedEntry.value
+    // eslint-disable-next-line no-underscore-dangle
+    && !(tab.name === "websocket" && !selectedEntry.value._webSocketMessages)
+    && !(tab.name === "post-data" && !selectedEntry.value.request.postData)
+    && !(tab.name === "response-content" && selectedEntry.value.response.content.size === 0)
+    && !(tab.name === "cookies"
+      && selectedEntry.value.request.cookies.length !== 0
+      && selectedEntry.value.response.cookies.length !== 0)
+    && !(tab.name === "timing" && Object.keys(selectedEntry.value.timings).length === 0)
+  )));
 
   const onSelect = id => {
     currentTab.value = "request";
@@ -111,11 +123,7 @@
         <TabBar
           :current-tab="currentTab"
           :as-dialog="showDialog"
-          :has-post-data="!!selectedEntry.request.postData"
-          :has-response-content="selectedEntry.response.content.size !== 0"
-          :has-cookies="selectedEntry.request.cookies.length !== 0 || selectedEntry.response.cookies.length !== 0"
-          :has-timings="Object.keys(selectedEntry.timings).length !== 0"
-          :has-websocket="!!selectedEntry._webSocketMessages"
+          :tabs="enabledTabs"
           @change="tab => currentTab = tab"
         />
         <div

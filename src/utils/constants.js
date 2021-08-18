@@ -47,3 +47,45 @@ export const methodOrder = {
   CONNECT: 7,
   TRACE: 8,
 };
+
+/**
+ * @typedef {object} TabProperties
+ * @property {string} name - The internal name (id).
+ * @property {string} displayName - The name which is displayed to the user.
+ */
+
+/**
+ * All tabs supported by the viewer.
+ *
+ * @type {TabProperties[]}
+ */
+export const viewerTabs = [
+  {
+    name: "request",
+    displayName: "Request",
+  },
+  {
+    name: "post-data",
+    displayName: "Post Data",
+  },
+  {
+    name: "response",
+    displayName: "Response",
+  },
+  {
+    name: "response-content",
+    displayName: "Response Content",
+  },
+  {
+    name: "websocket",
+    displayName: "Websocket",
+  },
+  {
+    name: "cookies",
+    displayName: "Cookies",
+  },
+  {
+    name: "timing",
+    displayName: "Timing",
+  },
+];
