@@ -10,6 +10,9 @@
   import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
 
+  import { compare } from "./utils/array";
+  import { methodOrder, statusTypeOrder } from "./utils/constants";
+
   import { getSystemTheme, switchTheme, isPWA } from "./utils/theme";
 
   const data = ref(null);
@@ -37,39 +40,6 @@
     // workaround for 100vh on mobile browsers
     window.height = window.innerHeight;
   });
-
-  const compare = (a, b) => {
-    if (a < b) {
-      return -1;
-    }
-
-    if (a > b) {
-      return 1;
-    }
-
-    return 0;
-  };
-
-  const statusTypeOrder = {
-    Informational: 0,
-    Success: 1,
-    Redirection: 2,
-    "Client Error": 3,
-    "Server Error": 4,
-    Unknown: 5,
-  };
-
-  const methodOrder = {
-    GET: 0,
-    POST: 1,
-    PATCH: 2,
-    PUT: 3,
-    DELETE: 4,
-    OPTIONS: 5,
-    HEAD: 6,
-    CONNECT: 7,
-    TRACE: 8,
-  };
 
   const filteredData = ref([]);
 

@@ -2,6 +2,7 @@
 
 /**
  * Keys that are required for a HAR file.
+ *
  * @type {string[]}
  */
 const requiredKeys = [
@@ -24,6 +25,7 @@ const errInvalid = new Error("invalid HAR file");
  * Read a file's contents.
  *
  * @param {File} file - The file to read.
+ *
  * @return {Promise<string|Error>}
  */
 async function readFile(file) {
@@ -38,7 +40,9 @@ async function readFile(file) {
 
 /**
  * Check if object is a valid HAR file.
+ *
  * @param {Object} harContent - The HAR file contents
+ *
  * @return {Promise<Object|Error>}
  */
 export function checkHar(harContent) {
@@ -65,6 +69,7 @@ export function checkHar(harContent) {
  * Parse a given HAR file.
  *
  * @param {File} file - The HAR file to parse.
+ *
  * @return {Promise<Object|Error>}
  */
 export async function parseHarFile(file) {

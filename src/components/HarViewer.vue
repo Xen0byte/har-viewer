@@ -13,6 +13,8 @@
   import ResponseTab from "./tabs/ResponseTab";
   import TimingTab from "./tabs/TimingTab";
 
+  import { uniqueArrayByProperty } from "../utils/array";
+
   const props = defineProps({
     data: {
       type: Array,
@@ -24,14 +26,6 @@
   const selectedGroup = ref("");
   const showDialog = ref(false);
   const currentTab = ref("request");
-
-  const uniqueArrayByProperty = (arr, cb) => arr.reduce((prev, item) => {
-    const v = cb(item);
-    if (!prev.includes(v) && v !== undefined) {
-      prev.push(v);
-    }
-    return prev;
-  }, []);
 
   const groups = computed(() => uniqueArrayByProperty(props.data, o => o.group));
 
