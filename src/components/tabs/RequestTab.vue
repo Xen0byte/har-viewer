@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, computed } from "vue";
 
   const props = defineProps({
     data: {
@@ -10,6 +10,11 @@
 
   const filteredHeaders = ref(props.data.request.headers
     .filter(h => h.name.toLowerCase() !== "cookie"));
+
+  const headerSize = computed(() => props.data.request.headersSize || 0);
+  const bodySize = computed(() => (props.data.request.bodySize === -1 ? 0 : props.data.request.bodySize || 0));
+
+  const totalResponseSize = computed(() => headerSize.value + bodySize.value);
 </script>
 
 <template>
@@ -67,15 +72,15 @@
       <table>
         <tr>
           <th>Headers</th>
-          <td>{{ data.request.headersSize }} bytes</td>
+          <td>{{ headerSize }} bytes</td>
         </tr>
         <tr>
           <th>Body</th>
-          <td>{{ data.request.bodySize }} bytes</td>
+          <td>{{ bodySize }} bytes</td>
         </tr>
         <tr>
           <th>Total</th>
-          <td>{{ data.request.headersSize + data.request.bodySize }} bytes</td>
+          <td>{{ totalResponseSize }} bytes</td>
         </tr>
       </table>
     </section>

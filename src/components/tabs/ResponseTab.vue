@@ -11,26 +11,24 @@
   const filteredHeaders = ref(props.data.response.headers
     .filter(h => h.name.toLowerCase() !== "cookie"));
 
-  const totalResponseSize = computed(() => props.data.response.headersSize + (props.data.response.bodySize === -1
-    ? props.data.response.content.size
-    : props.data.response.bodySize));
+  const headerSize = computed(() => props.data.response.headersSize || 0);
+  const bodySize = computed(() => (props.data.response.bodySize === -1 ? 0 : props.data.response.bodySize || 0));
+
+  const totalResponseSize = computed(() => headerSize.value + bodySize.value);
 </script>
 
 <template>
   <div class="tab-content overflow-text">
-    <div v-if="data.response.status !== 0">
-      <i> {{ data.response.status }} {{ data.response.statusText }} {{ data.response.httpVersion }}</i>
-    </div>
+    <i v-if="data.response.status !== 0">
+      {{ data.response.status }} {{ data.response.statusText }} {{ data.response.httpVersion }}
+    </i>
     <section
       v-if="data.response._error"
       class="error"
     >
       <b v-text="data.response._error" />
     </section>
-    <section
-      v-if="data.response.status !== 0"
-      style="margin-top: .5rem;"
-    >
+    <section v-if="data.response.status !== 0">
       <h1>Headers</h1>
       <ul>
         <li
@@ -51,11 +49,11 @@
         <tbody>
           <tr>
             <th>Headers</th>
-            <td>{{ data.response.headersSize }} bytes</td>
+            <td>{{ headerSize }} bytes</td>
           </tr>
           <tr>
             <th>Body</th>
-            <td>{{ data.response.bodySize === -1 ? data.response.content.size : data.response.bodySize }} bytes</td>
+            <td>{{ bodySize }} bytes</td>
           </tr>
           <tr>
             <th>Total</th>
