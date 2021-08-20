@@ -106,10 +106,8 @@ export function filterBy(arr, filter) {
       const resTypesExcludes = resTypes.filter(m => m.startsWith("!"))
         .map(m => m.replace("!", ""));
 
-      // eslint-disable-next-line no-underscore-dangle
-      const include = resTypesIncludes.includes(arr[i]._resourceType.toLowerCase());
-      // eslint-disable-next-line no-underscore-dangle
-      const exclude = resTypesExcludes.includes(arr[i]._resourceType.toLowerCase());
+      const include = resTypesIncludes.includes(arr[i].custom.resourceType.toLowerCase());
+      const exclude = resTypesExcludes.includes(arr[i].custom.resourceType.toLowerCase());
 
       if (exclude) {
         arr.splice(i, 1);
@@ -219,8 +217,7 @@ export function groupBy(arr, prop) {
         group = "Unknown";
       }
     } else if (prop === "resource-type") {
-      // eslint-disable-next-line no-underscore-dangle
-      group = arr[i]._resourceType;
+      group = arr[i].custom.resourceType;
     } else if (prop === "domain") {
       group = (new URL(arr[i].request.url)).hostname;
     }

@@ -78,7 +78,7 @@
     <div class="details">
       <b v-text="props.data.request.method" />
       <span v-text="duration" />
-      <span v-text="props.data._resourceType" />
+      <span v-text="props.data.custom.resourceType" />
       <div
         :class="`tag tag-${statusType}`"
         v-text="statusCode"

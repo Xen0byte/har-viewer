@@ -28,15 +28,13 @@
   const groupBy = ref(props.filter.groupBy);
 
   const onApply = () => {
-    const hasFilter = methods.value || status.value || resType.value || domains.value;
-
     emit("apply", {
-      filter: hasFilter ? {
+      filter: {
         methods: methods.value.toLowerCase(),
         status: status.value,
         resType: resType.value.toLowerCase(),
         domains: domains.value.toLowerCase(),
-      } : null,
+      },
       sortBy: sortBy.value,
       groupBy: groupBy.value,
     });
