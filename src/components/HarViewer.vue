@@ -49,8 +49,8 @@
     && !(tab.name === "post-data" && !selectedEntry.value.request.postData)
     && !(tab.name === "response-content" && selectedEntry.value.response.bodySize < 0)
     && !(tab.name === "cookies"
-      && selectedEntry.value.request.cookies.length !== 0
-      && selectedEntry.value.response.cookies.length !== 0)
+      && selectedEntry.value.request.cookies.length === 0
+      && selectedEntry.value.response.cookies.length === 0)
     && !(tab.name === "timing" && Object.keys(selectedEntry.value.timings).length === 0)
   )));
 
