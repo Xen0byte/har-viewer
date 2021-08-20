@@ -75,15 +75,13 @@
     @click="emit('click')"
     @keydown.enter="emit('click')"
   >
-    <div class="details">
-      <b v-text="props.data.request.method" />
-      <span v-text="duration" />
-      <span v-text="props.data.custom.resourceType" />
-      <div
-        :class="`tag tag-${statusType}`"
-        v-text="statusCode"
-      />
-    </div>
+    <b v-text="props.data.request.method" />
+    <span v-text="duration" />
+    <span v-text="props.data.custom.resourceType" />
+    <div
+      :class="`tag tag-${statusType}`"
+      v-text="statusCode"
+    />
     <div
       class="url overflow-text is-unselectable"
       v-text="url"
@@ -105,29 +103,36 @@
     color: var(--color-text);
     padding: .65rem;
 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: .3rem 0;
+    align-items: center;
+    grid-template-areas: "method timing type status" "url url url url";
+
     @media (min-width: 476px) {
       &:hover {
         background-color: var(--color-background);
         border-color: var(--color-primary-light);
       }
     }
+  }
 
-    & > .details {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: .3rem;
-    }
+  .tag-container {
+    display: flex;
+    justify-content: flex-end;
+  }
 
-    & > .url {
-      white-space: nowrap;
-    }
+  .url {
+    white-space: nowrap;
+    grid-area: url;
   }
 
   .tag {
     border-radius: 5px;
     padding: .2rem .35rem;
     width: max-content;
+    justify-self: flex-end;
 
     &.tag-unknown {
       background-color: var(--color-background);
