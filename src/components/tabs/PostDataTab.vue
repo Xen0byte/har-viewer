@@ -1,43 +1,36 @@
-<script>
-  export default {
-    name: "PostDataTab",
-    props: {
-      data: {
-        type: Object,
-        required: true,
-      },
+<script setup>
+  const props = defineProps({
+    data: {
+      type: Object,
+      required: true,
     },
-  };
+  });
 </script>
 
 <template>
-  <article
-    v-if="data.request.postData"
-    class="overflow-text"
+  <div
+    v-if="props.data.request.postData"
+    class="tab-content overflow-text"
   >
     <section>
       <h1>Type</h1>
-      {{ data.request.postData.mimeType }}
+      <span v-text="props.data.request.postData.mimeType" />
     </section>
-    <section v-if="data.request.postData.params">
+    <section v-if="props.data.request.postData.params">
       <h1>Parameters</h1>
       <ul>
         <li
-          v-for="p in data.request.postData.params"
+          v-for="p in props.data.request.postData.params"
           :key="p.name"
         >
-          <b>{{ p.name }}</b>: {{ p.value }}
+          <template v-if="p.value">
+            <b>{{ p.name }}</b>: {{ p.value }}
+          </template>
+          <template v-else>
+            <b>{{ p.name }}</b>
+          </template>
         </li>
       </ul>
     </section>
-  </article>
+  </div>
 </template>
-
-<style
-  lang="scss"
-  scoped
->
-  section:not(:last-of-type) {
-    margin-bottom: .5rem;
-  }
-</style>
