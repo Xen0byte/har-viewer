@@ -98,6 +98,18 @@
 
     try {
       data.value = payload.data;
+      showPropDialog.value = false;
+      propAttached.value = false;
+      propFilter.value = {
+        filter: {
+          methods: "",
+          status: "",
+          resType: "",
+          domains: "",
+        },
+        sortBy: "",
+        groupBy: "",
+      };
       filteredData.value = payload.data.entries;
       hasError.value = null;
     } catch (e) {
