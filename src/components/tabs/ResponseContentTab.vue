@@ -1,52 +1,44 @@
-<script>
+<script setup>
   import { computed } from "vue";
 
-  export default {
-    name: "ResponseContentTab",
-    props: {
-      data: {
-        type: Object,
-        required: true,
-      },
+  const props = defineProps({
+    data: {
+      type: Object,
+      required: true,
     },
-    setup(props) {
-      const hasImage = computed(() => props.data.response.content.encoding === "base64"
-        && props.data.response.content.mimeType.startsWith("image/")
-        && props.data.response.content.text);
+  });
 
-      return {
-        hasImage,
-      };
-    },
-  };
+  const hasImage = computed(() => props.data.response.content.encoding === "base64"
+    && props.data.response.content.mimeType.startsWith("image/")
+    && props.data.response.content.text);
 </script>
 
 <template>
-  <article
-    v-if="data.response.content"
-    class="overflow-text"
+  <div
+    v-if="props.data.response.content"
+    class="tab-content overflow-text"
   >
     <section>
       <h1>Size</h1>
-      {{ data.response.content.size }} bytes
+      {{ props.data.response.content.size }} bytes
     </section>
-    <section v-if="data.response.content.encoding">
+    <section v-if="props.data.response.content.encoding">
       <h1>Encoding</h1>
-      {{ data.response.content.encoding }}
+      {{ props.data.response.content.encoding }}
     </section>
     <section>
       <h1>Mime Type</h1>
-      {{ data.response.content.mimeType }}
+      {{ props.data.response.content.mimeType }}
     </section>
     <section>
       <h1 style="margin-bottom: .5rem;">
         Content
       </h1>
       <span
-        v-if="data.response.content.comment"
-        v-text="data.response.content.comment"
+        v-if="props.data.response.content.comment"
+        v-text="props.data.response.content.comment"
       />
-      <div v-if="data.response.content.text">
+      <div v-if="props.data.response.content.text">
         <details>
           <summary class="is-unselectable">
             Show content
@@ -54,25 +46,25 @@
           <img
             v-if="hasImage"
             alt="Response Content"
-            :src="`data:${data.response.content.mimeType};base64,${data.response.content.text}`"
+            :src="`data:${props.data.response.content.mimeType};base64,${props.data.response.content.text}`"
           >
           <code
             v-else
             style="font-family: monospace;"
           >
-            {{ data.response.content.text.replace(")]}'\n", "") }}
+            {{ props.data.response.content.text.replace(")]}'\n", "") }}
           </code>
         </details>
       </div>
     </section>
-  </article>
+  </div>
 </template>
 
 <style
   lang="scss"
   scoped
 >
-  section:not(:last-of-type) {
-    margin-bottom: .5rem;
+  summary {
+    margin-bottom: .3rem;
   }
 </style>
