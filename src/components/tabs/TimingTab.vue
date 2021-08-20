@@ -1,66 +1,103 @@
-<script>
-  export default {
-    name: "TimingTab",
-    props: {
-      data: {
-        type: Object,
-        required: true,
-      },
+<script setup>
+  const props = defineProps({
+    data: {
+      type: Object,
+      required: true,
     },
-    setup() {
-      return {
-        round: Math.round,
-      };
-    },
-  };
+  });
 </script>
 
 <template>
   <article class="overflow-text">
     <div class="timing">
       <div
-        v-if="data.timings.blocked !== -1"
+        v-if="props.data.timings.blocked !== -1"
         class="timing-blocked"
-        :style="`width: ${(data.timings.blocked/data.time)*100}%`"
+        :style="`width: ${(props.data.timings.blocked/props.data.time)*100}%`"
       />
       <div
-        v-if="data.timings.dns !== -1"
+        v-if="props.data.timings.dns !== -1"
         class="timing-dns"
-        :style="`width: ${(data.timings.dns/data.time)*100}%`"
+        :style="`width: ${(props.data.timings.dns/props.data.time)*100}%`"
       />
       <div
-        v-if="data.timings.connect !== -1"
+        v-if="props.data.timings.connect !== -1"
         class="timing-connect"
-        :style="`width: ${(data.timings.connect/data.time)*100}%`"
+        :style="`width: ${(props.data.timings.connect/props.data.time)*100}%`"
       />
       <div
-        v-if="data.timings.send !== -1"
+        v-if="props.data.timings.send !== -1"
         class="timing-send"
-        :style="`width: ${(data.timings.send/data.time)*100}%`"
+        :style="`width: ${(props.data.timings.send/props.data.time)*100}%`"
       />
       <div
-        v-if="data.timings.wait !== -1"
+        v-if="props.data.timings.wait !== -1"
         class="timing-wait"
-        :style="`width: ${(data.timings.wait/data.time)*100}%`"
+        :style="`width: ${(props.data.timings.wait/props.data.time)*100}%`"
       />
       <div
-        v-if="data.timings.receive !== -1"
+        v-if="props.data.timings.receive !== -1"
         class="timing-receive"
-        :style="`width: ${(data.timings.receive/data.time)*100}%`"
+        :style="`width: ${(props.data.timings.receive/props.data.time)*100}%`"
       />
       <div
-        v-if="data.timings.ssl !== -1"
+        v-if="props.data.timings.ssl !== -1"
         class="timing-ssl"
-        :style="`width: ${(data.timings.ssl/data.time)*100}%`"
+        :style="`width: ${(props.data.timings.ssl/props.data.time)*100}%`"
       />
     </div>
-    <b>Blocked</b>: {{ round(data.timings.blocked) }} ms<br>
-    <b>DNS</b>: {{ round(data.timings.dns) }} ms<br>
-    <b>Connection</b>: {{ round(data.timings.connect) }} ms<br>
-    <b>Send</b>: {{ round(data.timings.send) }} ms<br>
-    <b>Wait</b>: {{ round(data.timings.wait) }} ms<br>
-    <b>Receive</b>: {{ round(data.timings.receive) }} ms<br>
-    <b>SSL</b>: {{ round(data.timings.ssl) }} ms
+    <table class="data-table">
+      <tbody>
+        <tr>
+          <th>Blocked</th>
+          <td>
+            {{ props.data.timings.blocked !== -1 ? `${Math.round(props.data.timings.blocked)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+        <tr>
+          <th>DNS</th>
+          <td>
+            {{ props.data.timings.dns !== -1 ? `${Math.round(props.data.timings.dns)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+        <tr>
+          <th>Connection</th>
+          <td>
+            {{ props.data.timings.connect !== -1 ? `${Math.round(props.data.timings.connect)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+        <tr>
+          <th>Send</th>
+          <td>
+            {{ props.data.timings.send !== -1 ? `${Math.round(props.data.timings.send)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+        <tr>
+          <th>Wait</th>
+          <td>
+            {{ props.data.timings.wait !== -1 ? `${Math.round(props.data.timings.wait)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+        <tr>
+          <th>Receive</th>
+          <td>
+            {{ props.data.timings.receive !== -1 ? `${Math.round(props.data.timings.receive)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+        <tr>
+          <th>SSL</th>
+          <td>
+            {{ props.data.timings.ssl !== -1 ? `${Math.round(props.data.timings.ssl)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total</th>
+          <td>{{ props.data.time }} ms</td>
+        </tr>
+      </tfoot>
+    </table>
   </article>
 </template>
 
