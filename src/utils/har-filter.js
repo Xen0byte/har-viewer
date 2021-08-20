@@ -169,7 +169,7 @@ export function sortBy(arr, prop) {
       sortFunc = (a, b) => compare(b.time, a.time);
       break;
     default:
-      sortFunc = (a, b) => compare(a.id, b.id);
+      sortFunc = (a, b) => compare(a.custom.id, b.custom.id);
       break;
   }
 
@@ -186,7 +186,7 @@ export function groupBy(arr, prop) {
   if (!prop) {
     for (let i = 0; i < arr.length; i++) {
       // eslint-disable-next-line no-param-reassign
-      delete arr[i].group;
+      delete arr[i].custom.group;
     }
 
     return;
@@ -226,7 +226,7 @@ export function groupBy(arr, prop) {
     }
 
     // eslint-disable-next-line no-param-reassign
-    arr[i].group = group;
+    arr[i].custom.group = group;
   }
 
   let sortFunc;

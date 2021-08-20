@@ -27,10 +27,10 @@
   const showDialog = ref(false);
   const currentTab = ref("request");
 
-  const groups = computed(() => uniqueArrayByProperty(props.data, o => o.group));
+  const groups = computed(() => uniqueArrayByProperty(props.data, o => o.custom.group));
 
   const selectedEntry = computed(() => (selectedId.value !== -1
-    ? props.data[selectedId.value]
+    ? props.data.find(o => o.custom.id === selectedId.value)
     : null));
 
   const tabViews = {
@@ -77,11 +77,11 @@
           />
           <div class="group">
             <RequestCard
-              v-for="entry in props.data.filter(o => o.group === group)"
-              :key="entry.id"
+              v-for="entry in props.data.filter(o => o.custom.group === group)"
+              :key="entry.custom.id"
               :data="entry"
-              :active="selectedId === entry.id"
-              @click="() => onSelect(entry.id)"
+              :active="selectedId === entry.custom.id"
+              @click="() => onSelect(entry.custom.id)"
             />
           </div>
         </template>
@@ -89,10 +89,10 @@
       <template v-else>
         <RequestCard
           v-for="entry in props.data"
-          :key="entry.id"
+          :key="entry.custom.id"
           :data="entry"
-          :active="selectedId === entry.id"
-          @click="() => onSelect(entry.id)"
+          :active="selectedId === entry.custom.id"
+          @click="() => onSelect(entry.custom.id)"
         />
       </template>
     </aside>
