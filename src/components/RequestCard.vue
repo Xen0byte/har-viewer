@@ -24,6 +24,7 @@
   >
     <b v-text="data.request.method" />
     <span>{{ Math.round(data.time) }} ms</span>
+    <!--TODO: replace resource type by response mime type-->
     <span v-text="data.custom.resourceType" />
     <div
       :class="`tag tag-${data.custom.statusType}`"

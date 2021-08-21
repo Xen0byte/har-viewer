@@ -41,9 +41,11 @@ The following features are supported:
 
 1. Visit [https://develerik.github.io/har-viewer](https://develerik.github.io/har-viewer)
 2. Open a `.har` file
-  - Option 1: Open a file from your local device
-  - Option 2: Open a file from a remote url
+   - Option 1: Open a file from your local device
+   - Option 2: Open a file from a remote url
 3. Analyze your file
+
+_If you don't know how to generate `.har` files, see [here](./docs/generate.md)._
 
 ## Roadmap
 
