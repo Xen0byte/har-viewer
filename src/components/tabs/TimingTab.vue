@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <article class="overflow-text">
+  <div class="tab-content overflow-text">
     <div class="timing">
       <div
         v-if="props.data.timings.blocked !== -1"
@@ -47,77 +47,96 @@
       />
     </div>
     <table class="data-table">
+      <thead>
+        <tr>
+          <th colspan="3">
+            Connection Start
+          </th>
+        </tr>
+      </thead>
       <tbody>
         <tr>
-          <th>Blocked</th>
+          <td class="timing-blocked" />
+          <th>Stalled</th>
           <td>
             {{ props.data.timings.blocked !== -1 ? `${Math.round(props.data.timings.blocked)} ms` : "Does not apply" }}
           </td>
         </tr>
         <tr>
-          <th>DNS</th>
+          <td class="timing-dns" />
+          <th>DNS Lookup</th>
           <td>
             {{ props.data.timings.dns !== -1 ? `${Math.round(props.data.timings.dns)} ms` : "Does not apply" }}
           </td>
         </tr>
         <tr>
-          <th>Connection</th>
-          <td>
-            {{ props.data.timings.connect !== -1 ? `${Math.round(props.data.timings.connect)} ms` : "Does not apply" }}
-          </td>
-        </tr>
-        <tr>
-          <th>Send</th>
-          <td>
-            {{ props.data.timings.send !== -1 ? `${Math.round(props.data.timings.send)} ms` : "Does not apply" }}
-          </td>
-        </tr>
-        <tr>
-          <th>Wait</th>
-          <td>
-            {{ props.data.timings.wait !== -1 ? `${Math.round(props.data.timings.wait)} ms` : "Does not apply" }}
-          </td>
-        </tr>
-        <tr>
-          <th>Receive</th>
-          <td>
-            {{ props.data.timings.receive !== -1 ? `${Math.round(props.data.timings.receive)} ms` : "Does not apply" }}
-          </td>
-        </tr>
-        <tr>
+          <td class="timing-ssl" />
           <th>SSL</th>
           <td>
             {{ props.data.timings.ssl !== -1 ? `${Math.round(props.data.timings.ssl)} ms` : "Does not apply" }}
           </td>
         </tr>
+        <tr>
+          <td class="timing-connect" />
+          <th>Initial Connection</th>
+          <td>
+            {{ props.data.timings.connect !== -1 ? `${Math.round(props.data.timings.connect)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th
+            colspan="3"
+            class="total"
+          >
+            Request/Response
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="timing-send" />
+          <th>Request Sent</th>
+          <td>
+            {{ props.data.timings.send !== -1 ? `${Math.round(props.data.timings.send)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="timing-wait" />
+          <th>Waiting (TTFB)</th>
+          <td>
+            {{ props.data.timings.wait !== -1 ? `${Math.round(props.data.timings.wait)} ms` : "Does not apply" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="timing-receive" />
+          <th>Content Downloaded</th>
+          <td>
+            {{ props.data.timings.receive !== -1 ? `${Math.round(props.data.timings.receive)} ms` : "Does not apply" }}
+          </td>
+        </tr>
       </tbody>
       <tfoot>
         <tr>
-          <th>Total</th>
-          <td>{{ props.data.time }} ms</td>
+          <th colspan="2">
+            Total time
+          </th>
+          <td>{{ Math.round(props.data.time) }} ms</td>
         </tr>
       </tfoot>
     </table>
-  </article>
+  </div>
 </template>
 
 <style
   lang="scss"
   scoped
 >
-  section:not(:last-of-type) {
-    margin-bottom: .5rem;
-  }
-
   .timing {
     width: 100%;
     height: 35px;
-    margin-bottom: .5rem;
     display: flex;
-
-    & > div {
-      height: 100%;
-    }
   }
 
   .timing-blocked {
@@ -146,5 +165,29 @@
 
   .timing-ssl {
     background-color: var(--color-timing-ssl);
+  }
+
+  .data-table {
+    width: max-content;
+
+    & tbody td:first-child {
+      width: .25rem;
+    }
+
+    & tbody th {
+      font-weight: 400;
+      padding-left: .5rem;
+    }
+
+    & tbody td,
+    & tfoot td {
+      text-align: right;
+    }
+
+    & thead th,
+    & tfoot th,
+    & tfoot td {
+      padding-top: 1rem;
+    }
   }
 </style>
