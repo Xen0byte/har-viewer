@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import { compare } from "./array";
+import { statusCodes } from "./http";
 
 /**
  * Keys that are required for a HAR file.
@@ -99,14 +100,7 @@ function computeSizes(data) {
     } else {
       let { statusText } = data;
       if (data.status !== 0 && !statusText) {
-        // TODO: add more status texts
-        switch (data.status) {
-          case 200:
-            statusText = "OK";
-            break;
-          default:
-            break;
-        }
+        statusText = statusCodes[data.status];
       }
 
       sizes.headersSize = `${data.status} ${statusText} ${data.httpVersion}\r\n`.length;
@@ -218,7 +212,7 @@ export function checkHar(harContent) {
     switch (true) {
       case data.response.status === 0:
         // eslint-disable-next-line no-underscore-dangle
-        statusType = data.response._error ? "error" : "unknown";
+        statusType = data.response._error ? "error" : "unknown"; // TODO: use blocked
         break;
       case data.response.status < 200:
         statusType = "info";
@@ -227,16 +221,16 @@ export function checkHar(harContent) {
         statusType = "success";
         break;
       case data.response.status < 400:
-        statusType = "info";
+        statusType = "info"; // TODO: use redirect
         break;
       case data.response.status < 500:
-        statusType = "warning";
+        statusType = "warning"; // TODO: use client-error
         break;
       case data.response.status < 600:
-        statusType = "error";
+        statusType = "error"; // TODO: use server-error
         break;
       default:
-        statusType = "unknown";
+        statusType = "unknown"; // TODO: use custom
         break;
     }
 
