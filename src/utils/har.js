@@ -86,17 +86,17 @@ function computeResourceType(data) {
  */
 function computeSizes(data) {
   const sizes = {
-    headersSize: data.headersSize,
-    bodySize: data.bodySize,
+    headersSize: data.headersSize || 0,
+    bodySize: data.bodySize || 0,
     totalSize: 0,
     headersSizeComputed: false,
     bodySizeComputed: false,
     totalSizeComputed: false,
   };
 
-  if (sizes.headersSize === -1) {
+  if (sizes.headersSize === -1 || !sizes.headersSize) {
     if (data.method) {
-      sizes.headersSize = `${data.method} ${data.url} ${data.httpVersion}\r\n`.length;
+      sizes.headersSize = `${data.method} ${data.url} ${data.httpVersion || "HTTP/1.1"}\r\n`.length;
     } else {
       let { statusText } = data;
       if (data.status !== 0 && !statusText) {
@@ -211,8 +211,7 @@ export function checkHar(harContent) {
     let statusType = "";
     switch (true) {
       case data.response.status === 0:
-        // eslint-disable-next-line no-underscore-dangle
-        statusType = data.response._error ? "error" : "unknown"; // TODO: use blocked
+        statusType = "blocked";
         break;
       case data.response.status < 200:
         statusType = "info";
@@ -221,27 +220,28 @@ export function checkHar(harContent) {
         statusType = "success";
         break;
       case data.response.status < 400:
-        statusType = "info"; // TODO: use redirect
+        statusType = "redirect";
         break;
       case data.response.status < 500:
-        statusType = "warning"; // TODO: use client-error
+        statusType = "client-error";
         break;
       case data.response.status < 600:
-        statusType = "error"; // TODO: use server-error
+        statusType = "server-error";
         break;
       default:
-        statusType = "unknown"; // TODO: use custom
+        statusType = "custom";
         break;
     }
 
     let statusCode = "unknown";
     if (data.response.status !== 0) {
       statusCode = data.response.status;
-    }
-    // eslint-disable-next-line no-underscore-dangle
-    if (data.response._error) {
+      // eslint-disable-next-line no-underscore-dangle
+    } else if (data.response._error) {
       // eslint-disable-next-line no-underscore-dangle
       statusCode = data.response._error.replace("net::", "");
+    } else {
+      statusCode = "blocked";
     }
 
     // eslint-disable-next-line no-param-reassign

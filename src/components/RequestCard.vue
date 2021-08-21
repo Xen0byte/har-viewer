@@ -81,7 +81,7 @@
     width: max-content;
     justify-self: flex-end;
 
-    &.tag-unknown {
+    &.tag-custom {
       background-color: var(--color-background);
       color: var(--color-text);
     }
@@ -91,17 +91,19 @@
       color: var(--color-success-text);
     }
 
-    &.tag-info {
+    &.tag-info,
+    &.tag-redirect {
       background-color: var(--color-info);
       color: var(--color-info-text);
     }
 
-    &.tag-warning {
+    &.tag-client-error {
       background-color: var(--color-warning);
       color: var(--color-warning-text);
     }
 
-    &.tag-error {
+    &.tag-blocked,
+    &.tag-server-error {
       background-color: var(--color-error);
       color: var(--color-error-text);
     }

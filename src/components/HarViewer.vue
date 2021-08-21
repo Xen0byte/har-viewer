@@ -47,8 +47,8 @@
     // eslint-disable-next-line no-underscore-dangle
     && !(tab.name === "websocket" && !selectedEntry.value._webSocketMessages)
     && !(tab.name === "post-data" && !selectedEntry.value.request.postData)
-    && !(tab.name === "response-content" && selectedEntry.value.response.bodySize < 0
-      && selectedEntry.value.response.content.size < 0)
+    && !(tab.name === "response-content" && (selectedEntry.value.response.bodySize < 0
+      || selectedEntry.value.response.content.size < 0))
     && !(tab.name === "cookies"
       && selectedEntry.value.request.cookies.length === 0
       && selectedEntry.value.response.cookies.length === 0)

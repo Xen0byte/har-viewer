@@ -13,10 +13,10 @@
       {{ data.response.status }} {{ data.response.statusText }} {{ data.response.httpVersion }}
     </i>
     <section
-      v-if="data.response._error"
+      v-else
       class="error"
     >
-      <b v-text="data.response._error" />
+      <b v-text="data.response._error || 'This request has been blocked!'" />
     </section>
     <section v-if="data.response.status !== 0">
       <h1>Headers</h1>
@@ -33,7 +33,7 @@
       <h1>Cache</h1>
       {{ data.cache }}
     </section>
-    <section>
+    <section v-if="data.response.status !== 0">
       <h1>Size</h1>
       <table class="data-table">
         <tbody>
