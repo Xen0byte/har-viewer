@@ -40,6 +40,25 @@ function regexMatch(str, patterns) {
 }
 
 /**
+ * Simple parse in- and excludes from filter string.
+ *
+ * @param {string} filter - The filter string to parse.
+ * @returns {{
+ *   excludes,
+ *   includes
+ * }} The parsed in- and excludes.
+ */
+function parseInAndExcludes(filter) {
+  const parts = filter.split(",");
+
+  return {
+    includes: parts.filter(m => !m.startsWith("!")),
+    excludes: parts.filter(m => m.startsWith("!"))
+      .map(m => m.replace("!", "")),
+  };
+}
+
+/**
  * Filter an array of har entries.
  *
  * @param {object[]} arr - The har entries to filter.
@@ -48,20 +67,17 @@ function regexMatch(str, patterns) {
 export function filterBy(arr, filter) {
   for (let i = arr.length - 1; i >= 0; i--) {
     if (filter.methods) {
-      const methods = filter.methods.split(",");
-      const methodIncludes = methods.filter(m => !m.startsWith("!"));
-      const methodExcludes = methods.filter(m => m.startsWith("!"))
-        .map(m => m.replace("!", ""));
+      const { includes, excludes } = parseInAndExcludes(filter.methods);
 
-      const include = methodIncludes.includes(arr[i].request.method.toLowerCase());
-      const exclude = methodExcludes.includes(arr[i].request.method.toLowerCase());
+      const include = includes.includes(arr[i].request.method.toLowerCase());
+      const exclude = excludes.includes(arr[i].request.method.toLowerCase());
 
       if (exclude) {
         arr.splice(i, 1);
         continue;
       }
 
-      if (methodIncludes.length !== 0 && !include) {
+      if (includes.length !== 0 && !include) {
         arr.splice(i, 1);
         continue;
       }
@@ -101,42 +117,36 @@ export function filterBy(arr, filter) {
     }
 
     if (filter.resType) {
-      const resTypes = filter.resType.split(",");
-      const resTypesIncludes = resTypes.filter(m => !m.startsWith("!"));
-      const resTypesExcludes = resTypes.filter(m => m.startsWith("!"))
-        .map(m => m.replace("!", ""));
+      const { includes, excludes } = parseInAndExcludes(filter.resType);
 
-      const include = resTypesIncludes.includes(arr[i].custom.resourceType.toLowerCase());
-      const exclude = resTypesExcludes.includes(arr[i].custom.resourceType.toLowerCase());
+      const include = includes.includes(arr[i].custom.resourceType.toLowerCase());
+      const exclude = excludes.includes(arr[i].custom.resourceType.toLowerCase());
 
       if (exclude) {
         arr.splice(i, 1);
         continue;
       }
 
-      if (resTypesIncludes.length !== 0 && !include) {
+      if (includes.length !== 0 && !include) {
         arr.splice(i, 1);
         continue;
       }
     }
 
     if (filter.domains) {
-      const domains = filter.domains.split(",");
-      const domainsIncludes = domains.filter(m => !m.startsWith("!"));
-      const domainsExcludes = domains.filter(m => m.startsWith("!"))
-        .map(m => m.replace("!", ""));
+      const { includes, excludes } = parseInAndExcludes(filter.domains);
 
-      const include = domainsIncludes.includes((new URL(arr[i].request.url)).hostname.toLowerCase())
-        || regexMatch((new URL(arr[i].request.url)).hostname.toLowerCase(), domainsIncludes);
-      const exclude = domainsExcludes.includes((new URL(arr[i].request.url)).hostname.toLowerCase())
-        || regexMatch((new URL(arr[i].request.url)).hostname.toLowerCase(), domainsExcludes);
+      const include = includes.includes((new URL(arr[i].request.url)).hostname.toLowerCase())
+        || regexMatch((new URL(arr[i].request.url)).hostname.toLowerCase(), includes);
+      const exclude = excludes.includes((new URL(arr[i].request.url)).hostname.toLowerCase())
+        || regexMatch((new URL(arr[i].request.url)).hostname.toLowerCase(), excludes);
 
       if (exclude) {
         arr.splice(i, 1);
         continue;
       }
 
-      if (domainsIncludes.length !== 0 && !include) {
+      if (includes.length !== 0 && !include) {
         arr.splice(i, 1);
         continue;
       }
