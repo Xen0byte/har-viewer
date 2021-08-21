@@ -1,6 +1,8 @@
 <script setup>
   import { ref, computed } from "vue";
 
+  import { compare } from "../../utils/array";
+
   const props = defineProps({
     data: {
       type: Object,
@@ -9,12 +11,25 @@
   });
 
   const filteredHeaders = ref(props.data.request.headers
-    .filter(h => h.name.toLowerCase() !== "cookie"));
+    .filter(h => h.name.toLowerCase() !== "cookie")
+    .sort((a, b) => compare(a.name, b.name)));
 
-  const headerSize = computed(() => props.data.request.headersSize || 0);
-  const bodySize = computed(() => (props.data.request.bodySize === -1 ? 0 : props.data.request.bodySize || 0));
+  const headerSize = computed(() => props.data.request.headersSize || -1);
+  const bodySize = computed(() => props.data.request.bodySize || -1);
 
-  const totalResponseSize = computed(() => headerSize.value + bodySize.value);
+  const totalRequestSize = computed(() => {
+    let sum = 0;
+
+    if (headerSize.value !== -1) {
+      sum += headerSize.value;
+    }
+
+    if (bodySize.value !== -1) {
+      sum += bodySize.value;
+    }
+
+    return sum;
+  });
 </script>
 
 <template>
@@ -72,15 +87,29 @@
       <table>
         <tr>
           <th>Headers</th>
-          <td>{{ headerSize }} bytes</td>
+          <td>
+            <template v-if="headerSize !== -1">
+              {{ headerSize }} bytes
+            </template>
+            <template v-else>
+              (not available)
+            </template>
+          </td>
         </tr>
         <tr>
           <th>Body</th>
-          <td>{{ bodySize }} bytes</td>
+          <td>
+            <template v-if="bodySize !== -1">
+              {{ bodySize }} bytes
+            </template>
+            <template v-else>
+              (not available)
+            </template>
+          </td>
         </tr>
         <tr>
           <th>Total</th>
-          <td>{{ totalResponseSize }} bytes</td>
+          <td>{{ totalRequestSize }} bytes</td>
         </tr>
       </table>
     </section>

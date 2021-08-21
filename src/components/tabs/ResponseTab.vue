@@ -1,6 +1,8 @@
 <script setup>
   import { ref, computed } from "vue";
 
+  import { compare } from "../../utils/array";
+
   const props = defineProps({
     data: {
       type: Object,
@@ -9,12 +11,29 @@
   });
 
   const filteredHeaders = ref(props.data.response.headers
-    .filter(h => h.name.toLowerCase() !== "cookie"));
+    .filter(h => h.name.toLowerCase() !== "cookie")
+    .sort((a, b) => compare(a.name, b.name)));
 
-  const headerSize = computed(() => props.data.response.headersSize || 0);
-  const bodySize = computed(() => (props.data.response.bodySize === -1 ? 0 : props.data.response.bodySize || 0));
+  const headerSize = computed(() => props.data.response.headersSize || -1);
+  const bodySize = computed(() => (props.data.response.bodySize === -1
+    ? (props.data.response.content.size || -1)
+    : props.data.response.bodySize));
 
-  const totalResponseSize = computed(() => headerSize.value + bodySize.value);
+  const bodyComputed = computed(() => props.data.response.bodySize === -1 && !!props.data.response.content.size);
+
+  const totalResponseSize = computed(() => {
+    let sum = 0;
+
+    if (headerSize.value !== -1) {
+      sum += headerSize.value;
+    }
+
+    if (bodySize.value !== -1) {
+      sum += bodySize.value;
+    }
+
+    return sum;
+  });
 </script>
 
 <template>
@@ -49,15 +68,35 @@
         <tbody>
           <tr>
             <th>Headers</th>
-            <td>{{ headerSize }} bytes</td>
+            <td>
+              <template v-if="headerSize !== -1">
+                {{ headerSize }} bytes
+              </template>
+              <template v-else>
+                (not available)
+              </template>
+            </td>
           </tr>
           <tr>
             <th>Body</th>
-            <td>{{ bodySize }} bytes</td>
+            <td>
+              <template v-if="bodySize !== -1">
+                {{ bodySize }} bytes<template v-if="bodyComputed">
+                  (computed)
+                </template>
+              </template>
+              <template v-else>
+                (not available)
+              </template>
+            </td>
           </tr>
           <tr>
             <th>Total</th>
-            <td>{{ totalResponseSize }} bytes</td>
+            <td>
+              {{ totalResponseSize }} bytes<template v-if="bodyComputed">
+                (computed)
+              </template>
+            </td>
           </tr>
         </tbody>
       </table>
