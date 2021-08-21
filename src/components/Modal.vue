@@ -4,7 +4,7 @@
   // TODO: remove on firefox and safari support.
   import dialogPolyfill from "dialog-polyfill";
 
-  const props = defineProps({
+  defineProps({
     isAttached: {
       type: Boolean,
       default: false,
@@ -27,11 +27,11 @@
 </script>
 
 <template>
-  <div :class="{ attached: props.isAttached }">
+  <div :class="{ attached: isAttached }">
     <component
-      :is="props.isAttached ? 'div' : 'dialog'"
-      :aria-labelledby="!props.isAttached ? 'dialog-header' : null"
-      :class="{ 'modal-container': !props.isAttached }"
+      :is="isAttached ? 'div' : 'dialog'"
+      :aria-labelledby="!isAttached ? 'dialog-header' : null"
+      :class="{ 'modal-container': !isAttached }"
     >
       <div class="modal-header">
         <h2

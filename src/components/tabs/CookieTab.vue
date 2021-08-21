@@ -1,5 +1,5 @@
 <script setup>
-  const props = defineProps({
+  defineProps({
     data: {
       type: Object,
       required: true,
@@ -9,11 +9,11 @@
 
 <template>
   <div class="tab-content overflow-text">
-    <section v-if="props.data.request.cookies.length !== 0">
+    <section v-if="data.request.cookies.length !== 0">
       <h1>Sent</h1>
       <ul>
         <li
-          v-for="c in props.data.request.cookies"
+          v-for="c in data.request.cookies"
           :key="c.name"
         >
           <b v-text="c.name" />
@@ -28,11 +28,11 @@
         </li>
       </ul>
     </section>
-    <section v-if="props.data.response.cookies.length !== 0">
+    <section v-if="data.response.cookies.length !== 0">
       <h1>Received</h1>
       <ul>
         <li
-          v-for="c in props.data.response.cookies"
+          v-for="c in data.response.cookies"
           :key="c.name"
         >
           <b v-text="c.name" />

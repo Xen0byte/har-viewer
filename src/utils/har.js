@@ -1,5 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
+import { compare } from "./array";
+
 /**
  * Keys that are required for a HAR file.
  *
@@ -70,6 +72,90 @@ function computeResourceType(data) {
 }
 
 /**
+ * compute request/response sizes.
+ *
+ * @param {object} data - The request/response data.
+ * @returns {{
+ *   totalSize: number,
+ *   headersSizeComputed: boolean,
+ *   bodySizeComputed: boolean,
+ *   headersSize,
+ *   bodySize: number
+ * }} The computed sizes.
+ */
+function computeSizes(data) {
+  const sizes = {
+    headersSize: data.headersSize,
+    bodySize: data.bodySize,
+    totalSize: 0,
+    headersSizeComputed: false,
+    bodySizeComputed: false,
+    totalSizeComputed: false,
+  };
+
+  if (sizes.headersSize === -1) {
+    if (data.method) {
+      sizes.headersSize = `${data.method} ${data.url} ${data.httpVersion}\r\n`.length;
+    } else {
+      let { statusText } = data;
+      if (data.status !== 0 && !statusText) {
+        // TODO: add more status texts
+        switch (data.status) {
+          case 200:
+            statusText = "OK";
+            break;
+          default:
+            break;
+        }
+      }
+
+      sizes.headersSize = `${data.status} ${statusText} ${data.httpVersion}\r\n`.length;
+    }
+
+    if (data.headers) {
+      for (let i = 0; i < data.headers.length; i++) {
+        sizes.headersSize += `${data.headers[i].name}: ${data.headers[i].value}\r\n`.length;
+      }
+    }
+
+    if (data.headers && data.cookies) {
+      sizes.headersSize += 8;
+      for (let i = 0; i < data.cookies.length; i++) {
+        sizes.headersSize += `${data.cookies[i].name}=${data.cookies[i].value}`.length;
+      }
+      sizes.headersSize += 2;
+    }
+
+    sizes.headersSize += 2;
+    sizes.headersSizeComputed = true;
+  }
+
+  if (sizes.bodySize < 0 && data.content.size === 0) {
+    sizes.bodySize = 0;
+    sizes.bodySizeComputed = true;
+  }
+
+  if (sizes.bodySize === -1 && data.content.size) {
+    sizes.bodySize = data.content.size;
+    sizes.bodySizeComputed = true;
+  }
+
+  if (sizes.headersSize !== -1) {
+    sizes.totalSize += sizes.headersSize;
+  }
+
+  if (sizes.bodySize !== -1) {
+    sizes.totalSize += sizes.bodySize;
+  }
+
+  if (sizes.headersSizeComputed || sizes.bodySizeComputed) {
+    sizes.totalSizeComputed = true;
+  }
+
+  return sizes;
+}
+
+/**
  * Read a file's contents.
  *
  * @param {File} file - The file to read.
@@ -109,7 +195,60 @@ export function checkHar(harContent) {
   }
 
   for (let id = 0; id < harContent.log.entries.length; id++) {
-    const resourceType = computeResourceType(harContent.log.entries[id]);
+    const data = harContent.log.entries[id];
+
+    harContent.log.entries[id].request.headers.sort((a, b) => compare(a.name, b.name));
+    harContent.log.entries[id].request.cookies.sort((a, b) => compare(a.name, b.name));
+    harContent.log.entries[id].response.headers.sort((a, b) => compare(a.name, b.name));
+    harContent.log.entries[id].response.cookies.sort((a, b) => compare(a.name, b.name));
+
+    if (data.request.queryString) {
+      harContent.log.entries[id].request.queryString.sort((a, b) => compare(a.name, b.name));
+    }
+
+    if (data.request.postData && data.request.postData.params) {
+      harContent.log.entries[id].request.postData.params.sort((a, b) => compare(a.name, b.name));
+    }
+
+    const resourceType = computeResourceType(data);
+    const requestSizes = computeSizes(data.request);
+    const responseSizes = computeSizes(data.response);
+
+    let statusType = "";
+    switch (true) {
+      case data.response.status === 0:
+        // eslint-disable-next-line no-underscore-dangle
+        statusType = data.response._error ? "error" : "unknown";
+        break;
+      case data.response.status < 200:
+        statusType = "info";
+        break;
+      case data.response.status < 300:
+        statusType = "success";
+        break;
+      case data.response.status < 400:
+        statusType = "info";
+        break;
+      case data.response.status < 500:
+        statusType = "warning";
+        break;
+      case data.response.status < 600:
+        statusType = "error";
+        break;
+      default:
+        statusType = "unknown";
+        break;
+    }
+
+    let statusCode = "unknown";
+    if (data.response.status !== 0) {
+      statusCode = data.response.status;
+    }
+    // eslint-disable-next-line no-underscore-dangle
+    if (data.response._error) {
+      // eslint-disable-next-line no-underscore-dangle
+      statusCode = data.response._error.replace("net::", "");
+    }
 
     // eslint-disable-next-line no-param-reassign
     harContent.log.entries[id].custom = {
@@ -117,6 +256,14 @@ export function checkHar(harContent) {
       id,
       // add calculated resource type for firefox exports
       resourceType,
+      request: requestSizes,
+      response: responseSizes,
+      statusType,
+      statusCode,
+      url: data.request.url.split("?")[0],
+      hasImageResponse: data.response.content.encoding === "base64"
+        && data.response.content.mimeType.startsWith("image/")
+        && data.response.content.text,
     };
   }
 

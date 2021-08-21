@@ -1,29 +1,22 @@
 <script setup>
-  import { computed } from "vue";
-
-  const props = defineProps({
+  defineProps({
     data: {
       type: Object,
       required: true,
     },
   });
-
-  // eslint-disable-next-line no-underscore-dangle
-  const receive = computed(() => props.data._webSocketMessages.filter(o => o.type === "receive"));
-  // eslint-disable-next-line no-underscore-dangle
-  const send = computed(() => props.data._webSocketMessages.filter(o => o.type === "send"));
 </script>
 
 <template>
   <div
-    v-if="props.data._webSocketMessages"
+    v-if="data._webSocketMessages"
     class="tab-content overflow-text"
   >
     <section>
       <h1>Send</h1>
       <ul>
         <li
-          v-for="(m, i) in send"
+          v-for="(m, i) in data._webSocketMessages.filter(o => o.type === 'send')"
           :key="i"
         >
           <b>Time: {{ m.time }}</b>
@@ -38,7 +31,7 @@
       <h1>Receive</h1>
       <ul>
         <li
-          v-for="(m, i) in receive"
+          v-for="(m, i) in data._webSocketMessages.filter(o => o.type === 'receive')"
           :key="i"
         >
           <b>Time: {{ m.time }}</b>

@@ -1,7 +1,5 @@
 <script setup>
-  import { computed } from "vue";
-
-  const props = defineProps({
+  defineProps({
     data: {
       type: Object,
       required: true,
@@ -13,78 +11,27 @@
   });
 
   const emit = defineEmits(["click"]);
-
-  const statusType = computed(() => {
-    if (props.data.response.status === 0) {
-      // eslint-disable-next-line no-underscore-dangle
-      return props.data.response._error ? "error" : "unknown";
-    }
-
-    // informational response
-    if (props.data.response.status < 200) {
-      return "info";
-    }
-
-    // success
-    if (props.data.response.status < 300) {
-      return "success";
-    }
-
-    // redirect
-    if (props.data.response.status < 400) {
-      return "info";
-    }
-
-    // client error
-    if (props.data.response.status < 500) {
-      return "warning";
-    }
-
-    // server error
-    if (props.data.response.status < 600) {
-      return "error";
-    }
-
-    return "unknown";
-  });
-
-  const statusCode = computed(() => {
-    if (props.data.response.status !== 0) {
-      return props.data.response.status;
-    }
-
-    // eslint-disable-next-line no-underscore-dangle
-    if (props.data.response._error) {
-      // eslint-disable-next-line no-underscore-dangle
-      return props.data.response._error.replace("net::", "");
-    }
-
-    return "unknown";
-  });
-
-  const url = computed(() => props.data.request.url.split("?")[0]);
-  const duration = computed(() => `${Math.round(props.data.time)} ms`);
 </script>
 
 <template>
   <div
     class="request-card"
-    :class="{ active: props.active }"
+    :class="{ active }"
     role="button"
     tabindex="0"
     @click="emit('click')"
     @keydown.enter="emit('click')"
   >
-    <b v-text="props.data.request.method" />
-    <span v-text="duration" />
-    <span v-text="props.data.custom.resourceType" />
+    <b v-text="data.request.method" />
+    <span>{{ Math.round(data.time) }} ms</span>
+    <span v-text="data.custom.resourceType" />
     <div
-      :class="`tag tag-${statusType}`"
-      v-text="statusCode"
+      :class="`tag tag-${data.custom.statusType}`"
+      v-text="data.custom.statusCode"
     />
     <div
       class="url overflow-text is-unselectable"
-      v-text="url"
+      v-text="data.custom.url"
     />
   </div>
 </template>

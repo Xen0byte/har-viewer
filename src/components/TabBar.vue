@@ -1,5 +1,5 @@
 <script setup>
-  const props = defineProps({
+  defineProps({
     currentTab: {
       type: String,
       default: "request",
@@ -20,11 +20,11 @@
 <template>
   <nav
     class="tabbar"
-    :role="props.asDialog ? null : 'tablist'"
+    :role="asDialog ? null : 'tablist'"
   >
-    <template v-if="props.asDialog">
+    <template v-if="asDialog">
       <select
-        :value="props.currentTab"
+        :value="currentTab"
         @change="e => emit('change', e.target.value)"
       >
         <option
@@ -39,7 +39,7 @@
       <button
         v-for="tab in tabs"
         :key="tab.name"
-        :class="{ active: props.currentTab === tab.name }"
+        :class="{ active: currentTab === tab.name }"
         class="btn btn-dark"
         type="button"
         role="tab"

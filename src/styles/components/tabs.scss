@@ -14,4 +14,14 @@
     padding-right: .75rem;
     font-weight: 600;
   }
+
+  & tbody td,
+  & tfoot td {
+    text-align: right;
+  }
+
+  &.no-align tbody td,
+  &.no-align tfoot td {
+    text-align: unset;
+  }
 }

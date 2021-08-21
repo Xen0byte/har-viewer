@@ -1,7 +1,7 @@
 <script setup>
   import Modal from "../Modal";
 
-  const props = defineProps({
+  defineProps({
     creator: {
       type: Object,
       default: () => ({}),
@@ -28,15 +28,15 @@
       <tbody>
         <tr>
           <th>File</th>
-          <td v-text="props.file" />
+          <td v-text="file" />
         </tr>
         <tr>
           <th>Creator</th>
-          <td v-text="`${props.creator.name} (${props.creator.version})`" />
+          <td v-text="`${creator.name} (${creator.version})`" />
         </tr>
         <tr>
           <th>HAR Version</th>
-          <td v-text="props.version" />
+          <td v-text="version" />
         </tr>
       </tbody>
     </table>

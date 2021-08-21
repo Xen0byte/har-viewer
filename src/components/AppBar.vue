@@ -4,7 +4,7 @@
   import svgFilterMenu from "@mdi/svg/svg/filter-menu-outline.svg";
   import svgInformation from "@mdi/svg/svg/information-outline.svg";
 
-  const props = defineProps({
+  defineProps({
     isLoaded: {
       type: Boolean,
       default: false,
@@ -29,7 +29,7 @@
     </div>
     <div class="actions">
       <button
-        v-if="props.isLoaded && false"
+        v-if="isLoaded && false"
         type="button"
         class=" btn-primary-dark"
         @click="emit('action', 'export')"
@@ -43,7 +43,7 @@
         <span>Export</span>
       </button>
       <button
-        v-if="props.isLoaded"
+        v-if="isLoaded"
         type="button"
         class="btn btn-primary-dark"
         title="Show Info"
@@ -57,7 +57,7 @@
         >
       </button>
       <button
-        v-if="props.isLoaded"
+        v-if="isLoaded"
         type="button"
         class="btn btn-primary-dark"
         title="Filter / Sort / Group"

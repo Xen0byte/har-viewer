@@ -1,58 +1,52 @@
 <script setup>
-  import { computed } from "vue";
-
-  const props = defineProps({
+  defineProps({
     data: {
       type: Object,
       required: true,
     },
   });
-
-  const hasImage = computed(() => props.data.response.content.encoding === "base64"
-    && props.data.response.content.mimeType.startsWith("image/")
-    && props.data.response.content.text);
 </script>
 
 <template>
   <div
-    v-if="props.data.response.content"
+    v-if="data.response.content"
     class="tab-content overflow-text"
   >
     <section>
       <h1>Size</h1>
-      {{ props.data.response.content.size }} bytes
+      {{ data.response.content.size }} bytes
     </section>
-    <section v-if="props.data.response.content.encoding">
+    <section v-if="data.response.content.encoding">
       <h1>Encoding</h1>
-      {{ props.data.response.content.encoding }}
+      {{ data.response.content.encoding }}
     </section>
     <section>
       <h1>Mime Type</h1>
-      {{ props.data.response.content.mimeType }}
+      {{ data.response.content.mimeType }}
     </section>
     <section>
       <h1 style="margin-bottom: .5rem;">
         Content
       </h1>
       <span
-        v-if="props.data.response.content.comment"
-        v-text="props.data.response.content.comment"
+        v-if="data.response.content.comment"
+        v-text="data.response.content.comment"
       />
-      <div v-if="props.data.response.content.text">
+      <div v-if="data.response.content.text">
         <details>
           <summary class="is-unselectable">
             Show content
           </summary>
           <img
-            v-if="hasImage"
+            v-if="data.custom.hasImageResponse"
             alt="Response Content"
-            :src="`data:${props.data.response.content.mimeType};base64,${props.data.response.content.text}`"
+            :src="`data:${data.response.content.mimeType};base64,${data.response.content.text}`"
           >
           <code
             v-else
             style="font-family: monospace;"
           >
-            {{ props.data.response.content.text.replace(")]}'\n", "") }}
+            {{ data.response.content.text.replace(")]}'\n", "") }}
           </code>
         </details>
       </div>

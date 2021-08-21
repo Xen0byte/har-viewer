@@ -1,43 +1,20 @@
 <script setup>
-  import { ref, computed } from "vue";
-
-  import { compare } from "../../utils/array";
-
-  const props = defineProps({
+  defineProps({
     data: {
       type: Object,
       required: true,
     },
   });
-
-  const filteredHeaders = ref(props.data.request.headers
-    .filter(h => h.name.toLowerCase() !== "cookie")
-    .sort((a, b) => compare(a.name, b.name)));
-
-  const headerSize = computed(() => props.data.request.headersSize || -1);
-  const bodySize = computed(() => props.data.request.bodySize || -1);
-
-  const totalRequestSize = computed(() => {
-    let sum = 0;
-
-    if (headerSize.value !== -1) {
-      sum += headerSize.value;
-    }
-
-    if (bodySize.value !== -1) {
-      sum += bodySize.value;
-    }
-
-    return sum;
-  });
 </script>
 
 <template>
   <div class="tab-content overflow-text">
-    <i>Request on <time>{{ data.startedDateTime }}</time></i>
+    <i>Request on
+      <time>{{ data.startedDateTime }}</time>
+    </i>
     <section>
       <h1>General</h1>
-      <table class="data-table">
+      <table class="data-table no-align">
         <tbody>
           <tr>
             <th>
@@ -64,7 +41,7 @@
       <h1>Headers</h1>
       <ul>
         <li
-          v-for="h in filteredHeaders"
+          v-for="h in data.request.headers"
           :key="h.name"
         >
           <b>{{ h.name }}</b>: {{ h.value }}
@@ -84,45 +61,66 @@
     </section>
     <section>
       <h1>Size</h1>
-      <table>
-        <tr>
-          <th>Headers</th>
-          <td>
-            <template v-if="headerSize !== -1">
-              {{ headerSize }} bytes
-            </template>
-            <template v-else>
-              (not available)
-            </template>
-          </td>
-        </tr>
-        <tr>
-          <th>Body</th>
-          <td>
-            <template v-if="bodySize !== -1">
-              {{ bodySize }} bytes
-            </template>
-            <template v-else>
-              (not available)
-            </template>
-          </td>
-        </tr>
-        <tr>
-          <th>Total</th>
-          <td>{{ totalRequestSize }} bytes</td>
-        </tr>
+      <table class="data-table">
+        <tbody>
+          <tr>
+            <th>Headers</th>
+            <td>
+              <template v-if="data.custom.request.headersSize !== -1">
+                {{ data.custom.request.headersSize }} bytes
+                <template v-if="data.custom.request.headersSizeComputed">
+                  (computed)
+                </template>
+              </template>
+              <template v-else>
+                (not available)
+              </template>
+            </td>
+          </tr>
+          <tr>
+            <th>Body</th>
+            <td>
+              <template v-if="data.custom.request.bodySize !== -1">
+                {{ data.custom.request.bodySize }} bytes
+                <template v-if="data.custom.request.bodySizeComputed">
+                  (computed)
+                </template>
+              </template>
+              <template v-else>
+                (not available)
+              </template>
+            </td>
+          </tr>
+          <tr>
+            <th>Total</th>
+            <td>
+              {{ data.custom.request.totalSize }} bytes
+              <template v-if="data.custom.request.totalSizeComputed">
+                (computed)
+              </template>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </section>
     <section v-if="data._initiator">
       <h1>Initiator</h1>
-      <b>Type</b>: {{ data._initiator.type }}<br>
-      <div v-if="data._initiator.type === 'parser'">
-        <b>Url</b>: {{ data._initiator.url }}<br>
-        <b>Line Number</b>: {{ data._initiator.lineNumber }}
-      </div>
-      <div v-if="data._initiator.type === 'preflight'">
-        <b>Url</b>: {{ data._initiator.url }}
-      </div>
+      <table class="data-table no-align">
+        <tbody>
+          <tr>
+            <th>Type</th>
+            <td v-text="data._initiator.type" />
+          </tr>
+          <tr v-if="data._initiator.type === 'parser' || data._initiator.type === 'preflight'">
+            <th>Url</th>
+            <td v-text="data._initiator.url" />
+          </tr>
+          <tr v-if="data._initiator.type === 'parser'">
+            <th>Line Number</th>
+            <td v-text="data._initiator.lineNumber" />
+          </tr>
+        </tbody>
+      </table>
       <div v-if="data._initiator.type === 'script' && data._initiator.stack.callFrames.length > 0">
         <details style="margin-top: .25rem">
           <summary class="is-unselectable">
