@@ -36,6 +36,7 @@ The following features are supported:
 - Group entries by Method, Status Code, Status Type, Domain and Resource Type
 - Offline usage (PWA)
 - Usable UI on mobile devices
+- Filtered and redacted (**please verify before using the result**) data export
 
 ## Usage
 
@@ -49,7 +50,8 @@ _If you don't know how to generate `.har` files, see [here](./docs/generate.md).
 
 ## Roadmap
 
-- More Export Formats (redact, postman, ...)
+- Tune redacted export
+- Custom word list for redaction
 - Support initial filter on file load to improve loading times for large files
 - Settings dialog
 - Add sort by request/response size

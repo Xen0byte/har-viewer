@@ -11,12 +11,14 @@
 
   const filename = ref(`exported_${(new Date()).toISOString().split("T")[0]}`);
   const onlyFiltered = ref(true);
+  const redact = ref(false);
   const format = ref("har");
 
   const onExport = () => emit("export", {
     format: format.value,
     filename: filename.value,
     onlyFiltered: onlyFiltered.value,
+    redact: redact.value,
   });
 </script>
 
@@ -42,6 +44,14 @@
         <input
           id="filter"
           v-model="onlyFiltered"
+          type="checkbox"
+        >
+      </div>
+      <div>
+        <label for="redact">Redact sensitive values</label>
+        <input
+          id="redact"
+          v-model="redact"
           type="checkbox"
         >
       </div>
