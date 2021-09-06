@@ -7,6 +7,7 @@
   import InfoDialog from "./components/dialogs/InfoDialog";
   import OpenDialog from "./components/dialogs/OpenDialog";
   import PropDialog from "./components/dialogs/PropDialog";
+  import ExportDialog from "./components/dialogs/ExportDialog";
   import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
 
@@ -22,6 +23,7 @@
   const propAttached = ref(false);
   const showInfoDialog = ref(false);
   const showOpenDialog = ref(false);
+  const showExportDialog = ref(false);
   const propFilter = ref({
     filter: {
       methods: "",
@@ -121,8 +123,55 @@
     }
   };
 
+  const onExport = settings => {
+    let exportData;
+    let mimeType = "";
+    let ext = "";
+
+    switch (settings.format) {
+      case "har":
+        mimeType = "application/json";
+        ext = ".har";
+        exportData = settings.onlyFiltered ? {
+          log: {
+            ...data.value,
+            creator: {
+              name: "HTTP Archive Viewer",
+              version: VERSION,
+            },
+            entries: filteredData.value,
+          },
+        } : {
+          log: {
+            ...data.value,
+            creator: {
+              name: "HTTP Archive Viewer",
+              version: VERSION,
+            },
+          },
+        };
+        break;
+      default:
+        mimeType = "text/plain";
+        ext = ".txt";
+    }
+
+    const e = document.createElement("a");
+    e.setAttribute("href", `data:${mimeType};charset=utf-8,${encodeURIComponent(JSON.stringify(exportData))}`);
+    e.setAttribute("download", settings.filename + ext);
+    e.style.display = "none";
+    document.body.appendChild(e);
+    e.click();
+    document.body.removeChild(e);
+
+    showExportDialog.value = false;
+  };
+
   const onAction = async action => {
     switch (action) {
+      case "export":
+        showExportDialog.value = true;
+        break;
       case "open":
         showOpenDialog.value = true;
         break;
@@ -202,6 +251,11 @@
     v-if="showOpenDialog"
     @open="onOpenFile"
     @close="showOpenDialog = false"
+  />
+  <ExportDialog
+    v-if="showExportDialog"
+    @export="onExport"
+    @close="showExportDialog = false"
   />
 </template>
 

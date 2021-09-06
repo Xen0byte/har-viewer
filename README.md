@@ -49,7 +49,7 @@ _If you don't know how to generate `.har` files, see [here](./docs/generate.md).
 
 ## Roadmap
 
-- Export Feature (filters, redact, postman)
+- More Export Formats (redact, postman, ...)
 - Support initial filter on file load to improve loading times for large files
 - Settings dialog
 - Add sort by request/response size

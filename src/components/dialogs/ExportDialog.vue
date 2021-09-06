@@ -1,40 +1,23 @@
-<script>
+<script setup>
   import { ref } from "vue";
 
   import Modal from "../Modal";
 
-  // TODO: refactor and add again
+  const emit = defineEmits(["close", "export"]);
 
-  export default {
-    name: "ExportDialog",
-    components: { Modal },
-    emits: ["export", "close"],
-    setup(props, { emit }) {
-      const availableFormats = {
-        har: ".har",
-      };
-
-      const filename = ref(`exported_${(new Date()).toISOString().split("T")[0]}`);
-      const onlyFiltered = ref(true);
-      const format = ref("har");
-
-      const onClose = () => emit("close");
-      const onExport = () => emit("export", {
-        format: format.value,
-        filename: filename.value,
-        onlyFiltered: onlyFiltered.value,
-      });
-
-      return {
-        availableFormats,
-        filename,
-        onlyFiltered,
-        format,
-        onClose,
-        onExport,
-      };
-    },
+  const availableFormats = {
+    har: ".har",
   };
+
+  const filename = ref(`exported_${(new Date()).toISOString().split("T")[0]}`);
+  const onlyFiltered = ref(true);
+  const format = ref("har");
+
+  const onExport = () => emit("export", {
+    format: format.value,
+    filename: filename.value,
+    onlyFiltered: onlyFiltered.value,
+  });
 </script>
 
 <template>
@@ -42,43 +25,52 @@
     <template #header>
       Export
     </template>
-    <form class="export-form">
-      <label for="filename">Filename</label>
-      <input
-        id="filename"
-        v-model="filename"
-        type="text"
-      >
-      <label for="filter">Respect filter</label>
-      <input
-        id="filter"
-        v-model="onlyFiltered"
-        type="checkbox"
-      >
-      <label for="format">Output Format</label>
-      <select
-        id="format"
-        v-model="format"
-      >
-        <option
-          v-for="(displayValue, index) in availableFormats"
-          :key="index"
-          :value="index"
+    <form
+      class="is-unselectable"
+      @submit.prevent
+    >
+      <div>
+        <label for="filename">Filename</label>
+        <input
+          id="filename"
+          v-model="filename"
+          type="text"
         >
-          {{ displayValue }}
-        </option>
-      </select>
+      </div>
+      <div>
+        <label for="filter">Respect filter</label>
+        <input
+          id="filter"
+          v-model="onlyFiltered"
+          type="checkbox"
+        >
+      </div>
+      <div>
+        <label for="format">Output Format</label>
+        <select
+          id="format"
+          v-model="format"
+        >
+          <option
+            v-for="(displayValue, index) in availableFormats"
+            :key="index"
+            :value="index"
+          >
+            {{ displayValue }}
+          </option>
+        </select>
+      </div>
     </form>
     <template #footer>
       <button
-        class="btn-cancel"
+        class="btn btn-dark"
         type="button"
-        @click="onClose"
+        @click="emit('close')"
       >
         Cancel
       </button>
       <button
-        class="btn-primary"
+        class="btn btn-primary"
         type="button"
         @click="onExport"
       >
@@ -92,19 +84,29 @@
   lang="scss"
   scoped
 >
-  .export-form {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    grid-gap: 1em;
+  form {
+    min-width: 350px;
+    max-width: 350px;
 
-    label {
-      grid-column: 1 / 2;
-      align-self: center;
-      color: var(--color-text);
+    & > div:not(:last-of-type) {
+      margin-bottom: .5rem;
     }
 
-    input {
-      grid-column: 2 / 3;
+    & input[type=text], select {
+      margin-top: .1rem;
     }
+
+    & input[type=checkbox] {
+      margin-left: .5rem;
+    }
+
+    @media (max-width: 475px) {
+      min-width: unset;
+      max-width: unset;
+    }
+  }
+
+  label {
+    font-weight: 600;
   }
 </style>

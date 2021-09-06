@@ -29,9 +29,10 @@
     </div>
     <div class="actions">
       <button
-        v-if="isLoaded && false"
+        v-if="isLoaded"
         type="button"
-        class=" btn-primary-dark"
+        class="btn btn-primary-dark"
+        title="Export file"
         @click="emit('action', 'export')"
       >
         <img
@@ -40,7 +41,6 @@
           class="icon"
           :src="svgDownload"
         >
-        <span>Export</span>
       </button>
       <button
         v-if="isLoaded"
