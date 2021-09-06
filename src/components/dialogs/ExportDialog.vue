@@ -3,22 +3,27 @@
 
   import Modal from "../Modal";
 
+  import { postmanVersions } from "../../utils/postman";
+
   const emit = defineEmits(["close", "export"]);
 
   const availableFormats = {
-    har: ".har",
+    har: "HTTP Archive",
+    postman: "Postman Collection",
   };
 
   const filename = ref(`exported_${(new Date()).toISOString().split("T")[0]}`);
   const onlyFiltered = ref(true);
   const redact = ref(false);
   const format = ref("har");
+  const postmanVersion = ref(postmanVersions[postmanVersions.length - 1]);
 
   const onExport = () => emit("export", {
     format: format.value,
     filename: filename.value,
     onlyFiltered: onlyFiltered.value,
     redact: redact.value,
+    postmanVersion: postmanVersion.value,
   });
 </script>
 
@@ -67,6 +72,21 @@
             :value="index"
           >
             {{ displayValue }}
+          </option>
+        </select>
+      </div>
+      <div v-if="format === 'postman'">
+        <label for="postmanVersion">Format Version</label>
+        <select
+          id="postmanVersion"
+          v-model="postmanVersion"
+        >
+          <option
+            v-for="v in postmanVersions"
+            :key="v"
+            :value="v"
+          >
+            {{ v }}
           </option>
         </select>
       </div>

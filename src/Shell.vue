@@ -12,6 +12,8 @@
   import Footer from "./components/Footer";
 
   import { sortBy, groupBy, filterBy } from "./utils/har-filter";
+  import { toPostman } from "./utils/postman";
+  import { redactData } from "./utils/redact";
 
   import { getSystemTheme, switchTheme, isPWA } from "./utils/theme";
 
@@ -123,41 +125,26 @@
     }
   };
 
-  const sensitiveKeys = [
-    "authorization",
-    "email",
-    "password",
-    "client_id",
-    "client_secret",
-    "token",
-    "access_token",
-    "id_token",
-  ];
-
-  const iterate = (obj, cb) => {
-    Object.keys(obj).forEach(key => {
-      if (typeof obj[key] === "object") {
-        iterate(obj[key], cb);
-      } else {
-        cb(obj, key);
-      }
-    });
-  };
-
-  const redactData = sensitiveData => {
-    iterate(sensitiveData, (parent, key) => {
-      if (key === "name" && sensitiveKeys.includes(parent.name.toLowerCase())) {
-        // eslint-disable-next-line no-param-reassign
-        parent.value = "*** Redacted ***";
-      } else if (sensitiveKeys.includes(key.toLowerCase())) {
-        // eslint-disable-next-line no-param-reassign
-        parent[key] = "*** Redacted ***";
-      }
-    });
-  };
-
   const onExport = settings => {
-    let exportData;
+    let exportData = settings.onlyFiltered ? {
+      log: {
+        ...data.value,
+        creator: {
+          name: "HTTP Archive Viewer",
+          version: VERSION,
+        },
+        entries: filteredData.value,
+      },
+    } : {
+      log: {
+        ...data.value,
+        creator: {
+          name: "HTTP Archive Viewer",
+          version: VERSION,
+        },
+      },
+    };
+
     let mimeType = "";
     let ext = "";
 
@@ -165,24 +152,11 @@
       case "har":
         mimeType = "application/json";
         ext = ".har";
-        exportData = settings.onlyFiltered ? {
-          log: {
-            ...data.value,
-            creator: {
-              name: "HTTP Archive Viewer",
-              version: VERSION,
-            },
-            entries: filteredData.value,
-          },
-        } : {
-          log: {
-            ...data.value,
-            creator: {
-              name: "HTTP Archive Viewer",
-              version: VERSION,
-            },
-          },
-        };
+        break;
+      case "postman":
+        mimeType = "application/json";
+        ext = ".postman_collection.json";
+        exportData = toPostman(settings.filename, exportData, settings.postmanVersion);
         break;
       default:
         mimeType = "text/plain";
