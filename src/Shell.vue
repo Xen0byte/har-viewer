@@ -13,6 +13,7 @@
 
   import { sortBy, groupBy, filterBy } from "./utils/har-filter";
   import { toPostman } from "./utils/postman";
+  import { toCSV } from "./utils/csv";
   import { redactData } from "./utils/redact";
 
   import { getSystemTheme, switchTheme, isPWA } from "./utils/theme";
@@ -145,6 +146,10 @@
       },
     };
 
+    if (settings.redact) {
+      redactData(exportData.log.entries, settings.redactWordList);
+    }
+
     let mimeType = "";
     let ext = "";
 
@@ -152,23 +157,31 @@
       case "har":
         mimeType = "application/json";
         ext = ".har";
+
+        for (let i = 0; i < exportData.log.entries.length; i++) {
+          delete exportData.log.entries[i].custom;
+        }
+
+        exportData = JSON.stringify(exportData);
         break;
       case "postman":
         mimeType = "application/json";
         ext = ".postman_collection.json";
         exportData = toPostman(settings.filename, exportData, settings.postmanVersion);
+        exportData = JSON.stringify(exportData);
+        break;
+      case "csv":
+        mimeType = "text/csv";
+        ext = ".csv";
+        exportData = toCSV(exportData);
         break;
       default:
         mimeType = "text/plain";
         ext = ".txt";
     }
 
-    if (settings.redact) {
-      redactData(exportData.log.entries, settings.redactWordList);
-    }
-
     const e = document.createElement("a");
-    e.setAttribute("href", `data:${mimeType};charset=utf-8,${encodeURIComponent(JSON.stringify(exportData))}`);
+    e.setAttribute("href", `data:${mimeType};charset=utf-8,${encodeURIComponent(exportData)}`);
     e.setAttribute("download", settings.filename + ext);
     e.style.display = "none";
     document.body.appendChild(e);

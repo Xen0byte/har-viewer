@@ -10,6 +10,7 @@
   const availableFormats = {
     har: "HTTP Archive",
     postman: "Postman Collection",
+    csv: "CSV (Reduced)",
   };
 
   const filename = ref(`exported_${(new Date()).toISOString().split("T")[0]}`);
