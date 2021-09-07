@@ -63,12 +63,10 @@ function computeResourceType(data) {
       return "image";
     case contentTypeHeader.value.includes("font/"):
       return "font";
-    case contentTypeHeader.value.includes("application/json"):
-      return "fetch";
     case contentTypeHeader.value.includes("text/plain"):
       return "plain";
     default:
-      return "unknown";
+      return "other";
   }
 }
 
