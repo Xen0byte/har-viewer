@@ -69,6 +69,8 @@
         <textarea
           id="redactWordList"
           v-model="redactWordList"
+          rows="3"
+          placeholder="Separated by comma (leave empty to use default values)"
         />
       </div>
       <div>
@@ -87,7 +89,12 @@
         </select>
       </div>
       <div v-if="format === 'csv'">
-        <label for="csvExcel">Add MS Excel metadata</label>
+        <label
+          for="csvExcel"
+          title="Allows to open the csv directly in MS Excel without using data import"
+        >
+          Add MS Excel metadata
+        </label>
         <input
           id="csvExcel"
           v-model="csvExcel"
