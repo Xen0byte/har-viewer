@@ -1,5 +1,5 @@
-ARG BUSYBOX_VERSION=1.33.1
-ARG NODE_VERSION=16.5.0-buster
+ARG BUSYBOX_VERSION=1.34.0
+ARG NODE_VERSION=16.9.0-buster
 
 ## STAGE I - Build builder image
 FROM node:${NODE_VERSION} AS build
@@ -28,7 +28,7 @@ ARG BUILD_DATE
 LABEL org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.authors="erik.bender@develerik.dev" \
       org.opencontainers.image.source="https://github.com/develerik/har-viewer" \
-      org.opencontainers.image.version="0.3.0" \
+      org.opencontainers.image.version="0.4.0" \
       org.opencontainers.image.vendor="Erik Bender" \
       org.opencontainers.image.licenses="ISC" \
       org.opencontainers.image.title="HTTP Archive Viewer" \
