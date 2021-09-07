@@ -176,6 +176,18 @@ export function sortBy(arr, prop) {
     case "timing-reverse":
       sortFunc = (a, b) => compare(b.time, a.time);
       break;
+    case "reqSize":
+      sortFunc = (a, b) => compare(a.custom.request.totalSize, b.custom.request.totalSize);
+      break;
+    case "reqSize-reverse":
+      sortFunc = (a, b) => compare(b.custom.request.totalSize, a.custom.request.totalSize);
+      break;
+    case "resSize":
+      sortFunc = (a, b) => compare(a.custom.response.totalSize, b.custom.response.totalSize);
+      break;
+    case "resSize-reverse":
+      sortFunc = (a, b) => compare(b.custom.response.totalSize, a.custom.response.totalSize);
+      break;
     default:
       sortFunc = (a, b) => compare(a.custom.id, b.custom.id);
       break;

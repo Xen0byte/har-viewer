@@ -143,6 +143,18 @@
           <option value="timing-reverse">
             Timing (Descending)
           </option>
+          <option value="reqSize">
+            Request Size (Ascending)
+          </option>
+          <option value="reqSize-reverse">
+            Request Size (Descending)
+          </option>
+          <option value="resSize">
+            Response Size (Ascending)
+          </option>
+          <option value="resSize-reverse">
+            Response Size (Descending)
+          </option>
         </select>
         <label for="group">
           Group By
