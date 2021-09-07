@@ -173,7 +173,7 @@
       case "csv":
         mimeType = "text/csv";
         ext = ".csv";
-        exportData = toCSV(exportData);
+        exportData = toCSV(exportData, settings.csvExcel);
         break;
       default:
         mimeType = "text/plain";
