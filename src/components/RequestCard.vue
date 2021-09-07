@@ -17,6 +17,7 @@
   <div
     class="request-card"
     :class="{ active }"
+    :title="data.custom.url"
     role="button"
     tabindex="0"
     @click="emit('click')"

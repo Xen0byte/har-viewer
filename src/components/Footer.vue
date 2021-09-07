@@ -12,31 +12,29 @@
     class="footer row is-unselectable"
     role="contentinfo"
   >
-    <div>
-      <span>
-        <a
-          :href="homepage"
-          title="Homepage"
-          target="_blank"
-          rel="noreferrer"
-        ><b v-text="app" /></a> v{{ version }} by
-        <a
-          :href="authorUrl"
-          target="_blank"
-          title="Author Homepage"
-          rel="noreferrer"
-          v-text="authorName"
-        />.
-        The source code is licensed under the
-        <a
-          :href="`https://opensource.org/licenses/${license}`"
-          title="License Page"
-          target="_blank"
-          rel="noreferrer"
-          v-text="license"
-        /> license.
-      </span>
-    </div>
+    <span>
+      <a
+        :href="homepage"
+        title="Homepage"
+        target="_blank"
+        rel="noreferrer"
+      ><b v-text="app" /></a> v{{ version }} by
+      <a
+        :href="authorUrl"
+        target="_blank"
+        title="Author Homepage"
+        rel="noreferrer"
+        v-text="authorName"
+      />.
+      The source code is licensed under the
+      <a
+        :href="`https://opensource.org/licenses/${license}`"
+        title="License Page"
+        target="_blank"
+        rel="noreferrer"
+        v-text="license"
+      /> license.
+    </span>
   </footer>
 </template>
 

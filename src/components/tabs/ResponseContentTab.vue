@@ -24,7 +24,7 @@
       <h1>Mime Type</h1>
       {{ data.response.content.mimeType }}
     </section>
-    <section>
+    <section class="content-section">
       <h1 style="margin-bottom: .5rem;">
         Content
       </h1>
@@ -32,7 +32,7 @@
         v-if="data.response.content.comment"
         v-text="data.response.content.comment"
       />
-      <div v-if="data.response.content.text">
+      <template v-if="data.response.content.text">
         <details>
           <summary class="is-unselectable">
             Show content
@@ -42,14 +42,9 @@
             alt="Response Content"
             :src="`data:${data.response.content.mimeType};base64,${data.response.content.text}`"
           >
-          <code
-            v-else
-            style="font-family: monospace;"
-          >
-            {{ data.response.content.text.replace(")]}'\n", "") }}
-          </code>
+          <pre v-else><code v-text="data.response.content.text" /></pre>
         </details>
-      </div>
+      </template>
     </section>
   </div>
 </template>
@@ -60,5 +55,13 @@
 >
   summary {
     margin-bottom: .3rem;
+  }
+
+  pre {
+    margin: 0;
+  }
+
+  code {
+    font-family: monospace;
   }
 </style>
