@@ -1,4 +1,4 @@
-input[type=text], select {
+input[type=text], select, textarea {
   padding: .375rem .75rem;
 
   font-weight: 400;
@@ -8,6 +8,7 @@ input[type=text], select {
   border-radius: 5px;
 
   appearance: none;
+  resize: none;
 
   background-color: var(--color-background-dark);
   color: var(--color-text);

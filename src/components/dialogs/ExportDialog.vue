@@ -15,6 +15,7 @@
   const filename = ref(`exported_${(new Date()).toISOString().split("T")[0]}`);
   const onlyFiltered = ref(true);
   const redact = ref(false);
+  const redactWordList = ref("");
   const format = ref("har");
   const postmanVersion = ref(postmanVersions[postmanVersions.length - 1]);
 
@@ -23,6 +24,7 @@
     filename: filename.value,
     onlyFiltered: onlyFiltered.value,
     redact: redact.value,
+    redactWordList: redactWordList.value,
     postmanVersion: postmanVersion.value,
   });
 </script>
@@ -59,6 +61,13 @@
           v-model="redact"
           type="checkbox"
         >
+      </div>
+      <div v-if="redact">
+        <label for="redactWordList">Custom Word List</label>
+        <textarea
+          id="redactWordList"
+          v-model="redactWordList"
+        />
       </div>
       <div>
         <label for="format">Output Format</label>

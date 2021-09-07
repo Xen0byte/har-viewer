@@ -164,7 +164,7 @@
     }
 
     if (settings.redact) {
-      redactData(exportData.log.entries);
+      redactData(exportData.log.entries, settings.redactWordList);
     }
 
     const e = document.createElement("a");

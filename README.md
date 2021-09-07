@@ -50,15 +50,13 @@ _If you don't know how to generate `.har` files, see [here](./docs/generate.md).
 
 ## Roadmap
 
-- Custom word list for redaction
-
 See the [open issues](https://github.com/develerik/har-viewer/issues) for a list of proposed features
 (and known issues).
 
 ## Get Support
 
-This project is maintained by [@develerik](https://github.com/develerik). Please understand that we won't be able to
-provide individual support via email. We also believe that help is much more valuable if it's shared publicly, so that
+This project is maintained by [@develerik](https://github.com/develerik). Please understand that I won't be able to
+provide individual support via email. I also believe that help is much more valuable if it's shared publicly, so that
 more people can benefit from it.
 
 - [**Report a bug**](https://github.com/develerik/har-viewer/issues/new?labels=bug&template=bug_report.md)

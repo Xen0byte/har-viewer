@@ -22,12 +22,17 @@ const iterate = (obj, cb) => {
     });
 };
 
-export const redactData = sensitiveData => {
+export const redactData = (sensitiveData, wordList) => {
+  if (wordList) {
+    // eslint-disable-next-line no-param-reassign
+    wordList = wordList.split(",");
+  }
+
   iterate(sensitiveData, (parent, key) => {
-    if (key === "name" && sensitiveKeys.includes(parent.name.toLowerCase())) {
+    if (key === "name" && (wordList || sensitiveKeys).includes(parent.name.toLowerCase())) {
       // eslint-disable-next-line no-param-reassign
       parent.value = "*** Redacted ***";
-    } else if (sensitiveKeys.includes(key.toLowerCase())) {
+    } else if ((wordList || sensitiveKeys).includes(key.toLowerCase())) {
       // eslint-disable-next-line no-param-reassign
       parent[key] = "*** Redacted ***";
     }
