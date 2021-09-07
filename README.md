@@ -50,10 +50,7 @@ _If you don't know how to generate `.har` files, see [here](./docs/generate.md).
 
 ## Roadmap
 
-- Tune redacted export
 - Custom word list for redaction
-- Support initial filter on file load to improve loading times for large files
-- Settings dialog
 - Add sort by request/response size
 
 See the [open issues](https://github.com/develerik/har-viewer/issues) for a list of proposed features
