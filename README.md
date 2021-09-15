@@ -46,6 +46,7 @@ The following features are supported:
    - Option 2: Open a file from a remote url
 3. Analyze your file
 
+_If you want to install this software in your own environment checkout [this](./docs/installation.md)._  
 _If you don't know how to generate `.har` files, see [here](./docs/generate.md)._
 
 ## Roadmap
