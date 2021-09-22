@@ -1,9 +1,24 @@
 <script setup>
-  defineProps({
+  import { computed } from "vue";
+
+  const props = defineProps({
     data: {
       type: Object,
       required: true,
     },
+  });
+
+  const content = computed(() => {
+    if (props.data.response.content.mimeType.includes("application/json")) {
+      try {
+        const json = JSON.parse(props.data.response.content.text);
+        return JSON.stringify(json, null, 2);
+      } catch (_) {
+        // ignore - use base case
+      }
+    }
+
+    return props.data.response.content.text;
   });
 </script>
 
@@ -42,7 +57,7 @@
             alt="Response Content"
             :src="`data:${data.response.content.mimeType};base64,${data.response.content.text}`"
           >
-          <pre v-else><code v-text="data.response.content.text" /></pre>
+          <pre v-else><code v-text="content" /></pre>
         </details>
       </template>
     </section>
