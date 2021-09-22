@@ -35,9 +35,9 @@
 
   const tabViews = {
     request: RequestTab,
-    "post-data": PostDataTab,
+    postData: PostDataTab,
     response: ResponseTab,
-    "response-content": ResponseContentTab,
+    responseContent: ResponseContentTab,
     websocket: WebsocketTab,
     cookies: CookieTab,
     timing: TimingTab,
@@ -46,9 +46,9 @@
   const enabledTabs = computed(() => viewerTabs.filter(tab => (selectedEntry.value
     // eslint-disable-next-line no-underscore-dangle
     && !(tab.name === "websocket" && !selectedEntry.value._webSocketMessages)
-    && !(tab.name === "post-data" && !selectedEntry.value.request.postData)
-    && !(tab.name === "response-content" && (selectedEntry.value.response.bodySize < 0
-      || selectedEntry.value.response.content.size < 0))
+    && !(tab.name === "postData" && !selectedEntry.value.request.postData)
+    && !(tab.name === "responseContent" && (selectedEntry.value.response.bodySize < 0
+      && selectedEntry.value.response.content && selectedEntry.value.response.content.size < 0))
     && !(tab.name === "cookies"
       && selectedEntry.value.request.cookies.length === 0
       && selectedEntry.value.response.cookies.length === 0)
@@ -78,7 +78,7 @@
           />
           <div class="group">
             <RequestCard
-              v-for="entry in props.data.filter(o => o.custom.group === group)"
+              v-for="entry in data.filter(o => o.custom.group === group)"
               :key="entry.custom.id"
               :data="entry"
               :active="selectedId === entry.custom.id"
@@ -89,7 +89,7 @@
       </template>
       <template v-else>
         <RequestCard
-          v-for="entry in props.data"
+          v-for="entry in data"
           :key="entry.custom.id"
           :data="entry"
           :active="selectedId === entry.custom.id"

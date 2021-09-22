@@ -39,7 +39,10 @@
       <h1>Mime Type</h1>
       {{ data.response.content.mimeType }}
     </section>
-    <section class="content-section">
+    <section
+      v-if="data.response.content.text || data.response.content.comment"
+      class="content-section"
+    >
       <h1 style="margin-bottom: .5rem;">
         Content
       </h1>
@@ -74,6 +77,7 @@
 
   pre {
     margin: 0;
+    overflow: auto;
   }
 
   code {

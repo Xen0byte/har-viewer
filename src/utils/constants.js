@@ -65,7 +65,7 @@ export const viewerTabs = [
     displayName: "Request",
   },
   {
-    name: "post-data",
+    name: "postData",
     displayName: "Post Data",
   },
   {
@@ -73,7 +73,7 @@ export const viewerTabs = [
     displayName: "Response",
   },
   {
-    name: "response-content",
+    name: "responseContent",
     displayName: "Response Content",
   },
   {

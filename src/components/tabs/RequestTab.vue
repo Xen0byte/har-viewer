@@ -17,7 +17,7 @@
       <table class="data-table no-align">
         <tbody>
           <tr>
-            <th>
+            <th style="vertical-align: top;">
               Request URL
             </th>
             <td v-text="data.request.url.split('?')[0]" />
@@ -31,7 +31,9 @@
             <td v-text="data.request.httpVersion" />
           </tr>
           <tr v-if="data.serverIPAddress">
-            <th>Remote Address</th>
+            <th style="min-width: 131px;">
+              Remote Address
+            </th>
             <td v-text="data.serverIPAddress" />
           </tr>
         </tbody>

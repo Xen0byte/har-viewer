@@ -51,18 +51,18 @@
 </script>
 
 <template>
-  <modal :is-attached="props.isAttached">
+  <modal :is-attached="isAttached">
     <template #header>
       <div class="dialog-header row">
-        <span v-text="!props.isAttached ? 'Filter / Sort / Group' : ''" />
+        <span v-text="!isAttached ? 'Filter / Sort / Group' : ''" />
         <button
           class="btn btn-icon btn-attach"
           type="button"
-          :title="props.isAttached ? 'Detach filter from main window' : 'Attach filter to main window'"
+          :title="isAttached ? 'Detach filter from main window' : 'Attach filter to main window'"
           @click="emit('attach')"
         >
           <img
-            v-if="props.isAttached"
+            v-if="isAttached"
             alt="Detach Icon"
             role="none"
             :src="svgPinOff"
@@ -200,7 +200,7 @@
         Reset
       </button>
       <button
-        v-if="!props.isAttached"
+        v-if="!isAttached"
         class="btn btn-primary"
         type="button"
         @click="emit('close')"

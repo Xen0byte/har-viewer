@@ -18,8 +18,8 @@
     "url": "https://develerik.dev"
   },
   "scripts": {
+    "analyze": "cross-env NODE_ENV=production ANALYZE=1 webpack",
     "build": "cross-env NODE_ENV=production webpack",
-    "build:analyze": "cross-env NODE_ENV=production ANALYZE=1 webpack",
     "deploy": "cross-env DEPLOY=1 node scripts/gh-pages-deploy.js",
     "lint": "eslint --ext js,vue .",
     "serve": "webpack serve",
@@ -28,10 +28,10 @@
   "dependencies": {
     "@mdi/svg": "^6.1.95",
     "dialog-polyfill": "^0.5.6",
-    "vue": "^3.2.13"
+    "vue": "^3.2.14"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.2.13",
+    "@vue/compiler-sfc": "^3.2.14",
     "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.3.0",
@@ -52,11 +52,11 @@
     "postcss-import": "^14.0.2",
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
-    "sass": "^1.42.0",
+    "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
     "terser-webpack-plugin": "^5.2.4",
-    "vue-loader": "^16.7.0",
+    "vue-loader": "^16.8.1",
     "webpack": "^5.53.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.8.0",

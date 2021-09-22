@@ -1,5 +1,5 @@
 ARG BUSYBOX_VERSION=1.34.0
-ARG NODE_VERSION=16.9.0-buster
+ARG NODE_VERSION=16.10.0-buster
 
 ## STAGE I - Build builder image
 FROM node:${NODE_VERSION} AS build
