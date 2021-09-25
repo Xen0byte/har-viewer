@@ -33,6 +33,7 @@ const config = {
       : "js/[contenthash].min.js",
     publicPath: publicUrl,
     pathinfo: false,
+    hashFunction: "xxhash64",
   },
   performance: { hints: false },
   resolve: {
