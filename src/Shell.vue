@@ -12,7 +12,7 @@
   import Footer from "./components/Footer";
 
   import applyFilter from "./utils/har-filter";
-  import { exportToCSV } from "./utils/export";
+  import { exportToCSV, exportToHar } from "./utils/export";
   import { toPostman } from "./utils/postman";
   import { redactData } from "./utils/redact";
 
@@ -128,11 +128,7 @@
         mimeType = "application/json";
         ext = ".har";
 
-        for (let i = 0; i < exportData.log.entries.length; i++) {
-          delete exportData.log.entries[i].custom;
-        }
-
-        exportData = JSON.stringify(exportData);
+        exportData = exportToHar(exportData);
         break;
       case "postman":
         mimeType = "application/json";
