@@ -1,4 +1,6 @@
 <script setup>
+  // TODO: substract 'ssl' from 'connect'
+
   defineProps({
     data: {
       type: Object,

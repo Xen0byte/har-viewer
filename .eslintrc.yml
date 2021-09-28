@@ -56,6 +56,8 @@ rules:
     - error
     - 2
     - SwitchCase: 1
+  # disable until intellij supports import syntax
+  jsdoc/no-undefined-types: 0
   linebreak-style:
     - error
     - unix
