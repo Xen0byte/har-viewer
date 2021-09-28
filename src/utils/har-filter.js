@@ -64,7 +64,7 @@ function parseInAndExcludes(filter) {
  * @param {object[]} arr - The har entries to filter.
  * @param {object} filter - The filter to apply.
  */
-export function filterBy(arr, filter) {
+function filterBy(arr, filter) {
   for (let i = arr.length - 1; i >= 0; i--) {
     if (filter.methods) {
       const { includes, excludes } = parseInAndExcludes(filter.methods);
@@ -160,7 +160,7 @@ export function filterBy(arr, filter) {
  * @param {object[]} arr - The har entries to sort.
  * @param {string} prop - THe name of the propery to sort by (leave empty to unsort).
  */
-export function sortBy(arr, prop) {
+function sortBy(arr, prop) {
   let sortFunc;
 
   switch (prop) {
@@ -202,7 +202,7 @@ export function sortBy(arr, prop) {
  * @param {object[]} arr - The har entries to group.
  * @param {string} prop - THe name of the propery to group by (leave empty to ungroup).
  */
-export function groupBy(arr, prop) {
+function groupBy(arr, prop) {
   if (!prop) {
     for (let i = 0; i < arr.length; i++) {
       // eslint-disable-next-line no-param-reassign
@@ -262,3 +262,45 @@ export function groupBy(arr, prop) {
     arr.sort(sortFunc);
   }
 }
+
+/**
+ * Apply all filters and return a new object.
+ *
+ * @param {object[]} data - Data to filter.
+ * @param {object} filters - Filter configuration.
+ * @param {boolean} onlySortAndGroup - do only sort and group data.
+ * @returns {object[]} - Filtered data.
+ */
+function applyFilter(data, filters, onlySortAndGroup) {
+  const clone = [...data];
+
+  if (!filters.filter || onlySortAndGroup) {
+    if (filters.sortBy) {
+      sortBy(clone, filters.sortBy);
+    } else {
+      sortBy(clone);
+    }
+
+    if (filters.groupBy) {
+      groupBy(clone, filters.groupBy);
+    } else {
+      groupBy(clone);
+    }
+
+    return clone;
+  }
+
+  filterBy(clone, filters.filter);
+
+  if (filters.sortBy) {
+    sortBy(clone, filters.sortBy);
+  }
+
+  if (filters.groupBy) {
+    groupBy(clone, filters.groupBy);
+  }
+
+  return clone;
+}
+
+export default applyFilter;

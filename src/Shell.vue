@@ -11,7 +11,7 @@
   import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
 
-  import { sortBy, groupBy, filterBy } from "./utils/har-filter";
+  import applyFilter from "./utils/har-filter";
   import { toPostman } from "./utils/postman";
   import { toCSV } from "./utils/csv";
   import { redactData } from "./utils/redact";
@@ -48,44 +48,14 @@
   const filteredData = ref([]);
 
   let filter = null;
-  const applyFilters = filters => {
-    if (!filters.filter || filter === filters.filter) {
-      const clone = [...filteredData.value];
-
-      if (filters.sortBy) {
-        sortBy(clone, filters.sortBy);
-      } else {
-        sortBy(clone);
-      }
-
-      if (filters.groupBy) {
-        groupBy(clone, filters.groupBy);
-      } else {
-        groupBy(clone);
-      }
-
-      filteredData.value = clone;
-      return;
-    }
-
-    const clone = [...data.value.entries];
-
-    filterBy(clone, filters.filter);
-
-    if (filters.sortBy) {
-      sortBy(clone, filters.sortBy);
-    }
-
-    if (filters.groupBy) {
-      groupBy(clone, filters.groupBy);
-    }
-
-    filter = filters.filter;
-    filteredData.value = clone;
-  };
 
   const onPropApply = filters => {
-    applyFilters(filters);
+    const onlySortAndGroup = filter === filters.filter;
+
+    const clone = applyFilter(onlySortAndGroup ? filteredData.value : data.value.entries, filters, onlySortAndGroup);
+    filteredData.value = clone;
+    filter = filters.filter;
+
     propFilter.value = filters;
     showPropDialog.value = false;
   };
