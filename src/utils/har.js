@@ -186,6 +186,7 @@ export function checkHar(harContent) {
     }
   }
 
+  // TODO: remove all custom fields (starting with '_')
   for (let id = 0; id < harContent.log.entries.length; id++) {
     const data = harContent.log.entries[id];
 
@@ -245,7 +246,7 @@ export function checkHar(harContent) {
     // eslint-disable-next-line no-param-reassign
     harContent.log.entries[id].custom = {
       // add id needed for selecting and restoring original order
-      id,
+      id, // TODO: determine if still needed if using timestamp
       // add calculated resource type for firefox exports
       resourceType,
       request: requestSizes,

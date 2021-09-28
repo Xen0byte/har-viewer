@@ -12,8 +12,8 @@
   import Footer from "./components/Footer";
 
   import applyFilter from "./utils/har-filter";
+  import { exportToCSV } from "./utils/export";
   import { toPostman } from "./utils/postman";
-  import { toCSV } from "./utils/csv";
   import { redactData } from "./utils/redact";
 
   import { getSystemTheme, switchTheme, isPWA } from "./utils/theme";
@@ -143,7 +143,9 @@
       case "csv":
         mimeType = "text/csv";
         ext = ".csv";
-        exportData = toCSV(exportData, settings.csvExcel);
+        exportData = exportToCSV(exportData, {
+          msExcelCompatible: settings.csvExcel.csvExcel,
+        });
         break;
       default:
         mimeType = "text/plain";

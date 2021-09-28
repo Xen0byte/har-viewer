@@ -26,6 +26,7 @@
     filename: filename.value,
     onlyFiltered: onlyFiltered.value,
     redact: redact.value,
+    csvExcel: csvExcel.value,
     redactWordList: redactWordList.value,
     postmanVersion: postmanVersion.value,
   });
