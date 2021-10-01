@@ -35,7 +35,13 @@ plugins:
   - vue
 
 settings:
-  import/resolver: webpack
+  import/resolver:
+    node:
+      extensions:
+        - .js
+        - .vue
+      moduleDirectory:
+        - node_modules
 
 rules:
   arrow-parens:
