@@ -46,8 +46,8 @@ function computeResourceType(data) {
     return "unknown";
   }
 
-  // TODO: use regex
-  return contentTypeHeader.value.split("/")[1].split(";")[0].split("+")[0];
+  const match = contentTypeHeader.value.match(/[a-z]+\/([a-z-]+).*/);
+  return match.length === 2 && match[1] ? match[1] : "unknown";
 }
 
 /**
