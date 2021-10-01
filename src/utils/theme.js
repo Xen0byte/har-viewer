@@ -26,6 +26,7 @@ export function getSystemTheme() {
  */
 export function isPWA() {
   return window.matchMedia("(display-mode: standalone)").matches
+    // @ts-ignore
     || (window.navigator.standalone)
     || document.referrer.includes("android-app://");
 }

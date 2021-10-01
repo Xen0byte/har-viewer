@@ -158,7 +158,7 @@ function filterBy(arr, filter) {
  * Sort an array of har entries.
  *
  * @param {object[]} arr - The har entries to sort.
- * @param {string} prop - THe name of the propery to sort by (leave empty to unsort).
+ * @param {string} [prop] - THe name of the propery to sort by (leave empty to unsort).
  */
 function sortBy(arr, prop) {
   let sortFunc;
@@ -200,7 +200,7 @@ function sortBy(arr, prop) {
  * Group an array of har entries.
  *
  * @param {object[]} arr - The har entries to group.
- * @param {string} prop - THe name of the propery to group by (leave empty to ungroup).
+ * @param {string} [prop] - THe name of the propery to group by (leave empty to ungroup).
  */
 function groupBy(arr, prop) {
   if (!prop) {

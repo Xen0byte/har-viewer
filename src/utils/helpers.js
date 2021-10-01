@@ -57,13 +57,13 @@ export function uuidv4() {
  * Read a file's contents.
  *
  * @param {File} file - The file to read.
- * @returns {Promise<string|Error>} The file contents or an error.
+ * @returns {Promise<string>} The file contents or an error.
  */
 export async function readFile(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
-    reader.onload = event => resolve(event.target.result);
+    reader.onload = event => resolve(event.target.result.toString());
     reader.onerror = reject;
     reader.readAsText(file, "utf-8");
   });

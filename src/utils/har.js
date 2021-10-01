@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+/* global HttpArchive */
 
 import { compare, readFile, iterateObject } from "./helpers";
 import { statusCodes } from "./http";
@@ -27,7 +28,7 @@ const errInvalid = new Error("invalid HAR file");
 /**
  * Compute the resource type of a response.
  *
- * @param {object} data - The .har entry
+ * @param {HttpArchive.Entry} data - The .har entry
  * @returns {string} The resource type of the response.
  */
 function computeResourceType(data) {
@@ -52,7 +53,7 @@ function computeResourceType(data) {
 /**
  * compute request/response sizes.
  *
- * @param {object} data - The request/response data.
+ * @param {HttpArchive.Entry.Request|HttpArchive.Entry.Response} data - The request/response data.
  * @returns {{
  *   totalSize: number,
  *   headersSizeComputed: boolean,
@@ -129,8 +130,8 @@ function computeSizes(data) {
 /**
  * Check if object is a valid HAR file.
  *
- * @param {object} harContent - The HAR file contents.
- * @returns {Promise<object|Error>} The checked har file.
+ * @param {HttpArchive} harContent - The HAR file contents.
+ * @returns {Promise<HttpArchive>} The checked har file.
  */
 export function checkHar(harContent) {
   // check required keys
@@ -140,11 +141,8 @@ export function checkHar(harContent) {
       .reduce((obj, key) => obj[key], harContent);
 
     if (!hasKey) {
-      if (DEBUG) {
-        // eslint-disable-next-line no-console
-        console.error(`missing key: ${requiredKeys[i]}`);
-      }
-
+      // eslint-disable-next-line no-console
+      console.error(`missing key: ${requiredKeys[i]}`);
       throw errInvalid;
     }
   }
@@ -237,15 +235,12 @@ export function checkHar(harContent) {
  * Parse a given HAR file.
  *
  * @param {File} file - The HAR file to parse.
- * @returns {Promise<object|Error>} The parsed har file or an error.
+ * @returns {Promise<HttpArchive|Error>} The parsed har file or an error.
  */
 export async function parseHarFile(file) {
   if (file.type && file.type !== "application/json") {
-    if (DEBUG) {
-      // eslint-disable-next-line no-console
-      console.error("mime type does not match");
-    }
-
+    // eslint-disable-next-line no-console
+    console.error("mime type does not match");
     throw errInvalid;
   }
 

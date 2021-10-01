@@ -3,6 +3,14 @@
 import { uuidv4 } from "../helpers";
 
 /**
+ * @typedef {(object)} PostmanRequestBody
+ * @property {string} mode - Postman stores the type of data associated with this request in this field.
+ * @property {object[]} [urlencoded] - URL encoded parameters.
+ * @property {object[]} [formdata] - Form data parameters.
+ * @property {string} [raw] - Raw request body.
+ */
+
+/**
  * Create a postman item from har entry.
  *
  * @param {HttpArchive.Entry} entry - The har entry.
@@ -11,6 +19,7 @@ import { uuidv4 } from "../helpers";
 function itemFromEntry(entry) {
   const id = uuidv4();
 
+  /** @type {PostmanRequestBody} */
   let body = null;
 
   if (entry.request.postData) {
