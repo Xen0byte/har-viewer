@@ -213,9 +213,6 @@ export function checkHar(harContent) {
 
     // eslint-disable-next-line no-param-reassign
     data.custom = {
-      // add id needed for selecting and restoring original order
-      id, // TODO: determine if still needed if using timestamp
-      // add calculated resource type for firefox exports
       resourceType,
       request: requestSizes,
       response: responseSizes,
