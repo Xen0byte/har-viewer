@@ -12,7 +12,7 @@
   import Footer from "./components/Footer";
 
   import applyFilter from "./utils/har-filter";
-  import { exportToCSV, exportToHar } from "./utils/export";
+  import { exportToCSV, exportToHar, exportToPostman } from "./utils/export";
   import { toPostman } from "./utils/postman";
   import { redactData } from "./utils/redact";
 
@@ -133,8 +133,7 @@
       case "postman":
         mimeType = "application/json";
         ext = ".postman_collection.json";
-        exportData = toPostman(settings.filename, exportData, settings.postmanVersion);
-        exportData = JSON.stringify(exportData);
+        exportData = exportToPostman(settings.filename, exportData);
         break;
       case "csv":
         mimeType = "text/csv";

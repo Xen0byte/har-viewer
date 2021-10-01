@@ -19,7 +19,6 @@
   const redactWordList = ref("");
   const format = ref("har");
   const csvExcel = ref(false);
-  const postmanVersion = ref(postmanVersions[postmanVersions.length - 1]);
 
   const onExport = () => emit("export", {
     format: format.value,
@@ -28,7 +27,6 @@
     redact: redact.value,
     csvExcel: csvExcel.value,
     redactWordList: redactWordList.value,
-    postmanVersion: postmanVersion.value,
   });
 </script>
 
@@ -101,21 +99,6 @@
           v-model="csvExcel"
           type="checkbox"
         >
-      </div>
-      <div v-if="format === 'postman'">
-        <label for="postmanVersion">Format Version</label>
-        <select
-          id="postmanVersion"
-          v-model="postmanVersion"
-        >
-          <option
-            v-for="v in postmanVersions"
-            :key="v"
-            :value="v"
-          >
-            {{ v }}
-          </option>
-        </select>
       </div>
     </form>
     <template #footer>
