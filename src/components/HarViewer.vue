@@ -27,7 +27,7 @@
   const showDialog = ref(false);
   const currentTab = ref("request");
 
-  const groups = computed(() => uniqueArrayByProperty(props.data, o => o.custom.group));
+  const groups = computed(() => uniqueArrayByProperty(props.data, o => o._harviewer.group));
 
   const selectedEntry = computed(() => (selectedId.value !== -1
     ? props.data.find(o => o.startedDateTime === selectedId.value)
@@ -44,8 +44,7 @@
   };
 
   const enabledTabs = computed(() => viewerTabs.filter(tab => (selectedEntry.value
-    // eslint-disable-next-line no-underscore-dangle
-    && !(tab.name === "websocket" && !selectedEntry.value._webSocketMessages)
+    && !(tab.name === "websocket" && !selectedEntry.value.request.url.startsWith("ws"))
     && !(tab.name === "postData" && !selectedEntry.value.request.postData)
     && !(tab.name === "responseContent" && (selectedEntry.value.response.bodySize < 0
       && selectedEntry.value.response.content && selectedEntry.value.response.content.size < 0))
@@ -78,7 +77,7 @@
           />
           <div class="group">
             <RequestCard
-              v-for="entry in data.filter(o => o.custom.group === group)"
+              v-for="entry in data.filter(o => o._harviewer.group === group)"
               :key="entry.startedDateTime"
               :data="entry"
               :active="selectedId === entry.startedDateTime"

@@ -50,8 +50,8 @@ function generateCSV(data, options) {
     row += `,"${entry.request.url}"`;
     row += `,"${entry.response.status}"`;
     row += `,"${entry.time}"`;
-    row += `,"${entry.custom.request.totalSize}"`; // TODO: new prop
-    row += `,"${entry.custom.response.totalSize}"`; // TODO: new prop
+    row += `,"${entry._harviewer.request.totalSize}"`;
+    row += `,"${entry._harviewer.response.totalSize}"`;
     row += `,"${entry.request.httpVersion}"`;
     row += `,"${entry.serverIPAddress}"`;
 

@@ -17,7 +17,7 @@
   <div
     class="request-card"
     :class="{ active }"
-    :title="data.custom.url"
+    :title="data._harviewer.url"
     role="button"
     tabindex="0"
     @click="emit('click')"
@@ -31,17 +31,17 @@
       {{ Math.round(data.time) }} ms
     </span>
     <span
-      v-if="data.custom.statusType !== 'blocked'"
+      v-if="data._harviewer.statusType !== 'blocked'"
       class="type"
-      v-text="data.custom.resourceType"
+      v-text="data._harviewer.resourceType"
     />
     <div
-      :class="`tag tag-${data.custom.statusType}`"
-      v-text="data.custom.statusCode"
+      :class="`tag tag-${data._harviewer.statusType}`"
+      v-text="data._harviewer.statusCode"
     />
     <div
       class="url overflow-text is-unselectable"
-      v-text="data.custom.url"
+      v-text="data._harviewer.url"
     />
   </div>
 </template>

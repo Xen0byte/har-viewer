@@ -56,7 +56,7 @@
             Show content
           </summary>
           <img
-            v-if="data.custom.hasImageResponse"
+            v-if="data._harviewer.hasImageResponse"
             alt="Response Content"
             :src="`data:${data.response.content.mimeType};base64,${data.response.content.text}`"
           >

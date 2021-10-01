@@ -195,13 +195,13 @@ export function checkHar(harContent) {
     let statusCode = "unknown";
     if (data.response.status !== 0) {
       statusCode = data.response.status;
-      // eslint-disable-next-line no-underscore-dangle
     } else if (data.response._error) {
-      // eslint-disable-next-line no-underscore-dangle
       statusCode = data.response._error.replace("net::", "");
     } else {
       statusCode = "blocked";
     }
+
+    const webSocketMessages = data._webSocketMessages;
 
     // remove custm properties
     iterateObject(data, (parent, key) => {
@@ -212,7 +212,7 @@ export function checkHar(harContent) {
     });
 
     // eslint-disable-next-line no-param-reassign
-    data.custom = {
+    data._harviewer = {
       resourceType,
       request: requestSizes,
       response: responseSizes,
@@ -222,6 +222,7 @@ export function checkHar(harContent) {
       hasImageResponse: data.response.content.encoding === "base64"
         && data.response.content.mimeType.startsWith("image/")
         && data.response.content.text,
+      webSocketMessages,
     };
   }
 

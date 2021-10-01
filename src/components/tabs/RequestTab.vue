@@ -68,9 +68,9 @@
           <tr>
             <th>Headers</th>
             <td>
-              <template v-if="data.custom.request.headersSize !== -1">
-                {{ data.custom.request.headersSize }} bytes
-                <template v-if="data.custom.request.headersSizeComputed">
+              <template v-if="data._harviewer.request.headersSize !== -1">
+                {{ data._harviewer.request.headersSize }} bytes
+                <template v-if="data._harviewer.request.headersSizeComputed">
                   (computed)
                 </template>
               </template>
@@ -82,9 +82,9 @@
           <tr>
             <th>Body</th>
             <td>
-              <template v-if="data.custom.request.bodySize !== -1">
-                {{ data.custom.request.bodySize }} bytes
-                <template v-if="data.custom.request.bodySizeComputed">
+              <template v-if="data._harviewer.request.bodySize !== -1">
+                {{ data._harviewer.request.bodySize }} bytes
+                <template v-if="data._harviewer.request.bodySizeComputed">
                   (computed)
                 </template>
               </template>
@@ -96,8 +96,8 @@
           <tr>
             <th>Total</th>
             <td>
-              {{ data.custom.request.totalSize }} bytes
-              <template v-if="data.custom.request.totalSizeComputed">
+              {{ data._harviewer.request.totalSize }} bytes
+              <template v-if="data._harviewer.request.totalSizeComputed">
                 (computed)
               </template>
             </td>

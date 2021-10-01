@@ -11,7 +11,7 @@ function generateHar(data) {
   const clone = { ...data };
 
   for (let i = 0; i < clone.log.entries.length; i++) {
-    delete clone.log.entries[i].custom; // TODO: new prop
+    delete clone.log.entries[i]._harviewer;
   }
 
   return JSON.stringify(clone);

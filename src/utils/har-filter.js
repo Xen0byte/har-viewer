@@ -119,8 +119,8 @@ function filterBy(arr, filter) {
     if (filter.resType) {
       const { includes, excludes } = parseInAndExcludes(filter.resType);
 
-      const include = includes.includes(arr[i].custom.resourceType.toLowerCase());
-      const exclude = excludes.includes(arr[i].custom.resourceType.toLowerCase());
+      const include = includes.includes(arr[i]._harviewer.resourceType.toLowerCase());
+      const exclude = excludes.includes(arr[i]._harviewer.resourceType.toLowerCase());
 
       if (exclude) {
         arr.splice(i, 1);
@@ -177,16 +177,16 @@ function sortBy(arr, prop) {
       sortFunc = (a, b) => compare(b.time, a.time);
       break;
     case "reqSize":
-      sortFunc = (a, b) => compare(a.custom.request.totalSize, b.custom.request.totalSize);
+      sortFunc = (a, b) => compare(a._harviewer.request.totalSize, b._harviewer.request.totalSize);
       break;
     case "reqSize-reverse":
-      sortFunc = (a, b) => compare(b.custom.request.totalSize, a.custom.request.totalSize);
+      sortFunc = (a, b) => compare(b._harviewer.request.totalSize, a._harviewer.request.totalSize);
       break;
     case "resSize":
-      sortFunc = (a, b) => compare(a.custom.response.totalSize, b.custom.response.totalSize);
+      sortFunc = (a, b) => compare(a._harviewer.response.totalSize, b._harviewer.response.totalSize);
       break;
     case "resSize-reverse":
-      sortFunc = (a, b) => compare(b.custom.response.totalSize, a.custom.response.totalSize);
+      sortFunc = (a, b) => compare(b._harviewer.response.totalSize, a._harviewer.response.totalSize);
       break;
     default:
       sortFunc = (a, b) => compare(a.startedDateTime, b.startedDateTime);
@@ -206,7 +206,7 @@ function groupBy(arr, prop) {
   if (!prop) {
     for (let i = 0; i < arr.length; i++) {
       // eslint-disable-next-line no-param-reassign
-      delete arr[i].custom.group;
+      delete arr[i]._harviewer.group;
     }
 
     return;
@@ -219,7 +219,6 @@ function groupBy(arr, prop) {
       group = arr[i].request.method;
     } else if (prop === "status") {
       if (arr[i].response.status === 0) {
-        // eslint-disable-next-line no-underscore-dangle
         group = arr[i].response.statusText || arr[i].response._error || "Unknown";
       } else {
         group = arr[i].response.status;
@@ -239,13 +238,13 @@ function groupBy(arr, prop) {
         group = "Unknown";
       }
     } else if (prop === "resource-type") {
-      group = arr[i].custom.resourceType;
+      group = arr[i]._harviewer.resourceType;
     } else if (prop === "domain") {
       group = (new URL(arr[i].request.url)).hostname;
     }
 
     // eslint-disable-next-line no-param-reassign
-    arr[i].custom.group = group;
+    arr[i]._harviewer.group = group;
   }
 
   let sortFunc;
