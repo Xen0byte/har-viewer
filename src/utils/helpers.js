@@ -84,5 +84,11 @@ export async function readFile(file) {
  * @param {iterateObjectCallback} func - The function to execute.
  */
 export function iterateObject(obj, func) {
-  Object.keys(obj).forEach(key => (typeof obj[key] === "object" ? iterateObject(obj[key], func) : func(obj, key)));
+  Object.keys(obj).forEach(key => {
+    func(obj, key);
+
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      iterateObject(obj[key], func);
+    }
+  });
 }

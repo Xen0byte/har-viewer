@@ -162,7 +162,6 @@ const config = {
 if (isDev) {
   config.devServer = {
     hot: true,
-    host: "local-ipv4",
     historyApiFallback: true,
     allowedHosts: "all",
   };

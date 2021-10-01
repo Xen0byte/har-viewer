@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { compare, readFile } from "./helpers";
+import { compare, readFile, iterateObject } from "./helpers";
 import { statusCodes } from "./http";
 
 /**
@@ -149,21 +149,20 @@ export function checkHar(harContent) {
     }
   }
 
-  // TODO: remove all custom fields (starting with '_')
   for (let id = 0; id < harContent.log.entries.length; id++) {
     const data = harContent.log.entries[id];
 
-    harContent.log.entries[id].request.headers.sort((a, b) => compare(a.name, b.name));
-    harContent.log.entries[id].request.cookies.sort((a, b) => compare(a.name, b.name));
-    harContent.log.entries[id].response.headers.sort((a, b) => compare(a.name, b.name));
-    harContent.log.entries[id].response.cookies.sort((a, b) => compare(a.name, b.name));
+    data.request.headers.sort((a, b) => compare(a.name, b.name));
+    data.request.cookies.sort((a, b) => compare(a.name, b.name));
+    data.response.headers.sort((a, b) => compare(a.name, b.name));
+    data.response.cookies.sort((a, b) => compare(a.name, b.name));
 
     if (data.request.queryString) {
-      harContent.log.entries[id].request.queryString.sort((a, b) => compare(a.name, b.name));
+      data.request.queryString.sort((a, b) => compare(a.name, b.name));
     }
 
     if (data.request.postData && data.request.postData.params) {
-      harContent.log.entries[id].request.postData.params.sort((a, b) => compare(a.name, b.name));
+      data.request.postData.params.sort((a, b) => compare(a.name, b.name));
     }
 
     const resourceType = computeResourceType(data);
@@ -206,8 +205,16 @@ export function checkHar(harContent) {
       statusCode = "blocked";
     }
 
+    // remove custm properties
+    iterateObject(data, (parent, key) => {
+      if (key.startsWith("_")) {
+        // eslint-disable-next-line no-param-reassign
+        delete parent[key];
+      }
+    });
+
     // eslint-disable-next-line no-param-reassign
-    harContent.log.entries[id].custom = {
+    data.custom = {
       // add id needed for selecting and restoring original order
       id, // TODO: determine if still needed if using timestamp
       // add calculated resource type for firefox exports
