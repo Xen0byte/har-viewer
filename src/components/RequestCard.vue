@@ -23,9 +23,18 @@
     @click="emit('click')"
     @keydown.enter="emit('click')"
   >
-    <b v-text="data.request.method" />
-    <span>{{ Math.round(data.time) }} ms</span>
-    <span v-text="data.custom.resourceType" />
+    <b
+      class="method"
+      v-text="data.request.method"
+    />
+    <span class="timing">
+      {{ Math.round(data.time) }} ms
+    </span>
+    <span
+      v-if="data.custom.statusType !== 'blocked'"
+      class="type"
+      v-text="data.custom.resourceType"
+    />
     <div
       :class="`tag tag-${data.custom.statusType}`"
       v-text="data.custom.statusCode"
@@ -52,7 +61,7 @@
     padding: .65rem;
 
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 100px 1fr 1fr 40px;
     grid-template-rows: 1fr 1fr;
     gap: .3rem 0;
     align-items: center;
@@ -76,11 +85,24 @@
     grid-area: url;
   }
 
+  .method {
+    grid-area: method;
+  }
+
+  .timing {
+    grid-area: timing;
+  }
+
+  .type {
+    grid-area: type;
+  }
+
   .tag {
     border-radius: 5px;
     padding: .2rem .35rem;
     width: max-content;
     justify-self: flex-end;
+    grid-area: status;
 
     &.tag-custom {
       background-color: var(--color-background);

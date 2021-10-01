@@ -13,7 +13,6 @@
 
   import applyFilter from "./utils/har-filter";
   import { exportToCSV, exportToHar, exportToPostman } from "./utils/export";
-  import { toPostman } from "./utils/postman";
   import { redactData } from "./utils/redact";
 
   import { getSystemTheme, switchTheme, isPWA } from "./utils/theme";

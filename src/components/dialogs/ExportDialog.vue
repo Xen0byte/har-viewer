@@ -3,8 +3,6 @@
 
   import Modal from "../Modal";
 
-  import { postmanVersions } from "../../utils/postman";
-
   const emit = defineEmits(["close", "export"]);
 
   const availableFormats = {

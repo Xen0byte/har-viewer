@@ -13,7 +13,7 @@
   import ResponseTab from "./tabs/ResponseTab";
   import TimingTab from "./tabs/TimingTab";
 
-  import { uniqueArrayByProperty } from "../utils/array";
+  import { uniqueArrayByProperty } from "../utils/helpers";
   import { viewerTabs } from "../utils/constants";
 
   const props = defineProps({

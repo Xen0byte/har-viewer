@@ -52,3 +52,37 @@ export function uuidv4() {
     return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
   });
 }
+
+/**
+ * Read a file's contents.
+ *
+ * @param {File} file - The file to read.
+ * @returns {Promise<string|Error>} The file contents or an error.
+ */
+export async function readFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = event => resolve(event.target.result);
+    reader.onerror = reject;
+    reader.readAsText(file, "utf-8");
+  });
+}
+
+/**
+ * The callback is executed when 'iterateObject' finds a new object key.
+ *
+ * @callback iterateObjectCallback
+ * @param {object} parent - The parent object.
+ * @param {string} key - The current object key.
+ */
+
+/**
+ * Recursively iterate over an object and execute a function for each key.
+ *
+ * @param {object} obj - The object to iterate over.
+ * @param {iterateObjectCallback} func - The function to execute.
+ */
+export function iterateObject(obj, func) {
+  Object.keys(obj).forEach(key => (typeof obj[key] === "object" ? iterateObject(obj[key], func) : func(obj, key)));
+}

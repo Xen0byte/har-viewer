@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { compare } from "./helpers";
+import { compare, readFile } from "./helpers";
 import { statusCodes } from "./http";
 
 /**
@@ -31,12 +31,6 @@ const errInvalid = new Error("invalid HAR file");
  * @returns {string} The resource type of the response.
  */
 function computeResourceType(data) {
-  // eslint-disable-next-line no-underscore-dangle
-  if (data._resourceType) {
-    // eslint-disable-next-line no-underscore-dangle
-    return data._resourceType;
-  }
-
   if (data.response.status === 0) {
     return "unknown";
   }
@@ -51,23 +45,8 @@ function computeResourceType(data) {
     return "unknown";
   }
 
-  switch (true) {
-    case contentTypeHeader.value.includes("text/html"):
-      return "document";
-    case contentTypeHeader.value.includes("application/javascript")
-    || contentTypeHeader.value.includes("text/javascript"):
-      return "script";
-    case contentTypeHeader.value.includes("text/css"):
-      return "stylesheet";
-    case contentTypeHeader.value.includes("image/"):
-      return "image";
-    case contentTypeHeader.value.includes("font/"):
-      return "font";
-    case contentTypeHeader.value.includes("text/plain"):
-      return "plain";
-    default:
-      return "other";
-  }
+  // TODO: use regex
+  return contentTypeHeader.value.split("/")[1].split(";")[0].split("+")[0];
 }
 
 /**
@@ -145,22 +124,6 @@ function computeSizes(data) {
   }
 
   return sizes;
-}
-
-/**
- * Read a file's contents.
- *
- * @param {File} file - The file to read.
- * @returns {Promise<string|Error>} The file contents or an error.
- */
-async function readFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = event => resolve(event.target.result);
-    reader.onerror = reject;
-    reader.readAsText(file, "utf-8");
-  });
 }
 
 /**
