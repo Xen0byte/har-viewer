@@ -1,3 +1,5 @@
+/* global HttpArchive */
+
 /**
  * Generate a har json from given data.
  *

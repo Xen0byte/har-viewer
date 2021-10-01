@@ -1,3 +1,5 @@
+/* global HttpArchive */
+
 import { uuidv4 } from "../helpers";
 
 /**

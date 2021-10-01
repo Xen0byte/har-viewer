@@ -1,3 +1,5 @@
+/* exported HttpArchive */
+
 /**
  * This object contains information about the log creator application.
  *

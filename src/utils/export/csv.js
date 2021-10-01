@@ -1,3 +1,5 @@
+/* global HttpArchive */
+
 /**
  * CSV generation options.
  *
