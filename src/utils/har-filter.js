@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export,no-continue */
 
-import { compare } from "./array";
+import { compare } from "./helpers";
 import { methodOrder, statusTypeOrder } from "./constants";
 
 /**

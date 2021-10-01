@@ -1,16 +1,4 @@
-/**
- * Generate a rfc4122 compliant v4 uuid.
- *
- * @returns {string} A rfc4122 compliant v4 uuid.
- */
- function uuidv4() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
-    // eslint-disable-next-line no-bitwise
-    const r = Math.random() * 16 | 0;
-    // eslint-disable-next-line no-mixed-operators,no-bitwise
-    return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
-  });
-}
+import { uuidv4 } from "../helpers";
 
 /**
  * Create a postman item from har entry.
@@ -23,46 +11,46 @@ function itemFromEntry(entry) {
 
   let body = null;
 
-    if (entry.request.postData) {
-      let mode = null;
+  if (entry.request.postData) {
+    let mode = null;
 
-      switch (entry.request.postData.mimeType) {
-        case "application/x-www-form-urlencoded":
-          mode = "urlencoded";
-          break;
-        case "application/octet-stream":
-          mode = "file";
-          break;
-        case "multipart/form-data":
-          mode = "formdata";
-          break;
-        case "application/graphql":
-        case "application/graphql+json":
-          mode = "graphql"; // not official
-          break;
-        default:
-          mode = "raw";
-          break;
-      }
-
-      body = { mode };
-
-      if (mode === "urlencoded" && entry.request.params) {
-        body.urlencoded = entry.request.postData.params
-          .map(p => ({
-            key: p.name,
-            value: p.value,
-          }));
-      } else if (mode === "formdata" && entry.request.params) {
-        body.formdata = entry.request.postData.params
-          .map(p => ({
-            key: p.name,
-            value: p.value,
-          }));
-      } else if (entry.request.postData.text) {
-        body.raw = entry.request.postData.text;
-      }
+    switch (entry.request.postData.mimeType) {
+      case "application/x-www-form-urlencoded":
+        mode = "urlencoded";
+        break;
+      case "application/octet-stream":
+        mode = "file";
+        break;
+      case "multipart/form-data":
+        mode = "formdata";
+        break;
+      case "application/graphql":
+      case "application/graphql+json":
+        mode = "graphql"; // not official
+        break;
+      default:
+        mode = "raw";
+        break;
     }
+
+    body = { mode };
+
+    if (mode === "urlencoded" && entry.request.params) {
+      body.urlencoded = entry.request.postData.params
+        .map(p => ({
+          key: p.name,
+          value: p.value,
+        }));
+    } else if (mode === "formdata" && entry.request.params) {
+      body.formdata = entry.request.postData.params
+        .map(p => ({
+          key: p.name,
+          value: p.value,
+        }));
+    } else if (entry.request.postData.text) {
+      body.raw = entry.request.postData.text;
+    }
+  }
 
   return {
     id,
@@ -109,7 +97,7 @@ function generatePostman(collectionName, data) {
     item.push(entry);
   }
 
-  const data = {
+  const postmanData = {
     info: {
       name: collectionName,
       schema: "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -119,7 +107,7 @@ function generatePostman(collectionName, data) {
     item,
   };
 
-  return JSON.stringify(data);
+  return JSON.stringify(postmanData);
 }
 
 export default generatePostman;

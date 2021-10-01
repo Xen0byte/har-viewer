@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { compare } from "./array";
+import { compare } from "./helpers";
 import { statusCodes } from "./http";
 
 /**
