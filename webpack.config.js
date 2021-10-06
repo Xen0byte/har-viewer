@@ -57,7 +57,16 @@ const config = {
         defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
           name: module => {
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            let packageName;
+
+            if (module.type === "css/mini-extract") {
+              // eslint-disable-next-line no-underscore-dangle
+              const idParts = module._identifier.split("!");
+              [, packageName] = idParts[idParts.length - 1].match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+            } else {
+              [, packageName] = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+            }
+
             return `npm.${packageName.replace("@", "")}`;
           },
         },
