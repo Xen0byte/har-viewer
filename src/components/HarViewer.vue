@@ -30,7 +30,7 @@
   const groups = computed(() => uniqueArrayByProperty(props.data, o => o._harviewer.group));
 
   const selectedEntry = computed(() => (selectedId.value !== -1
-    ? props.data.find(o => o.startedDateTime === selectedId.value)
+    ? props.data.find(o => o._harviewer.id === selectedId.value)
     : null));
 
   const tabViews = {
@@ -78,10 +78,10 @@
           <div class="group">
             <RequestCard
               v-for="entry in data.filter(o => o._harviewer.group === group)"
-              :key="entry.startedDateTime"
+              :key="entry._harviewer.id"
               :data="entry"
-              :active="selectedId === entry.startedDateTime"
-              @click="() => onSelect(entry.startedDateTime)"
+              :active="selectedId === entry._harviewer.id"
+              @click="() => onSelect(entry._harviewer.id)"
             />
           </div>
         </template>
@@ -89,10 +89,10 @@
       <template v-else>
         <RequestCard
           v-for="entry in data"
-          :key="entry.startedDateTime"
+          :key="entry._harviewer.id"
           :data="entry"
-          :active="selectedId === entry.startedDateTime"
-          @click="() => onSelect(entry.startedDateTime)"
+          :active="selectedId === entry._harviewer.id"
+          @click="() => onSelect(entry._harviewer.id)"
         />
       </template>
     </aside>

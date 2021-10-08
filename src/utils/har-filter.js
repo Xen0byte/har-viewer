@@ -189,7 +189,7 @@ function sortBy(arr, prop) {
       sortFunc = (a, b) => compare(b._harviewer.response.totalSize, a._harviewer.response.totalSize);
       break;
     default:
-      sortFunc = (a, b) => compare(a.startedDateTime, b.startedDateTime);
+      sortFunc = (a, b) => compare(a._harviewer.id, b._harviewer.id);
       break;
   }
 

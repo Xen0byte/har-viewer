@@ -147,6 +147,7 @@ export function checkHar(harContent) {
     }
   }
 
+  harContent.log.entries.sort((a, b) => compare(a.startedDateTime, b.startedDateTime));
   for (let id = 0; id < harContent.log.entries.length; id++) {
     const data = harContent.log.entries[id];
 
@@ -213,6 +214,7 @@ export function checkHar(harContent) {
 
     // eslint-disable-next-line no-param-reassign
     data._harviewer = {
+      id,
       resourceType,
       request: requestSizes,
       response: responseSizes,
