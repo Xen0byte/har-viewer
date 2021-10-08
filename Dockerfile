@@ -8,8 +8,8 @@ WORKDIR /src
 # copy source
 COPY . .
 
-# don't use favicon fork (unable to build using docker)
-RUN sed -i -e 's/https:\/\/github.com\/dermoumi\/favicons.git/6.2.2/g' package.json
+# don't use favicon 'master' (unable to build using docker)
+RUN sed -i -e 's/https:\/\/github.com\/itgalaxy\/favicons.git/6.2.2/g' package.json
 
 # install dependencies
 RUN yarn
