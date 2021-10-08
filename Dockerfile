@@ -12,7 +12,7 @@ COPY . .
 RUN sed -i -e 's/https:\/\/github.com\/itgalaxy\/favicons.git/6.2.2/g' package.json
 
 # install dependencies
-RUN yarn
+RUN yarn --non-interactive --frozen-lockfile
 
 # build static web
 ENV NODE_ENV production
