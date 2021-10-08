@@ -25,6 +25,10 @@
     "serve": "webpack serve",
     "start": "http-server dist --no-dotfiles --gzip --brotli -c86400"
   },
+  "resolutions": {
+    "vue/**/postcss": "8.3.9",
+    "workbox-webpack-plugin/**/lodash": "4.17.21"
+  },
   "dependencies": {
     "@mdi/svg": "^6.2.95",
     "dialog-polyfill": "^0.5.6",
