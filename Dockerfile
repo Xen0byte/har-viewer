@@ -1,5 +1,5 @@
 ARG BUSYBOX_VERSION=1.34.0
-ARG NODE_VERSION=16.10.0-buster
+ARG NODE_VERSION=16.11.1-buster
 
 ## STAGE I - Build builder image
 FROM node:${NODE_VERSION} AS build
@@ -12,7 +12,7 @@ COPY . .
 RUN sed -i -e 's/https:\/\/github.com\/itgalaxy\/favicons.git/6.2.2/g' package.json
 
 # install dependencies
-RUN yarn --non-interactive --frozen-lockfile
+RUN yarn --non-interactive
 
 # build static web
 ENV NODE_ENV production
