@@ -12,6 +12,20 @@ docker pull ghcr.io/develerik/har-viewer
 docker run -p 8080:8080 ghcr.io/develerik/har-viewer
 ```
 
+## Docker From Source
+
+```shell
+# clone source code
+git clone github.com/develerik/har-viewer.git
+cd har-viewer
+
+# build docker image
+docker build -t har-viewer --build-arg BUILD_DATE="$(date)" .
+
+# run docker image
+docker run -p 8080:8080 har-viewer
+```
+
 ## From Source
 
 ```shell

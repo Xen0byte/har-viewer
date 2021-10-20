@@ -1,8 +1,8 @@
 ARG BUSYBOX_VERSION=1.34.0
-ARG NODE_VERSION=16.11.1-buster
+ARG NODE_VERSION=16.11.1
 
 ## STAGE I - Build builder image
-FROM node:${NODE_VERSION} AS build
+FROM node:${NODE_VERSION}-bullseye-slim AS build
 WORKDIR /src
 
 # copy source
