@@ -1,4 +1,16 @@
+### Custom Entries ###
+
+dist
 report.html
+
+# yarn v3
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # Created by https://toptal.com/developers/gitignore/api/windows,macos,linux,vim,visualstudiocode,intellij+all,node
 # Edit at https://toptal.com/developers/gitignore?templates=windows,macos,linux,vim,visualstudiocode,intellij+all,node
