@@ -1,11 +1,21 @@
 <script setup>
-  // TODO: substract 'ssl' from 'connect'
+  import { computed } from "vue";
 
-  defineProps({
+  const props = defineProps({
     data: {
       type: Object,
       required: true,
     },
+  });
+
+  const timingConnect = computed(() => {
+    if (props.data.timings.ssl > 0
+      && props.data.timings.connect > 0
+      && props.data.timings.connect > props.data.timings.ssl) {
+      return props.data.timings.connect - props.data.timings.ssl;
+    }
+
+    return props.data.timings.connect;
   });
 </script>
 
@@ -25,7 +35,7 @@
       <div
         v-if="data.timings.connect !== -1"
         class="timing-connect"
-        :style="`width: ${(data.timings.connect/data.time)*100}%`"
+        :style="`width: ${(timingConnect/data.time)*100}%`"
       />
       <div
         v-if="data.timings.send !== -1"
@@ -82,7 +92,7 @@
           <td class="timing-connect" />
           <th>Initial Connection</th>
           <td>
-            {{ data.timings.connect !== -1 ? `${Math.round(data.timings.connect)} ms` : "Does not apply" }}
+            {{ data.timings.connect !== -1 ? `${Math.round(timingConnect)} ms` : "Does not apply" }}
           </td>
         </tr>
       </tbody>

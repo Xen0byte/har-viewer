@@ -322,7 +322,6 @@
 
   .load-from {
     display: flex;
-    align-items: center;
     margin-bottom: .5rem;
 
     & > input {
