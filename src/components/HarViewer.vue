@@ -23,7 +23,7 @@
     },
   });
 
-  const selectedId = ref(-1);
+  const selectedId = ref(0);
   const showDialog = ref(false);
   const currentTab = ref("request");
 
