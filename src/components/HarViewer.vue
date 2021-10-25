@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, computed } from "vue";
+  import { ref, computed, watch } from "vue";
   import svgChevronLeft from "@mdi/svg/svg/chevron-left.svg";
 
   import RequestCard from "./RequestCard";
@@ -78,6 +78,12 @@
       showDialog.value = true;
     }
   };
+
+  watch(selectedEntry, () => {
+    if (!props.data.find(o => o._harviewer.id === selectedId.value)) {
+      selectedId.value = props.data[0]._harviewer.id;
+    }
+  });
 </script>
 
 <template>
