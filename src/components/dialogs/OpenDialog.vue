@@ -5,7 +5,8 @@
   import svgDownload from "@mdi/svg/svg/download-outline.svg";
   import svgLoading from "@mdi/svg/svg/loading.svg";
 
-  import { parseHarFile, checkHar } from "../../utils/har";
+  import parseHar from "../../utils/parser";
+  import { readFile } from "../../utils/helpers";
   import Modal from "../Modal";
 
   const emit = defineEmits(["close", "open"]);
@@ -45,7 +46,7 @@
 
       hasError.value = false;
       isLoading.value = "Parsing file...";
-      data = checkHar(resData);
+      data = parseHar(resData);
       src = loadedFile.value;
       pages.value = data.pages;
       filterEnabled.value = true;
@@ -93,7 +94,16 @@
       isLoading.value = "Parsing file...";
 
       try {
-        data = await parseHarFile(input.files[0]);
+        if (input.files[0].type && input.files[0].type !== "application/json") {
+          // eslint-disable-next-line no-console
+          console.error("mime type does not match");
+          throw new Error("invalid HAR file: wrong file type");
+        }
+
+        const content = await readFile(input.files[0]);
+        const harContent = JSON.parse(content);
+
+        data = parseHar(harContent);
         src = loadedFile.value;
         pages.value = data.pages;
         filterEnabled.value = true;
