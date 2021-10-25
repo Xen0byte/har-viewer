@@ -43,20 +43,37 @@
     timing: TimingTab,
   };
 
-  const enabledTabs = computed(() => viewerTabs.filter(tab => (selectedEntry.value
-    && !(tab.name === "websocket" && !selectedEntry.value.request.url.startsWith("ws"))
-    && !(tab.name === "postData" && !selectedEntry.value.request.postData)
-    && !(tab.name === "responseContent" && (selectedEntry.value.response.bodySize < 0
-      && selectedEntry.value.response.content && selectedEntry.value.response.content.size < 0))
-    && !(tab.name === "cookies"
-      && selectedEntry.value.request.cookies.length === 0
-      && selectedEntry.value.response.cookies.length === 0)
-    && !(tab.name === "timing" && Object.keys(selectedEntry.value.timings).length === 0)
-  )));
+  /**
+   * get the enabled tabs for a given entry.
+   *
+   * @param {HttpArchive.Entry} entry - The entry to get enabled tabs for.
+   * @returns {string[]} - The enabled tabs for the entry.
+   */
+  function getEnabledTabs(entry) {
+    return viewerTabs.filter(tab => (entry
+      && !(tab.name === "websocket" && !entry.request.url.startsWith("ws"))
+      && !(tab.name === "postData" && !entry.request.postData)
+      && !(tab.name === "responseContent" && (entry.response.bodySize < 0
+        && entry.response.content && entry.response.content.size < 0))
+      && !(tab.name === "cookies"
+        && entry.request.cookies.length === 0
+        && entry.response.cookies.length === 0)
+      && !(tab.name === "timing" && Object.keys(entry.timings).length === 0)
+    ));
+  }
+
+  const enabledTabs = computed(() => getEnabledTabs(selectedEntry.value));
 
   const onSelect = id => {
-    currentTab.value = "request";
     selectedId.value = id;
+
+    const persistentTab = getEnabledTabs(selectedEntry.value)
+      .find(t => t.name === currentTab.value);
+
+    if (!persistentTab) {
+      currentTab.value = "request";
+    }
+
     if (window.innerWidth <= 475) {
       showDialog.value = true;
     }

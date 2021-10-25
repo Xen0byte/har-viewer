@@ -62,6 +62,10 @@ rules:
     - error
     - 2
     - SwitchCase: 1
+  jsdoc/no-undefined-types:
+    - error
+    - definedTypes:
+        - HttpArchive
   linebreak-style:
     - error
     - unix
