@@ -47,6 +47,17 @@
     resType.value = "";
     sortBy.value = "";
     groupBy.value = "";
+
+    emit("apply", {
+      filter: {
+        methods: methods.value.toLowerCase(),
+        status: status.value,
+        resType: resType.value.toLowerCase(),
+        domains: domains.value.toLowerCase(),
+      },
+      sortBy: sortBy.value,
+      groupBy: groupBy.value,
+    });
   };
 </script>
 
