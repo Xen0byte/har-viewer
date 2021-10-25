@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { iterateObject } from "./helpers";
+import { iterateObject } from "../helpers";
 
 const sensitiveKeys = [
   "authorization",
@@ -13,7 +13,13 @@ const sensitiveKeys = [
   "id_token",
 ];
 
-export const redactData = (sensitiveData, wordList) => {
+/**
+ * Redact har data.
+ *
+ * @param {HttpArchive.Entry[]} sensitiveData - The data to redact.
+ * @param {string[]} wordList - A custom redaction word list.
+ */
+export default function redactData(sensitiveData, wordList) {
   if (wordList) {
     // eslint-disable-next-line no-param-reassign
     wordList = wordList.split(",");
@@ -28,4 +34,4 @@ export const redactData = (sensitiveData, wordList) => {
       parent[key] = "*** Redacted ***";
     }
   });
-};
+}

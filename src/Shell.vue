@@ -11,9 +11,13 @@
   import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
 
-  import applyFilter from "./utils/har-filter";
-  import { exportToCSV, exportToHar, exportToPostman } from "./utils/export";
-  import { redactData } from "./utils/redact";
+  import applyCollation from "./utils/collation";
+  import {
+    exportToCSV,
+    exportToHar,
+    exportToPostman,
+    redactData,
+  } from "./utils/export";
 
   import { getSystemTheme, switchTheme, isPWA } from "./utils/theme";
 
@@ -51,7 +55,7 @@
   const onPropApply = filters => {
     const onlySortAndGroup = filter === filters.filter;
 
-    const clone = applyFilter(onlySortAndGroup ? filteredData.value : data.value.entries, filters, onlySortAndGroup);
+    const clone = applyCollation(onlySortAndGroup ? filteredData.value : data.value.entries, filters, onlySortAndGroup);
     filteredData.value = clone;
     filter = filters.filter;
 
