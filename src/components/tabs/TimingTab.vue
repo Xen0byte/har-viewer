@@ -1,12 +1,16 @@
 <script setup>
   import { computed } from "vue";
 
+  import { roundTo } from "../../utils/helpers";
+
   const props = defineProps({
     data: {
       type: Object,
       required: true,
     },
   });
+
+  const round = roundTo;
 
   const timingConnect = computed(() => {
     if (props.data.timings.ssl > 0
@@ -23,37 +27,37 @@
   <div class="tab-content overflow-text">
     <div class="timing">
       <div
-        v-if="data.timings.blocked !== -1"
+        v-if="data.timings.blocked > 0"
         class="timing-blocked"
         :style="`width: ${(data.timings.blocked/data.time)*100}%`"
       />
       <div
-        v-if="data.timings.dns !== -1"
+        v-if="data.timings.dns > 0"
         class="timing-dns"
         :style="`width: ${(data.timings.dns/data.time)*100}%`"
       />
       <div
-        v-if="data.timings.connect !== -1"
+        v-if="data.timings.connect > 0"
         class="timing-connect"
         :style="`width: ${(timingConnect/data.time)*100}%`"
       />
       <div
-        v-if="data.timings.send !== -1"
+        v-if="data.timings.send > 0"
         class="timing-send"
         :style="`width: ${(data.timings.send/data.time)*100}%`"
       />
       <div
-        v-if="data.timings.wait !== -1"
+        v-if="data.timings.wait > 0"
         class="timing-wait"
         :style="`width: ${(data.timings.wait/data.time)*100}%`"
       />
       <div
-        v-if="data.timings.receive !== -1"
+        v-if="data.timings.receive > 0"
         class="timing-receive"
         :style="`width: ${(data.timings.receive/data.time)*100}%`"
       />
       <div
-        v-if="data.timings.ssl !== -1"
+        v-if="data.timings.ssl > 0"
         class="timing-ssl"
         :style="`width: ${(data.timings.ssl/data.time)*100}%`"
       />
@@ -71,28 +75,28 @@
           <td class="timing-blocked" />
           <th>Stalled</th>
           <td>
-            {{ data.timings.blocked !== -1 ? `${Math.round(data.timings.blocked)} ms` : "Does not apply" }}
+            {{ data.timings.blocked > 0 ? `${round(data.timings.blocked)} ms` : "Does not apply" }}
           </td>
         </tr>
         <tr>
           <td class="timing-dns" />
           <th>DNS Lookup</th>
           <td>
-            {{ data.timings.dns !== -1 ? `${Math.round(data.timings.dns)} ms` : "Does not apply" }}
+            {{ data.timings.dns > 0 ? `${round(data.timings.dns)} ms` : "Does not apply" }}
           </td>
         </tr>
         <tr>
           <td class="timing-ssl" />
           <th>SSL</th>
           <td>
-            {{ data.timings.ssl !== -1 ? `${Math.round(data.timings.ssl)} ms` : "Does not apply" }}
+            {{ data.timings.ssl > 0 ? `${round(data.timings.ssl)} ms` : "Does not apply" }}
           </td>
         </tr>
         <tr>
           <td class="timing-connect" />
           <th>Initial Connection</th>
           <td>
-            {{ data.timings.connect !== -1 ? `${Math.round(timingConnect)} ms` : "Does not apply" }}
+            {{ data.timings.connect > 0 ? `${round(timingConnect)} ms` : "Does not apply" }}
           </td>
         </tr>
       </tbody>
@@ -111,21 +115,21 @@
           <td class="timing-send" />
           <th>Request Sent</th>
           <td>
-            {{ data.timings.send !== -1 ? `${Math.round(data.timings.send)} ms` : "Does not apply" }}
+            {{ data.timings.send > 0 ? `${round(data.timings.send)} ms` : "Does not apply" }}
           </td>
         </tr>
         <tr>
           <td class="timing-wait" />
           <th>Waiting (TTFB)</th>
           <td>
-            {{ data.timings.wait !== -1 ? `${Math.round(data.timings.wait)} ms` : "Does not apply" }}
+            {{ data.timings.wait > 0 ? `${round(data.timings.wait)} ms` : "Does not apply" }}
           </td>
         </tr>
         <tr>
           <td class="timing-receive" />
           <th>Content Downloaded</th>
           <td>
-            {{ data.timings.receive !== -1 ? `${Math.round(data.timings.receive)} ms` : "Does not apply" }}
+            {{ data.timings.receive > 0 ? `${round(data.timings.receive)} ms` : "Does not apply" }}
           </td>
         </tr>
       </tbody>
@@ -134,7 +138,7 @@
           <th colspan="2">
             Total time
           </th>
-          <td>{{ Math.round(data.time) }} ms</td>
+          <td>{{ round(data.time) }} ms</td>
         </tr>
       </tfoot>
     </table>

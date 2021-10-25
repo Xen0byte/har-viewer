@@ -20,6 +20,17 @@ export function uniqueArrayByProperty(arr, cb) {
 }
 
 /**
+ * Rounds a given number to a given precision.
+ *
+ * @param {number} [num=0] num - The number to round.
+ * @param {number} [x=2] x - The precision to use.
+ * @returns {number} - The rounded number.
+ */
+export function roundTo(num = 0, x = 2) {
+  return +(`${Math.round(`${num}e${x}`)}e-${x}`);
+}
+
+/**
  * Compare two values.
  *
  * @param {string|number} a - The first value to compare.

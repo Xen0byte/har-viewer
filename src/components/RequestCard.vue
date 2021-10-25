@@ -1,4 +1,6 @@
 <script setup>
+  import { roundTo } from "../utils/helpers";
+
   defineProps({
     data: {
       type: Object,
@@ -10,6 +12,7 @@
     },
   });
 
+  const round = roundTo;
   const emit = defineEmits(["click"]);
 </script>
 
@@ -28,7 +31,7 @@
       v-text="data.request.method"
     />
     <span class="timing">
-      {{ Math.round(data.time) }} ms
+      {{ round(data.time) }} ms
     </span>
     <span
       v-if="data._harviewer.statusType !== 'blocked'"
