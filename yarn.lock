@@ -1233,13 +1233,14 @@ __metadata:
     "@vue/compiler-sfc": 3.2.20
     clean-webpack-plugin: 4.0.0
     cross-env: 7.0.3
-    css-loader: 6.4.0
+    css-loader: 6.5.0
     cssnano: 5.0.8
     dialog-polyfill: 0.5.6
     eslint: 8.1.0
     eslint-config-airbnb-base: 14.2.1
+    eslint-import-resolver-node: ^0.3.6
     eslint-plugin-import: 2.25.2
-    eslint-plugin-jsdoc: 37.0.0
+    eslint-plugin-jsdoc: 37.0.3
     eslint-plugin-vue: 7.20.0
     execa: 5.1.1
     favicons: "https://github.com/itgalaxy/favicons.git"
@@ -1251,12 +1252,12 @@ __metadata:
     postcss-import: 14.0.2
     postcss-loader: 6.2.0
     postcss-preset-env: 6.7.0
-    sass: 1.43.3
-    sass-loader: 12.2.0
+    sass: 1.43.4
+    sass-loader: 12.3.0
     style-loader: 3.3.1
     terser-webpack-plugin: 5.2.4
     vue: 3.2.20
-    vue-loader: 16.8.1
+    vue-loader: 16.8.2
     webpack: 5.60.0
     webpack-bundle-analyzer: 4.5.0
     webpack-cli: 4.9.1
@@ -2969,9 +2970,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:6.4.0":
-  version: 6.4.0
-  resolution: "css-loader@npm:6.4.0"
+"css-loader@npm:6.5.0":
+  version: 6.5.0
+  resolution: "css-loader@npm:6.5.0"
   dependencies:
     icss-utils: ^5.1.0
     postcss: ^8.2.15
@@ -2983,7 +2984,7 @@ __metadata:
     semver: ^7.3.5
   peerDependencies:
     webpack: ^5.0.0
-  checksum: e842905fce973517dab8ae1e1f6412691c9b4164fbaf94f10ef2ec073c9aa97b5cf9a753a45965fd44aab6528e068be85fd2f8437c6126a823399458dff04282
+  checksum: 4f3e7b93df79293dca910de41c741486155ea8248e048ea51a74fc5570d3acb962b5be0b6740f3ad8006b40eb4ef375124de4f9507aebf7a42f5ca7b8a7807d1
   languageName: node
   linkType: hard
 
@@ -3672,9 +3673,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:37.0.0":
-  version: 37.0.0
-  resolution: "eslint-plugin-jsdoc@npm:37.0.0"
+"eslint-plugin-jsdoc@npm:37.0.3":
+  version: 37.0.3
+  resolution: "eslint-plugin-jsdoc@npm:37.0.3"
   dependencies:
     "@es-joy/jsdoccomment": 0.12.0
     comment-parser: 1.2.4
@@ -3687,7 +3688,7 @@ __metadata:
     spdx-expression-parse: ^3.0.1
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
-  checksum: 86f5ad4777b3a4343229919c6c2fb697b5bd5533d0810c15e72236db93443c5110741d7710884eba92027943a3ab7648ae3f26e7e9aae459dec5ea567f8fff43
+  checksum: 1659009bb285a728796f7a4ac69c0dc7c48f8189c4cbb26548eb7778be9a020796d8265f258c7fe0f625b83a4d95f21c28278e50deeff6c741c3fc4d62a9bfb5
   languageName: node
   linkType: hard
 
@@ -7864,9 +7865,9 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"sass-loader@npm:12.2.0":
-  version: 12.2.0
-  resolution: "sass-loader@npm:12.2.0"
+"sass-loader@npm:12.3.0":
+  version: 12.3.0
+  resolution: "sass-loader@npm:12.3.0"
   dependencies:
     klona: ^2.0.4
     neo-async: ^2.6.2
@@ -7882,18 +7883,18 @@ fsevents@~2.3.2:
       optional: true
     sass:
       optional: true
-  checksum: 2b2dd04ab5db65e8b9f5e6b6066735ef0bae134180ac7dc1912048065a6ce7797280f547937078c6f59bc8bd2889cbe8828240f5dd011cfb4a333b49fa628bdd
+  checksum: b755e6d5ceddb70d54334b53f70546b4afc9af5f9704cc0e2666894d0568bdaeccb2b07056bd35465c22c51c55e1d790023b32b9aa0977080403036ef6c47b29
   languageName: node
   linkType: hard
 
-"sass@npm:1.43.3":
-  version: 1.43.3
-  resolution: "sass@npm:1.43.3"
+"sass@npm:1.43.4":
+  version: 1.43.4
+  resolution: "sass@npm:1.43.4"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
   bin:
     sass: sass.js
-  checksum: d253980cdafe6eab223cd57a44a49a43fc3123c0459c3d09d7f95ab4d4f2a8e3559996c6bfeed5be8dc428c85fd5b8f3cd165a0ede695df9fbd002f2094f8ea1
+  checksum: 9af80105dabd32752c60b4557115832982cf1019c02c952db6a26c61a3e18dc95044c896685e6e9a6d6dd6643fc411ecf2ea4a8a431a8a08a7510a45d5a492ae
   languageName: node
   linkType: hard
 
@@ -9007,16 +9008,16 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"vue-loader@npm:16.8.1":
-  version: 16.8.1
-  resolution: "vue-loader@npm:16.8.1"
+"vue-loader@npm:16.8.2":
+  version: 16.8.2
+  resolution: "vue-loader@npm:16.8.2"
   dependencies:
     chalk: ^4.1.0
     hash-sum: ^2.0.0
     loader-utils: ^2.0.0
   peerDependencies:
     webpack: ^4.1.0 || ^5.0.0-0
-  checksum: c518db8b0b1eb99641f6d79ae552ba3638bd1d922ae83e399a69c0fb55f869caa1dac30995f777813c3a7487bbc425aa502b00728db8344b1c1cf7f95c4618c8
+  checksum: c39370b07e93fba82b63059947fcbbddbd40c7460c6aefc24fc9d845c6743e062bb02efa49d3aa576a12146f1a4ffad18725c2942c089d05422785749de796a5
   languageName: node
   linkType: hard
 

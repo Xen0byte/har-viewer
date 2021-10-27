@@ -3,7 +3,7 @@
 dist
 report.html
 
-# yarn v3
+# yarn v3 pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
