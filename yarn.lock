@@ -1241,7 +1241,7 @@ __metadata:
     eslint-import-resolver-node: ^0.3.6
     eslint-plugin-import: 2.25.2
     eslint-plugin-jsdoc: 37.0.3
-    eslint-plugin-vue: 7.20.0
+    eslint-plugin-vue: 8.0.3
     execa: 5.1.1
     favicons: "https://github.com/itgalaxy/favicons.git"
     favicons-webpack-plugin: 5.0.2
@@ -1258,10 +1258,10 @@ __metadata:
     terser-webpack-plugin: 5.2.4
     vue: 3.2.20
     vue-loader: 16.8.2
-    webpack: 5.60.0
+    webpack: 5.61.0
     webpack-bundle-analyzer: 4.5.0
     webpack-cli: 4.9.1
-    webpack-dev-server: 4.3.1
+    webpack-dev-server: 4.4.0
     workbox-webpack-plugin: 6.3.0
   languageName: unknown
   linkType: soft
@@ -1932,7 +1932,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn-jsx@npm:^5.2.0, acorn-jsx@npm:^5.3.1":
+"acorn-jsx@npm:^5.3.1":
   version: 5.3.2
   resolution: "acorn-jsx@npm:5.3.2"
   peerDependencies:
@@ -1945,15 +1945,6 @@ __metadata:
   version: 8.2.0
   resolution: "acorn-walk@npm:8.2.0"
   checksum: 1715e76c01dd7b2d4ca472f9c58968516a4899378a63ad5b6c2d668bba8da21a71976c14ec5f5b75f887b6317c4ae0b897ab141c831d741dc76024d8745f1ad1
-  languageName: node
-  linkType: hard
-
-"acorn@npm:^7.1.1":
-  version: 7.4.1
-  resolution: "acorn@npm:7.4.1"
-  bin:
-    acorn: bin/acorn
-  checksum: 1860f23c2107c910c6177b7b7be71be350db9e1080d814493fae143ae37605189504152d1ba8743ba3178d0b37269ce1ffc42b101547fdc1827078f82671e407
   languageName: node
   linkType: hard
 
@@ -2546,7 +2537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.5.1":
+"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.5.2":
   version: 3.5.2
   resolution: "chokidar@npm:3.5.2"
   dependencies:
@@ -3692,21 +3683,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-vue@npm:7.20.0":
-  version: 7.20.0
-  resolution: "eslint-plugin-vue@npm:7.20.0"
+"eslint-plugin-vue@npm:8.0.3":
+  version: 8.0.3
+  resolution: "eslint-plugin-vue@npm:8.0.3"
   dependencies:
-    eslint-utils: ^2.1.0
+    eslint-utils: ^3.0.0
     natural-compare: ^1.4.0
-    semver: ^6.3.0
-    vue-eslint-parser: ^7.10.0
+    semver: ^7.3.5
+    vue-eslint-parser: ^8.0.1
   peerDependencies:
     eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
-  checksum: 7b724ed8317ce3621cfd94235a68af20ec355fca93092cc09ee73fbffcefa69e3c5202b8035aae8e7457df6924dfe713834ae46dee08acdd9316188c47933956
+  checksum: 88bd597b72b8957d2f332718f89abe38e3a8b11564a37935adae64576444ea7770ee04e36e8bbad584aa963f8cb71304fa625719f63a21de3e9da0d5571e0627
   languageName: node
   linkType: hard
 
-"eslint-scope@npm:5.1.1, eslint-scope@npm:^5.1.1":
+"eslint-scope@npm:5.1.1":
   version: 5.1.1
   resolution: "eslint-scope@npm:5.1.1"
   dependencies:
@@ -3726,15 +3717,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-utils@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "eslint-utils@npm:2.1.0"
-  dependencies:
-    eslint-visitor-keys: ^1.1.0
-  checksum: 27500938f348da42100d9e6ad03ae29b3de19ba757ae1a7f4a087bdcf83ac60949bbb54286492ca61fac1f5f3ac8692dd21537ce6214240bf95ad0122f24d71d
-  languageName: node
-  linkType: hard
-
 "eslint-utils@npm:^3.0.0":
   version: 3.0.0
   resolution: "eslint-utils@npm:3.0.0"
@@ -3743,13 +3725,6 @@ __metadata:
   peerDependencies:
     eslint: ">=5"
   checksum: 0668fe02f5adab2e5a367eee5089f4c39033af20499df88fe4e6aba2015c20720404d8c3d6349b6f716b08fdf91b9da4e5d5481f265049278099c4c836ccb619
-  languageName: node
-  linkType: hard
-
-"eslint-visitor-keys@npm:^1.1.0":
-  version: 1.3.0
-  resolution: "eslint-visitor-keys@npm:1.3.0"
-  checksum: 37a19b712f42f4c9027e8ba98c2b06031c17e0c0a4c696cd429bd9ee04eb43889c446f2cd545e1ff51bef9593fcec94ecd2c2ef89129fcbbf3adadbef520376a
   languageName: node
   linkType: hard
 
@@ -3812,17 +3787,6 @@ __metadata:
   bin:
     eslint: bin/eslint.js
   checksum: e0b0c4bddd8673f376730b5bc72876fd0298e0ed9e52fa0707e48854ab0cea6a6a1945dbe2a059db1c867aafba7979b9d770060696e3f0ffc9d4b635ca4bce49
-  languageName: node
-  linkType: hard
-
-"espree@npm:^6.2.1":
-  version: 6.2.1
-  resolution: "espree@npm:6.2.1"
-  dependencies:
-    acorn: ^7.1.1
-    acorn-jsx: ^5.2.0
-    eslint-visitor-keys: ^1.1.0
-  checksum: 99c508950b5b9f53d008d781d2abb7a4ef3496ea699306fb6eb737c7e513aa594644314364c50ec27abb220124c6851fff64a6b62c358479534369904849360b
   languageName: node
   linkType: hard
 
@@ -8991,20 +8955,20 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"vue-eslint-parser@npm:^7.10.0":
-  version: 7.11.0
-  resolution: "vue-eslint-parser@npm:7.11.0"
+"vue-eslint-parser@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "vue-eslint-parser@npm:8.0.1"
   dependencies:
-    debug: ^4.1.1
-    eslint-scope: ^5.1.1
-    eslint-visitor-keys: ^1.1.0
-    espree: ^6.2.1
+    debug: ^4.3.2
+    eslint-scope: ^6.0.0
+    eslint-visitor-keys: ^3.0.0
+    espree: ^9.0.0
     esquery: ^1.4.0
     lodash: ^4.17.21
-    semver: ^6.3.0
+    semver: ^7.3.5
   peerDependencies:
-    eslint: ">=5.0.0"
-  checksum: 16d8bd31dacd9e5d3cd0fc82354c0cfdb42ee3d2e0c3aeda385b82aa48a59a440de3dc18521ea6535f4b00a54eb248d49a6ea2323fbae0d3c1afa0a00c63fe6c
+    eslint: ">=6.0.0"
+  checksum: 9c40558975ef0aecb5cf8977d59d39ffde58108c652b8fd66524aec0cc828fe63e2146c0a95b2ccb52fbd97c1b1d3e5936919920c12d4de4be4c5a752dbc4e53
   languageName: node
   linkType: hard
 
@@ -9127,13 +9091,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"webpack-dev-server@npm:4.3.1":
-  version: 4.3.1
-  resolution: "webpack-dev-server@npm:4.3.1"
+"webpack-dev-server@npm:4.4.0":
+  version: 4.4.0
+  resolution: "webpack-dev-server@npm:4.4.0"
   dependencies:
     ansi-html-community: ^0.0.8
     bonjour: ^3.5.0
-    chokidar: ^3.5.1
+    chokidar: ^3.5.2
     colorette: ^2.0.10
     compression: ^1.7.4
     connect-history-api-fallback: ^1.6.0
@@ -9163,7 +9127,7 @@ fsevents@~2.3.2:
       optional: true
   bin:
     webpack-dev-server: bin/webpack-dev-server.js
-  checksum: ce9d054c3de335df4cca4759aaff3a5291487c906b15bd3bb6e41de86e3784b307ae1e2cdd6403424567b0645a0dc6a9dd21b4839ba86176d5097664474d2b68
+  checksum: c317b5029b6f8caad47a257edb68b2dad5cd7087f4481ebda3359701c981037ce387486bdf992fb6e23213685d8e25e306b25a62541a42d0154562b1999563a5
   languageName: node
   linkType: hard
 
@@ -9194,9 +9158,9 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"webpack@npm:5.60.0":
-  version: 5.60.0
-  resolution: "webpack@npm:5.60.0"
+"webpack@npm:5.61.0":
+  version: 5.61.0
+  resolution: "webpack@npm:5.61.0"
   dependencies:
     "@types/eslint-scope": ^3.7.0
     "@types/estree": ^0.0.50
@@ -9227,7 +9191,7 @@ fsevents@~2.3.2:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 3c37424516cfb3c7c9cefc888b359b945913f801059fb7c496380b06830666116f71f394eac135e1721b6802ff846ffa73378d3c05a9e03e3c2890a6bfa5bba1
+  checksum: 442958ec48645c9e612a2628a815c411cbc18289b5cc7b3d1b5d0f8e5b41606ed225decf4f3684edc365e6390867bded244d20387c70fbb630c0ac08443c34c8
   languageName: node
   linkType: hard
 

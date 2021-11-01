@@ -14,6 +14,7 @@ README.md
 report.html
 
 # yarn v3 pnp
+node_modules
 .pnp.*
 .yarn/*
 !.yarn/patches
