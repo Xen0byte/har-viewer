@@ -1,4 +1,4 @@
-ARG BUSYBOX_VERSION=1.34.0
+ARG BUSYBOX_VERSION=1.34.1
 ARG NODE_VERSION=16.13.0
 
 ## STAGE I - Build builder image
@@ -7,9 +7,6 @@ WORKDIR /src
 
 # copy source
 COPY . .
-
-# don't use favicon 'master' (unable to build using docker)
-RUN sed -i -e 's/https:\/\/github.com\/itgalaxy\/favicons.git/6.2.2/g' package.json
 
 # install dependencies
 RUN yarn

@@ -104,7 +104,6 @@ const config = {
         version: pkg.version,
         start_url: publicUrl,
         icons: {
-          coast: false,
           yandex: false,
         },
       },
