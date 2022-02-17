@@ -20,7 +20,12 @@ git clone github.com/develerik/har-viewer.git
 cd har-viewer
 
 # build docker image
-docker build -t har-viewer --build-arg BUILD_DATE="$(date)" .
+docker build \
+  -t har-viewer \
+  --build-arg BUILD_DATE="$(date -u --rfc-3339=seconds)" \
+  --build-arg GIT_SHA="$(git rev-parse --short HEAD)" \
+  --build-arg VERSION="$(awk -F \" '/"version": ".+"/ { print $4; exit; }' package.json)" \
+  .
 
 # run docker image
 docker run -p 8080:8080 har-viewer
