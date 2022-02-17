@@ -11,6 +11,7 @@
   import HarViewer from "./components/HarViewer";
   import Footer from "./components/Footer";
 
+  import parseHar from "./utils/parser";
   import applyCollation from "./utils/collation";
   import {
     exportToCSV,
@@ -41,13 +42,6 @@
     groupBy: "",
   });
   const isStandalone = isPWA();
-
-  onBeforeMount(() => switchTheme(getSystemTheme()));
-  onMounted(() => {
-    // workaround for 100vh on mobile browsers
-    window.height = window.innerHeight;
-  });
-
   const filteredData = ref([]);
 
   let filter = null;
@@ -183,6 +177,35 @@
         break;
     }
   };
+
+  onBeforeMount(() => switchTheme(getSystemTheme()));
+  onMounted(async () => {
+    // workaround for 100vh on mobile browsers
+    window.height = window.innerHeight;
+
+    // open file from query parameters if given
+    const params = new URLSearchParams(window.location.search);
+    const fileUri = params.get("file");
+
+    if (fileUri) {
+      isLoading.value = true;
+      const res = await window.fetch(fileUri);
+      const resData = await res.json();
+
+      try {
+        onOpenFile({
+          src: fileUri,
+          data: parseHar(resData),
+          filter: {},
+        });
+      } catch (e) {
+        data.value = null;
+        filteredData.value = null;
+        hasError.value = e.message;
+        isLoading.value = false;
+      }
+    }
+  });
 </script>
 
 <template>

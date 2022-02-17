@@ -177,7 +177,7 @@ export default function addCustomProperties(id, entry) {
     statusCode,
     url: entry.request.url.split("?")[0],
     hasImageResponse: entry.response.content.encoding === "base64"
-      && entry.response.content.mimeType.startsWith("image/")
+      && entry.response.content.mimeType && entry.response.content.mimeType.startsWith("image/")
       && entry.response.content.text,
     webSocketMessages: entry._webSocketMessages,
   };
