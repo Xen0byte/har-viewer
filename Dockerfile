@@ -1,5 +1,5 @@
-ARG BUSYBOX_VERSION=1.34.1
-ARG NODE_VERSION=16.13.1
+ARG BUSYBOX_VERSION=1.35.0
+ARG NODE_VERSION=16.14.0
 
 ## STAGE I - Build builder image
 FROM node:${NODE_VERSION}-bullseye-slim AS build
@@ -8,13 +8,6 @@ WORKDIR /src
 # copy source
 COPY . .
 
-<<<<<<< HEAD
-=======
-# don't use favicon 'master' (unable to build using docker)
-RUN sed -i -e 's/7.0.0-beta.1/6.2.2/g' package.json
-RUN sed -i -e 's/https:\/\/github.com\/andy128k\/favicons-webpack-plugin.git#favicons-7.0.0/5.0.2/g' package.json
-
->>>>>>> ec0b024 (update dependencies)
 # install dependencies
 RUN yarn
 

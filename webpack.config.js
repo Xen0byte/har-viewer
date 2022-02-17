@@ -97,6 +97,7 @@ const config = {
         manifestMaskable: path.resolve("./src/assets/icon_mask.svg"),
         appShortName: "HAR Viewer",
         appName: pkg.description,
+        appDescription: `${pkg.description} (v${pkg.version})`,
         developerName: pkg.author.name,
         developerURL: pkg.author.url,
         background: "#e4e9f2",

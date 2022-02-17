@@ -333,6 +333,7 @@
   .load-from {
     display: flex;
     margin-bottom: .5rem;
+    align-items: center;
 
     & > input {
       margin-left: .75rem;
