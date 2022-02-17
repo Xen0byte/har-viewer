@@ -193,7 +193,7 @@
       const resData = await res.json();
 
       try {
-        onOpenFile({
+        await onOpenFile({
           src: fileUri,
           data: parseHar(resData),
           filter: {},
@@ -280,6 +280,7 @@
   lang="scss"
   scoped
 >
+  // TODO: move all css to scss files
   .propdialog-container {
     height: 100%;
     border-left: var(--color-background-dark) solid 2px;

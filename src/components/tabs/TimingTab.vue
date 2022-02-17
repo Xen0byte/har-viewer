@@ -25,7 +25,10 @@
 
 <template>
   <div class="tab-content overflow-text">
-    <div class="timing">
+    <div
+      v-if="data.time"
+      class="timing"
+    >
       <div
         v-if="data.timings.blocked > 0"
         class="timing-blocked"
@@ -153,6 +156,7 @@
     width: 100%;
     height: 35px;
     display: flex;
+    padding-bottom: 1rem;
   }
 
   .timing-blocked {
@@ -195,7 +199,7 @@
       padding-left: .5rem;
     }
 
-    & thead th,
+    & thead:nth-of-type(2) th,
     & tfoot th,
     & tfoot td {
       padding-top: 1rem;

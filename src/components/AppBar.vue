@@ -125,7 +125,7 @@
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 415px) {
     .brand > h1 {
       &:first-child {
         display: none;
