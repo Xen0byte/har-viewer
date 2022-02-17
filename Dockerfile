@@ -1,8 +1,9 @@
 ARG BUSYBOX_VERSION=1.35.0
 ARG NODE_VERSION=16.14.0
+ARG ALPINE_VERSION=3.15
 
 ## STAGE I - Build builder image
-FROM node:${NODE_VERSION}-bullseye-slim AS build
+FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS build
 WORKDIR /src
 
 # copy source
