@@ -1,9 +1,9 @@
 ARG BUSYBOX_VERSION=1.35.0
-ARG NODE_VERSION=16.14.2
-ARG ALPINE_VERSION=3.15
+ARG NODE_VERSION=18.11.0
+ARG ALPINE_VERSION=3.16
 
 ## STAGE I - Build builder image
-FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS build
+FROM docker.io/library/node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS build
 WORKDIR /src
 
 # copy source
@@ -17,7 +17,7 @@ ENV NODE_ENV production
 RUN yarn build
 
 ## STAGE II - Build production image
-FROM busybox:${BUSYBOX_VERSION}-uclibc
+FROM docker.io/library/busybox:${BUSYBOX_VERSION}-uclibc
 
 ARG BUSYBOX_VERSION
 ARG BUILD_DATE
