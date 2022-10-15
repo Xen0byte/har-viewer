@@ -15,6 +15,11 @@
 
   transition: background-color .15s ease-in-out;
 
+  & .icon {
+    width: 24px;
+    height: 24px;
+  }
+
   & .icon + span {
     margin-left: .5rem;
     font-weight: 600;
