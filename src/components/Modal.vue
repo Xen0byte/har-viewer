@@ -1,9 +1,6 @@
 <script setup>
   import { onMounted } from "vue";
 
-  // TODO: remove on firefox and safari support.
-  import dialogPolyfill from "dialog-polyfill";
-
   defineProps({
     isAttached: {
       type: Boolean,
@@ -17,9 +14,6 @@
     if (!dialog) {
       return;
     }
-
-    // TODO: remove on firefox and safari support.
-    dialogPolyfill.registerDialog(dialog);
 
     dialog.addEventListener("cancel", e => e.preventDefault());
     dialog.showModal();
@@ -64,12 +58,6 @@
   }
 
   dialog::backdrop {
-    background-color: rgba(0, 0, 0, .25);
-    backdrop-filter: blur(1px);
-  }
-
-  // TODO: remove on firefox and safari support.
-  dialog + .backdrop {
     background-color: rgba(0, 0, 0, .25);
     backdrop-filter: blur(1px);
   }

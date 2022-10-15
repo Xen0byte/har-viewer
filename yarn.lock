@@ -1441,7 +1441,6 @@ __metadata:
     cross-env: 7.0.3
     css-loader: 6.7.1
     cssnano: 5.1.13
-    dialog-polyfill: 0.5.6
     eslint: 8.25.0
     eslint-config-airbnb-base: 15.0.0
     eslint-import-resolver-node: ^0.3.6
@@ -3698,13 +3697,6 @@ __metadata:
   version: 2.1.0
   resolution: "detect-node@npm:2.1.0"
   checksum: 832184ec458353e41533ac9c622f16c19f7c02d8b10c303dfd3a756f56be93e903616c0bb2d4226183c9351c15fc0b3dba41a17a2308262afabcfa3776e6ae6e
-  languageName: node
-  linkType: hard
-
-"dialog-polyfill@npm:0.5.6":
-  version: 0.5.6
-  resolution: "dialog-polyfill@npm:0.5.6"
-  checksum: dde8d4b6a62b63b710e0d0d70b615d92ff08f3cb2b521e1f99b17e8220d9d55d0fdf9fc17fbe77b0ff1be817094e14b60c4c4bacd5456fba427ede48d2d90230
   languageName: node
   linkType: hard
 

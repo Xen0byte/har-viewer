@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "@mdi/svg": "7.0.96",
-    "dialog-polyfill": "0.5.6",
     "vue": "3.2.41"
   },
   "devDependencies": {
