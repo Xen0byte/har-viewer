@@ -1,7 +1,7 @@
 <script setup>
   import { computed } from "vue";
 
-  import { roundTo } from "../../utils/helpers";
+  import { roundTo } from "../../utils/helpers.js";
 
   const props = defineProps({
     data: {

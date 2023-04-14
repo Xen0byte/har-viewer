@@ -1,5 +1,5 @@
-import { compare } from "../helpers";
-import addCustomData from "./custom";
+import { compare } from "../helpers.js";
+import addCustomData from "./custom.js";
 
 /**
  * Keys that are required for a HAR file.

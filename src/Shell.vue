@@ -3,24 +3,24 @@
   import svgLoading from "@mdi/svg/svg/loading.svg";
   import svgAlertCircleOutline from "@mdi/svg/svg/alert-circle-outline.svg";
 
-  import AppBar from "./components/AppBar";
-  import InfoDialog from "./components/dialogs/InfoDialog";
-  import OpenDialog from "./components/dialogs/OpenDialog";
-  import PropDialog from "./components/dialogs/PropDialog";
-  import ExportDialog from "./components/dialogs/ExportDialog";
-  import HarViewer from "./components/HarViewer";
-  import Footer from "./components/Footer";
+  import AppBar from "./components/AppBar.vue";
+  import InfoDialog from "./components/dialogs/InfoDialog.vue";
+  import OpenDialog from "./components/dialogs/OpenDialog.vue";
+  import PropDialog from "./components/dialogs/PropDialog.vue";
+  import ExportDialog from "./components/dialogs/ExportDialog.vue";
+  import HarViewer from "./components/HarViewer.vue";
+  import Footer from "./components/Footer.vue";
 
-  import parseHar from "./utils/parser";
-  import applyCollation from "./utils/collation";
+  import parseHar from "./utils/parser/index.js";
+  import applyCollation from "./utils/collation/index.js";
   import {
     exportToCSV,
     exportToHar,
     exportToPostman,
     redactData,
-  } from "./utils/export";
+  } from "./utils/export/index.js";
 
-  import { getSystemTheme, switchTheme, isPWA } from "./utils/theme";
+  import { getSystemTheme, switchTheme, isPWA } from "./utils/theme.js";
 
   const data = ref(null);
   const file = ref("");

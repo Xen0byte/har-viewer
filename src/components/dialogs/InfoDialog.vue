@@ -1,5 +1,5 @@
 <script setup>
-  import Modal from "../Modal";
+  import Modal from "../Modal.vue";
 
   defineProps({
     creator: {

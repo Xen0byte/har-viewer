@@ -1,5 +1,5 @@
-import { iterateObject } from "../helpers";
-import { statusCodes } from "../http";
+import { iterateObject } from "../helpers.js";
+import { statusCodes } from "../http.js";
 
 /**
  * Compute the resource type of a response.
@@ -54,7 +54,7 @@ function computeSizes(data) {
     } else {
       let { statusText } = data;
       if (data.status !== 0 && !statusText) {
-        statusText = statusCodes[data.status];
+        statusText = statusCodes[data.status].replace("_", " ");
       }
 
       sizes.headersSize = `${data.status} ${statusText} ${data.httpVersion}\r\n`.length;

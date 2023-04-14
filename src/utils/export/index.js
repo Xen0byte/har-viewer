@@ -1,9 +1,9 @@
 /* eslint-disable import/prefer-default-export */
 
-import csv from "./csv";
-import har from "./har";
-import postman from "./postman";
-import redact from "./redact";
+import csv from "./csv.js";
+import har from "./har.js";
+import postman from "./postman.js";
+import redact from "./redact.js";
 
 export const exportToCSV = csv;
 export const exportToHar = har;

@@ -5,9 +5,9 @@
   import svgDownload from "@mdi/svg/svg/download-outline.svg";
   import svgLoading from "@mdi/svg/svg/loading.svg";
 
-  import parseHar from "../../utils/parser";
-  import { readFile } from "../../utils/helpers";
-  import Modal from "../Modal";
+  import parseHar from "../../utils/parser/index.js";
+  import { readFile } from "../../utils/helpers.js";
+  import Modal from "../Modal.vue";
 
   const emit = defineEmits(["close", "open"]);
 

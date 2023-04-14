@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { iterateObject } from "../helpers";
+import { iterateObject } from "../helpers.js";
 
 const sensitiveKeys = [
   "authorization",

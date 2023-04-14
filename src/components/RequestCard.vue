@@ -1,5 +1,5 @@
 <script setup>
-  import { roundTo } from "../utils/helpers";
+  import { roundTo } from "../utils/helpers.js";
 
   defineProps({
     data: {

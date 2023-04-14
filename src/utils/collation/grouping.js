@@ -1,5 +1,5 @@
-import { methodOrder, statusTypeOrder } from "../constants";
-import { compare } from "../helpers";
+import { methodOrder, statusTypeOrder } from "../constants.js";
+import { compare } from "../helpers.js";
 
 /**
  * Group an array of har entries.

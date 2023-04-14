@@ -1,6 +1,6 @@
-import filterBy from "./filtering";
-import groupBy from "./grouping";
-import sortBy from "./sorting";
+import filterBy from "./filtering.js";
+import groupBy from "./grouping.js";
+import sortBy from "./sorting.js";
 
 /**
  * Apply all filters and return a new object.

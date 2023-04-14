@@ -6,7 +6,6 @@ env:
   es2022: true
 
 globals:
-  DEBUG: readonly
   # app details
   APP: readonly
   AUTHOR_NAME: readonly
@@ -23,8 +22,7 @@ globals:
   withDefaults: readonly
 
 extends:
-  - plugin:import/errors
-  - plugin:import/warnings
+  - plugin:import/recommended
   - plugin:jsdoc/recommended
   - plugin:vue/vue3-recommended
   - airbnb-base
@@ -33,15 +31,6 @@ plugins:
   - import
   - jsdoc
   - vue
-
-settings:
-  import/resolver:
-    node:
-      extensions:
-        - .js
-        - .vue
-      moduleDirectory:
-        - node_modules
 
 rules:
   arrow-parens:
@@ -56,8 +45,8 @@ rules:
   import/extensions:
     - error
     - ignorePackages
-    - js: never
-      vue: never
+    - js: always
+      vue: always
   indent:
     - error
     - 2

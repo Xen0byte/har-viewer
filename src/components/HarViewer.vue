@@ -2,19 +2,19 @@
   import { ref, computed, watch } from "vue";
   import svgChevronLeft from "@mdi/svg/svg/chevron-left.svg";
 
-  import RequestCard from "./RequestCard";
-  import TabBar from "./TabBar";
+  import RequestCard from "./RequestCard.vue";
+  import TabBar from "./TabBar.vue";
 
-  import CookieTab from "./tabs/CookieTab";
-  import PostDataTab from "./tabs/PostDataTab";
-  import RequestTab from "./tabs/RequestTab";
-  import ResponseContentTab from "./tabs/ResponseContentTab";
-  import WebsocketTab from "./tabs/WebsocketTab";
-  import ResponseTab from "./tabs/ResponseTab";
-  import TimingTab from "./tabs/TimingTab";
+  import CookieTab from "./tabs/CookieTab.vue";
+  import PostDataTab from "./tabs/PostDataTab.vue";
+  import RequestTab from "./tabs/RequestTab.vue";
+  import ResponseContentTab from "./tabs/ResponseContentTab.vue";
+  import WebsocketTab from "./tabs/WebsocketTab.vue";
+  import ResponseTab from "./tabs/ResponseTab.vue";
+  import TimingTab from "./tabs/TimingTab.vue";
 
-  import { uniqueArrayByProperty } from "../utils/helpers";
-  import { viewerTabs } from "../utils/constants";
+  import { uniqueArrayByProperty } from "../utils/helpers.js";
+  import { viewerTabs } from "../utils/constants.js";
 
   const props = defineProps({
     data: {

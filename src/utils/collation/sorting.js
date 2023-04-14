@@ -1,4 +1,4 @@
-import { compare } from "../helpers";
+import { compare } from "../helpers.js";
 
 /**
  * Sort an array of har entries.

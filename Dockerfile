@@ -10,7 +10,8 @@ WORKDIR /src
 COPY . .
 
 # install dependencies
-RUN corepack enable && pnpm install
+RUN corepack enable && corepack prepare pnpm@8.2.0 --activate \
+ && pnpm fetch && pnpm install -r --offline
 
 # build static web
 ENV NODE_ENV production

@@ -1,6 +1,6 @@
 /* global HttpArchive */
 
-import { uuidv4 } from "../helpers";
+import { uuidv4 } from "../helpers.js";
 
 /**
  * @typedef {(object)} PostmanRequestBody

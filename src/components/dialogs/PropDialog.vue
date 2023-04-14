@@ -4,7 +4,7 @@
   import svgPin from "@mdi/svg/svg/pin-outline.svg";
   import svgPinOff from "@mdi/svg/svg/pin-off-outline.svg";
 
-  import Modal from "../Modal";
+  import Modal from "../Modal.vue";
 
   const props = defineProps({
     filter: {
