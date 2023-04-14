@@ -39,8 +39,8 @@ git clone github.com/develerik/har-viewer.git
 cd har-viewer
 
 # install dependencies and build web
-yarn
-yarn build
+pnpm install
+pnpm build
 ```
 
 Now copy the contents of the newly created `dist` folder to your web server.

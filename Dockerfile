@@ -10,11 +10,11 @@ WORKDIR /src
 COPY . .
 
 # install dependencies
-RUN corepack enable && yarn
+RUN corepack enable && pnpm install
 
 # build static web
 ENV NODE_ENV production
-RUN yarn build
+RUN pnpm build
 
 ## STAGE II - Build production image
 FROM public.ecr.aws/docker/library/busybox:${BUSYBOX_VERSION}-uclibc

@@ -62,7 +62,12 @@
     "workbox-webpack-plugin": "6.5.4"
   },
   "engines": {
-    "node": ">=16.13"
+    "node": ">=18.12.0"
   },
-  "packageManager": "yarn@3.5.0"
+  "pnpm": {
+    "overrides": {
+      "rollup-plugin-terser": "npm:@rollup/plugin-terser@0.4.1",
+      "sourcemap-codec": "npm:@jridgewell/sourcemap-codec@1.4.15"
+    }
+  }
 }

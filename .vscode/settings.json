@@ -1,7 +1,7 @@
 {
   "search.exclude": {
-    "**/.yarn": true,
-    "**/.pnp.*": true
-  },
-  "eslint.nodePath": ".yarn/sdks"
+    "**/dist": true,
+    "**/pnpm-lock.yaml": true,
+    "**/node_modules": true
+  }
 }

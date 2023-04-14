@@ -11,14 +11,3 @@ CONTRIBUTING.md
 Dockerfile
 LICENSE
 README.md
-report.html
-
-# yarn v3 pnp
-node_modules
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
