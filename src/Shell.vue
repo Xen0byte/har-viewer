@@ -49,8 +49,9 @@
   const onPropApply = filters => {
     const onlySortAndGroup = filter === filters.filter;
 
-    const clone = applyCollation(onlySortAndGroup ? filteredData.value : data.value.entries, filters, onlySortAndGroup);
-    filteredData.value = clone;
+    filteredData.value = applyCollation(onlySortAndGroup
+      ? filteredData.value
+      : data.value.entries, filters, onlySortAndGroup);
     filter = filters.filter;
 
     propFilter.value = filters;
@@ -164,9 +165,21 @@
         showOpenDialog.value = true;
         break;
       case "sort-and-filter":
+        if (propAttached.value) {
+          showPropDialog.value = false;
+          propAttached.value = false;
+          return;
+        }
+
         showPropDialog.value = true;
         break;
       case "sort-and-filter_attached":
+        if (propAttached.value) {
+          showPropDialog.value = false;
+          propAttached.value = false;
+          return;
+        }
+
         onPropAttach();
         showPropDialog.value = true;
         break;

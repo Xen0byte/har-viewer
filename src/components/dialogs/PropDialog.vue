@@ -62,7 +62,10 @@
 </script>
 
 <template>
-  <modal :is-attached="isAttached">
+  <modal
+    :is-attached="isAttached"
+    @close="emit('close')"
+  >
     <template #header>
       <div class="dialog-header row">
         <span v-text="!isAttached ? 'Filter / Sort / Group' : ''" />
@@ -75,12 +78,14 @@
           <img
             v-if="isAttached"
             alt="Detach Icon"
+            class="icon"
             role="none"
             :src="svgPinOff"
           >
           <img
             v-else
             alt="Attach Icon"
+            class="icon"
             role="none"
             :src="svgPin"
           >

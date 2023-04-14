@@ -1,7 +1,6 @@
 ### Custom Entries ###
 
 dist
-report.html
 
 # yarn v3 pnp
 .pnp.*

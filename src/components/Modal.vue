@@ -8,6 +8,8 @@
     },
   });
 
+  const emit = defineEmits(["close"]);
+
   onMounted(() => {
     const dialog = document.querySelector("dialog");
 
@@ -15,7 +17,10 @@
       return;
     }
 
-    dialog.addEventListener("cancel", e => e.preventDefault());
+    dialog.addEventListener("cancel", e => {
+      e.preventDefault();
+      emit("close");
+    });
     dialog.showModal();
   });
 </script>

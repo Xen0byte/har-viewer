@@ -1,5 +1,5 @@
-ARG BUSYBOX_VERSION=1.35.0
-ARG NODE_VERSION=18.12.1
+ARG BUSYBOX_VERSION=1.36.0
+ARG NODE_VERSION=18.15.0
 ARG ALPINE_VERSION=3.17
 
 ## STAGE I - Build builder image
@@ -10,7 +10,7 @@ WORKDIR /src
 COPY . .
 
 # install dependencies
-RUN yarn
+RUN corepack enable && yarn
 
 # build static web
 ENV NODE_ENV production
@@ -36,7 +36,7 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.licenses="ISC" \
       org.opencontainers.image.title="HTTP Archive Viewer" \
       org.opencontainers.image.description="Simple viewer for HTTP Archives" \
-      org.opencontainers.image.base.name="docker.io/busybox:${BUSYBOX_VERSION}-uclibc"
+      org.opencontainers.image.base.name="public.ecr.aws/docker/library/busybox:${BUSYBOX_VERSION}-uclibc"
 
 # copy static web
 COPY --from=build /src/dist /var/www/
