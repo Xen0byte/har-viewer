@@ -3,9 +3,8 @@ import { compare } from "../helpers.js";
 
 /**
  * Group an array of har entries.
- *
  * @param {HttpArchive.Entry[]} arr - The har entries to group.
- * @param {string} [prop] - THe name of the propery to group by (leave empty to ungroup).
+ * @param {string} [prop] - The name of the property to group by (leave empty to ungroup).
  */
 export default function groupBy(arr, prop) {
   if (!prop) {

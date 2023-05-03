@@ -2,7 +2,6 @@
 
 /**
  * Switch the currently active theme.
- *
  * @param {string} theme -The theme to switch to.
  */
 export function switchTheme(theme) {
@@ -11,7 +10,6 @@ export function switchTheme(theme) {
 
 /**
  * Gets the preferred system theme.
- *
  * @returns {string} The currently selected theme.
  */
 export function getSystemTheme() {
@@ -21,7 +19,6 @@ export function getSystemTheme() {
 
 /**
  * Determines whether the app is running in standalone mode or not.
- *
  * @returns {boolean} A boolean indicating whether the app is running in standalone mode or not.
  */
 export function isPWA() {

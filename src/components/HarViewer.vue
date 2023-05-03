@@ -45,7 +45,6 @@
 
   /**
    * get the enabled tabs for a given entry.
-   *
    * @param {HttpArchive.Entry} entry - The entry to get enabled tabs for.
    * @returns {string[]} - The enabled tabs for the entry.
    */

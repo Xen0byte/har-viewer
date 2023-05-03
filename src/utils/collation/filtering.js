@@ -2,7 +2,6 @@
 
 /**
  * Check whether a number is included in a range or not.
- *
  * @param {number} num - The number to test.
  * @param {number[]} ranges - Array of ranger (<code>[start, end]</code>).
  * @returns {boolean} A boolean indicating whether num is included in the ranges.
@@ -19,7 +18,6 @@ function isInRanges(num, ranges) {
 
 /**
  * Check whether a string matches any pattern in a array of patterns.
- *
  * @param {string} str - The string to test.
  * @param {string[]} patterns - An array of regex patterns.
  * @returns {boolean} A boolean indicating whether a string matches any pattern in a array of patterns.
@@ -38,7 +36,6 @@ function regexMatch(str, patterns) {
 
 /**
  * Simple parse in- and excludes from filter string.
- *
  * @param {string} filter - The filter string to parse.
  * @returns {{
  *   excludes,
@@ -57,7 +54,6 @@ function parseInAndExcludes(filter) {
 
 /**
  * Filter an array of har entries.
- *
  * @param {object[]} arr - The har entries to filter.
  * @param {object} filter - The filter to apply.
  */
@@ -145,7 +141,6 @@ export default function filterBy(arr, filter) {
 
       if (includes.length !== 0 && !include) {
         arr.splice(i, 1);
-        continue;
       }
     }
   }

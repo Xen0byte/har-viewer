@@ -12,7 +12,6 @@ import { uuidv4 } from "../helpers.js";
 
 /**
  * Create a postman item from har entry.
- *
  * @param {HttpArchive.Entry} entry - The har entry.
  * @returns {object} A postman item.
  */
@@ -95,7 +94,6 @@ function itemFromEntry(entry) {
 
 /**
  * Generate a postman v2.x file.
- *
  * @param {string} collectionName - The name of the collection.
  * @param {HttpArchive} data - The data to serialize.
  * @returns {string} A postman v2.x file as json string.

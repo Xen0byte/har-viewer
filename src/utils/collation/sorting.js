@@ -2,7 +2,6 @@ import { compare } from "../helpers.js";
 
 /**
  * Sort an array of har entries.
- *
  * @param {HttpArchive.Entry[]} arr - The har entries to sort.
  * @param {string} [prop] - THe name of the propery to sort by (leave empty to unsort).
  */

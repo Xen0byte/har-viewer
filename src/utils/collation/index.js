@@ -4,7 +4,6 @@ import sortBy from "./sorting.js";
 
 /**
  * Apply all filters and return a new object.
- *
  * @param {HttpArchive.Entry[]} data - Data to filter.
  * @param {object} filters - Filter configuration.
  * @param {boolean} onlySortAndGroup - do only sort and group data.

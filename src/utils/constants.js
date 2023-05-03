@@ -2,7 +2,6 @@
 
 /**
  * Order indicators for status type sorting.
- *
  * @type {{
  *   Unknown: number,
  *   Redirection: number,
@@ -23,7 +22,6 @@ export const statusTypeOrder = {
 
 /**
  * Order indicators for method sorting.
- *
  * @type {{
  *   TRACE: number,
  *   HEAD: number,
@@ -56,7 +54,6 @@ export const methodOrder = {
 
 /**
  * All tabs supported by the viewer.
- *
  * @type {TabProperties[]}
  */
 export const viewerTabs = [

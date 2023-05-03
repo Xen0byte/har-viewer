@@ -15,7 +15,6 @@ const sensitiveKeys = [
 
 /**
  * Redact har data.
- *
  * @param {HttpArchive.Entry[]} sensitiveData - The data to redact.
  * @param {string[]} wordList - A custom redaction word list.
  */

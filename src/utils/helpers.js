@@ -2,7 +2,6 @@
 
 /**
  * Finds all unique property values in an array of objects.
- *
  * @param {object[]} arr - The data array.
  * @param {Function} cb - Lamda returning the property to reduce on.
  * @returns {Array} An array of unique reducted property values.
@@ -21,7 +20,6 @@ export function uniqueArrayByProperty(arr, cb) {
 
 /**
  * Rounds a given number to a given precision.
- *
  * @param {number} [num=0] num - The number to round.
  * @param {number} [x=2] x - The precision to use.
  * @returns {number} - The rounded number.
@@ -32,7 +30,6 @@ export function roundTo(num = 0, x = 2) {
 
 /**
  * Compare two values.
- *
  * @param {string|number} a - The first value to compare.
  * @param {string|number} b - The second value to compare.
  * @returns {number}
@@ -52,7 +49,6 @@ export function compare(a, b) {
 
 /**
  * Generate a rfc4122 compliant v4 uuid.
- *
  * @returns {string} A rfc4122 compliant v4 uuid.
  */
 export function uuidv4() {
@@ -66,7 +62,6 @@ export function uuidv4() {
 
 /**
  * Read a file's contents.
- *
  * @param {File} file - The file to read.
  * @returns {Promise<string>} The file contents or an error.
  */
@@ -82,7 +77,6 @@ export async function readFile(file) {
 
 /**
  * The callback is executed when 'iterateObject' finds a new object key.
- *
  * @callback iterateObjectCallback
  * @param {object} parent - The parent object.
  * @param {string} key - The current object key.
@@ -90,7 +84,6 @@ export async function readFile(file) {
 
 /**
  * Recursively iterate over an object and execute a function for each key.
- *
  * @param {object} obj - The object to iterate over.
  * @param {iterateObjectCallback} func - The function to execute.
  */

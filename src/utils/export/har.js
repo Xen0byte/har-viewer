@@ -2,7 +2,6 @@
 
 /**
  * Generate a har json from given data.
- *
  * @param {HttpArchive} data - Data to generate csv for.
  * @returns {string} The har json data string.
  */

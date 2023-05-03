@@ -2,7 +2,6 @@
 
 /**
  * HTTP Status Code - Status Text mappings.
- *
  * @type {{
  *   "431": string,
  *   "510": string,

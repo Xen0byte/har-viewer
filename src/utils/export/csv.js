@@ -2,7 +2,6 @@
 
 /**
  * CSV generation options.
- *
  * @typedef {(object)} CSVOptions
  * @property {string} delimiter - Column delimiter character.
  * @property {boolean} msExcelCompatible - Prepend MS Excel header.
@@ -10,7 +9,6 @@
 
 /**
  * Default csv export options.
- *
  * @type {CSVOptions}
  */
 const defaultOptions = {
@@ -20,7 +18,6 @@ const defaultOptions = {
 
 /**
  * Generate a csv string from given data.
- *
  * @param {HttpArchive} data - Data to generate csv for.
  * @param {CSVOptions} options - Options to configure csv export.
  * @returns {string} The csv data string.

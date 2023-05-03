@@ -3,7 +3,6 @@ import { statusCodes } from "../http.js";
 
 /**
  * Compute the resource type of a response.
- *
  * @param {HttpArchive.Entry} entry - The .har entry
  * @returns {string} The resource type of the response.
  */
@@ -28,7 +27,6 @@ function computeResourceType(entry) {
 
 /**
  * compute request/response sizes.
- *
  * @param {HttpArchive.Entry.Request|HttpArchive.Entry.Response} data - The request/response data.
  * @returns {{
  *   totalSize: number,
@@ -105,7 +103,6 @@ function computeSizes(data) {
 
 /**
  * Compute the status type of a response.
- *
  * @param {HttpArchive.Entry.Response} response - The .har entry
  * @returns {string} The status type of the response.
  */
@@ -130,7 +127,6 @@ function computeStatusType(response) {
 
 /**
  * Compute the status code of a response.
- *
  * @param {HttpArchive.Entry.Response} response - The .har entry
  * @returns {string} The status code of the response.
  */
@@ -148,7 +144,6 @@ function computeStatusCode(response) {
 
 /**
  * Add custom attributes to har entry.
- *
  * @param {number} id - The new id of the entry.
  * @param {HttpArchive.Entry} entry - The entry to use.
  */

@@ -2,7 +2,6 @@
 
 /**
  * This object contains information about the log creator application.
- *
  * @typedef {(object)} HttpArchive.Creator
  * @property {(string)} name - The name of the application that created the log.
  * @property {(string)} version - The version number of the application that created the log.
@@ -11,7 +10,6 @@
 
 /**
  * This object contains information about the browser that created the log.
- *
  * @typedef {(object)} HttpArchive.Browser
  * @property {(string)} name - The name of the browser that created the log.
  * @property {(string)} version - The version number of the browser that created the log.
@@ -20,7 +18,6 @@
 
 /**
  * This object represents an exported page.
- *
  * @typedef {(object)} HttpArchive.Page
  * @property {(string)} startedDateTime - Date and time stamp for the beginning of the page load.
  * @property {(string)} id - Unique identifier of a page within the . Entries use it to refer the parent page.
@@ -31,7 +28,6 @@
 
 /**
  * This object represents an exported HTTP request.
- *
  * @typedef {(object)} HttpArchive.Entry
  * @property {(string)} [pageref] - Reference to the parent page.
  * @property {(string)} startedDateTime - Date and time stamp of the request start.
@@ -55,7 +51,6 @@
  *
  * The total request size sent can be computed as follows (if both values are available):
  * <code>var totalSize = headersSize + bodySize;</code>
- *
  * @typedef {(object)} HttpArchive.Entry.Request
  * @property {string} method - Request method (GET, POST, ...).
  * @property {string} url - Absolute URL of the request (fragments are not included).
@@ -76,7 +71,6 @@
  *
  * The total response size received can be computed as follows (if both values are available):
  * <code>var totalSize = headersSize + bodySize;</code>
- *
  * @typedef {(object)} HttpArchive.Entry.Response
  * @property {number} status - Response status.
  * @property {string} statusText - Response status description.
@@ -97,7 +91,6 @@
 
 /**
  * This object contains a cookies properties.
- *
  * @typedef {(object)} HttpArchive.Entry.Cookie
  * @property {string} name - The name of the cookie.
  * @property {string} value - The cookie value.
@@ -111,7 +104,6 @@
 
 /**
  * This object contains a headers properties.
- *
  * @typedef {(object)} HttpArchive.Entry.Header
  * @property {string} name - The name of the header.
  * @property {string} value - The value of the header.
@@ -120,7 +112,6 @@
 
 /**
  * This object contains a query parameters properties.
- *
  * @typedef {(object)} HttpArchive.Entry.Request.QueryParameter
  * @property {string} name - The name of the query parameter.
  * @property {string} value - The value of the query parameter.
@@ -129,7 +120,6 @@
 
 /**
  * This object describes posted data.
- *
  * @typedef {(object)} HttpArchive.Entry.Request.PostData
  * @property {string} mimeType - Mime type of posted data.
  * @property {HttpArchive.Entry.Request.PostData.Param[]} params - List of posted parameters
@@ -140,7 +130,6 @@
 
 /**
  * Posted parameter.
- *
  * @typedef {(object)} HttpArchive.Entry.Request.PostData.Param
  * @property {string} name - The name of the posted parameter.
  * @property {string} [value] - The value of the posted parameter.
@@ -151,7 +140,6 @@
 
 /**
  * This object describes details about response content.
- *
  * @typedef {(object)} HttpArchive.Entry.Response.Content
  * @property {number} size - Length of the returned content in bytes. Should be equal to response.bodySize if there is
  *   no compression and bigger when the content has been compressed.
@@ -167,7 +155,6 @@
 
 /**
  * This objects contains info about a request coming from browser cache.
- *
  * @typedef {(object)} HttpArchive.Entry.Cache
  * @property {HttpArchive.Entry.Cache.Part} [beforeRequest] - State of a cache entry before the request.
  * @property {HttpArchive.Entry.Cache.Part} [afterRequest] - State of a cache entry after the request.
@@ -176,7 +163,6 @@
 
 /**
  * Both beforeRequest and afterRequest object share the following structure.
- *
  * @typedef {(object)} HttpArchive.Entry.Cache.Part
  * @property {string} [expires] - Expiration time of the cache entry.
  * @property {string} lastAccess - The last time the cache entry was opened.
@@ -187,7 +173,6 @@
 
 /**
  * This object represents an exported HTTP request.
- *
  * @typedef {(object)} HttpArchive.Entry.Timings
  * @property {number} [blocked] - Time spent in a queue waiting for a network connection.
  * @property {number} [dns] - DNS resolution time. The time required to resolve a host name.
@@ -203,7 +188,6 @@
 /**
  * This object describes timings for various events (states) fired during the page load.
  * All times are specified in milliseconds. If a time info is not available appropriate field is set to -1.
- *
  * @typedef {(object)} HttpArchive.Page.Timings
  * @property {(number)} onContentLoad - Content of the page loaded. Number of milliseconds since page load started.
  * @property {(number)} onLoad - Page is loaded (onLoad event fired). Number of milliseconds since page load started.
@@ -212,7 +196,6 @@
 
 /**
  * This object represents the root of the exported data.
- *
  * @typedef {(object)} HttpArchive.Log
  * @property {(string)} version - Version number of the format.
  * @property {(HttpArchive.Creator)} creator - Contains the name and version information of the log creator application.
@@ -224,14 +207,12 @@
 
 /**
  * The http archive file structure.
- *
  * @typedef {(object)} HttpArchive
  * @property {(HttpArchive.Log)} log - The exported data.
  */
 
 /**
  * Custom entry properties.
- *
  * @typedef {(object)} CustomEntryProps
  * @property {(number)} id - Used for selecting and restoring order.
  * @property {(string)} resourceType - Type of the resource.
@@ -241,7 +222,6 @@
 
 /**
  * Custom entry request properties.
- *
  * @typedef {(object)} CustomEntryProps.Request
  * @property {(string)} url - URL of the request (without path and parameters).
  * @property {(number)} headersSize - computed header size.
@@ -252,7 +232,6 @@
 
 /**
  * Custom entry response properties.
- *
  * @typedef {(object)} CustomEntryProps.Response
  * @property {(string)} statusType - Type of the status code.
  * @property {(number|string)} statusCode - Status code or description.

@@ -3,7 +3,6 @@ import addCustomData from "./custom.js";
 
 /**
  * Keys that are required for a HAR file.
- *
  * @type {string[]}
  */
 const requiredKeys = [
@@ -17,7 +16,6 @@ const requiredKeys = [
 
 /**
  * Validate a har file.
- *
  * @param {HttpArchive} data - The data to validate.
  */
 function validateHarFile(data) {
@@ -37,7 +35,6 @@ function validateHarFile(data) {
 
 /**
  * Sort entry parameters: 'headers', 'cookies', 'queryString', 'postData'.
- *
  * @param {HttpArchive.Entry} entry - The entry to sort.
  */
 function sortParameters(entry) {
@@ -59,7 +56,6 @@ function sortParameters(entry) {
 
 /**
  * Parse data to HttpArchive.
- *
  * @param {HttpArchive} data - The data to parse.
  * @returns {HttpArchive.Log} - The parsed data.
  */
