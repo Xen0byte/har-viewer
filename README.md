@@ -44,6 +44,7 @@ The following features are supported:
 2. Open a `.har` file
    - Option 1: Open a file from your local device
    - Option 2: Open a file from a remote url
+   - Option 3: Use the query parameter `file` (e.g. `https://develerik.github.io/har-viewer?file=https://example.org/example.har`)
 3. Analyze your file
 
 _If you want to install this software in your own environment checkout [this](./docs/installation.md)._
