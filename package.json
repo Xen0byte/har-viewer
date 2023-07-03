@@ -1,6 +1,6 @@
 {
   "name": "@develerik/har-viewer",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "description": "HTTP Archive Viewer",
   "keywords": [
