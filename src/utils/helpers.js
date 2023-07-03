@@ -3,8 +3,8 @@
 /**
  * Finds all unique property values in an array of objects.
  * @param {object[]} arr - The data array.
- * @param {Function} cb - Lamda returning the property to reduce on.
- * @returns {Array} An array of unique reducted property values.
+ * @param {Function} cb - Lambda returning the property to reduce on.
+ * @returns {Array} An array of unique reduced property values.
  */
 export function uniqueArrayByProperty(arr, cb) {
   return arr.reduce((prev, item) => {
@@ -20,8 +20,8 @@ export function uniqueArrayByProperty(arr, cb) {
 
 /**
  * Rounds a given number to a given precision.
- * @param {number} [num=0] num - The number to round.
- * @param {number} [x=2] x - The precision to use.
+ * @param {number} [num] num - The number to round.
+ * @param {number} [x] x - The precision to use.
  * @returns {number} - The rounded number.
  */
 export function roundTo(num = 0, x = 2) {

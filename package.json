@@ -27,27 +27,27 @@
   },
   "dependencies": {
     "@mdi/svg": "7.2.96",
-    "vue": "3.2.47"
+    "vue": "3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "4.2.1",
-    "@vue/compiler-sfc": "3.2.47",
+    "@vitejs/plugin-vue": "4.2.3",
+    "@vue/compiler-sfc": "3.3.4",
     "cross-env": "7.0.3",
     "cssnano": "6.0.1",
-    "eslint": "8.39.0",
+    "eslint": "8.44.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.27.5",
-    "eslint-plugin-jsdoc": "43.1.1",
-    "eslint-plugin-vue": "9.11.0",
+    "eslint-plugin-jsdoc": "46.4.3",
+    "eslint-plugin-vue": "9.15.1",
     "execa": "7.1.1",
-    "postcss": "8.4.23",
+    "postcss": "8.4.24",
     "postcss-import": "15.1.0",
-    "postcss-preset-env": "8.3.2",
-    "sass": "1.62.1",
-    "vite": "4.3.4",
+    "postcss-preset-env": "9.0.0",
+    "sass": "1.63.6",
+    "vite": "4.3.9",
     "vite-plugin-favicons-inject": "2.2.0",
     "vite-plugin-minify": "1.5.2",
-    "vite-plugin-pwa": "0.14.7"
+    "vite-plugin-pwa": "0.16.4"
   },
   "engines": {
     "node": ">=18.12.0"

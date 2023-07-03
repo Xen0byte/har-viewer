@@ -1,6 +1,6 @@
-ARG BUSYBOX_VERSION=1.36.0
-ARG NODE_VERSION=18.16.0
-ARG ALPINE_VERSION=3.17
+ARG BUSYBOX_VERSION=1.36.1
+ARG NODE_VERSION=18.16.1
+ARG ALPINE_VERSION=3.18
 
 ## STAGE I - Build builder image
 FROM public.ecr.aws/docker/library/node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS build
@@ -10,7 +10,7 @@ WORKDIR /src
 COPY . .
 
 # install dependencies
-RUN corepack enable && corepack prepare pnpm@8.2.0 --activate \
+RUN corepack enable && corepack prepare pnpm@8.6.5 --activate \
  && pnpm fetch && pnpm install -r --offline
 
 # build static web
