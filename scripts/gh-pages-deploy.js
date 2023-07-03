@@ -1,12 +1,12 @@
 /* eslint-disable no-console,import/no-extraneous-dependencies */
-const execa = require("execa");
+import { execa } from "execa";
 
 (async () => {
   try {
     await execa("git", ["checkout", "--orphan", "gh-pages"]);
     // eslint-disable-next-line no-console
     console.log("Building started...");
-    await execa("yarn", ["build"]);
+    await execa("pnpm", ["build"]);
     // Understand if it's dist or build folder
     const folderName = "dist";
     await execa("git", ["--work-tree", folderName, "add", "--all"]);
