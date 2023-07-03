@@ -2,7 +2,7 @@
 
 ## GitHub Releases
 
-1. Download the latests `har-viewer.zip` from the [GitHub Releases](https://github.com/develerik/har-viewer/releases) page
+1. Download the latest `har-viewer.zip` from the [GitHub Releases](https://github.com/develerik/har-viewer/releases) page
 2. Extract the contents to your webserver
 
 ## Docker
