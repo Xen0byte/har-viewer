@@ -1,13 +1,9 @@
-ARG BUSYBOX_VERSION=1.36.1
-ARG NODE_VERSION=18.16.1
-ARG ALPINE_VERSION=3.18
-
 ## STAGE I - Build builder image
-FROM public.ecr.aws/docker/library/node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS build
+FROM public.ecr.aws/docker/library/node:18.16.1-alpine3.18 AS build
 WORKDIR /src
 
 # copy source
-COPY . .
+COPY .. .
 
 # install dependencies
 RUN corepack enable && corepack prepare pnpm@8.6.5 --activate \
@@ -17,10 +13,35 @@ RUN corepack enable && corepack prepare pnpm@8.6.5 --activate \
 ENV NODE_ENV production
 RUN pnpm build
 
-## STAGE II - Build production image
-FROM public.ecr.aws/docker/library/busybox:${BUSYBOX_VERSION}-uclibc
+## STAGE II - Webserver base
+FROM alpine:3.18 AS builder
 
-ARG BUSYBOX_VERSION
+# install all dependencies required for compiling busybox
+RUN apk --no-cache add \
+    gcc=12.2.1_git20220924-r10 \
+    musl-dev=1.2.4-r0 \
+    make=4.4.1-r1 \
+    perl=5.36.1-r2
+
+# download busybox sources
+RUN wget https://busybox.net/downloads/busybox-1.36.1.tar.bz2 \
+  && tar xf busybox-1.36.1.tar.bz2 \
+  && mv /busybox-1.36.1 /busybox
+
+WORKDIR /busybox
+
+# copy the busybox build config (limited to httpd)
+COPY busybox/httpd.config ./.config
+
+# compile and install busybox
+RUN make && make install
+
+# create a non-root user to own the files and run our server
+RUN adduser -D static
+
+## STAGE III - Build production image
+FROM scratch
+
 ARG BUILD_DATE
 ARG GIT_SHA
 ARG VERSION
@@ -36,17 +57,23 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.vendor="Erik Bender" \
       org.opencontainers.image.licenses="ISC" \
       org.opencontainers.image.title="HTTP Archive Viewer" \
-      org.opencontainers.image.description="Simple viewer for HTTP Archives" \
-      org.opencontainers.image.base.name="public.ecr.aws/docker/library/busybox:${BUSYBOX_VERSION}-uclibc"
+      org.opencontainers.image.description="Simple viewer for HTTP Archives"
 
-# copy static web
-COPY --from=build /src/dist /var/www/
+# copy over the user
+COPY --from=builder /etc/passwd /etc/passwd
 
-# don't run as root
-RUN addgroup -S har && adduser -SDHG har har
-USER har
+# copy the busybox static binary
+COPY --from=builder /busybox/_install/bin/busybox /
+
+# use the non-root user
+USER static
+
+WORKDIR /home/static
+
+# copy the static web
+COPY --from=build /src/dist .
 
 # default expose port
 EXPOSE 8080
 
-ENTRYPOINT ["httpd", "-p", "8080", "-f", "-h", "/var/www/"]
+ENTRYPOINT ["/busybox", "httpd", "-f"]
